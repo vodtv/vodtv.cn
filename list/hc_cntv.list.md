@@ -80,7 +80,7 @@
 | 72 | 海南卫视 | 老友网 | <https://live2.hnntv.cn/srs/tv/lywsgq.m3u8?_upt=ab4cb1af1737798488> |
 | 73 | 兵团卫视 | mobilelive-timeshift.ysp.cctv.cn | <http://mobilelive-timeshift.ysp.cctv.cn/timeshift/ysp/2022606701/timeshift.m3u8?delay=0> |
 
-Updated at **1/25/2025 4:14:44 PM**
+Updated at **1/26/2025 8:59:52 AM**
 
 ## 使用说明
 
