@@ -362,7 +362,7 @@
 | 354 | 金鹰卡通 | IPv4 直链 | <http://123.154.154.150:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=0&authid=0> |
 | 355 | 钱江 | IPv4 直链 | <http://123.154.154.150:9901/tsfile/live/1003_1.m3u8?key=txiptv&playlive=0&authid=0> |
 
-Updated at **1/26/2025 8:59:52 AM**
+Updated at **1/26/2025 4:13:51 PM**
 
 ## 使用说明
 
