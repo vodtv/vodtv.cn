@@ -15,7 +15,7 @@
 | 7 | [BD]黑龙江｜新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/080469d52cc5335c46964f7c27523b67504caee880cea18a77f7bdc91d2d98d0.m3u8> |
 | 8 | [BD]黑龙江｜都市 | stream1.freetv.fun | <https://stream1.freetv.fun/e8aab8e96ab29ac96cc392943d54a947eb57591f4a0fdaf6267345e76a54f209.m3u8> |
 
-Updated at **1/27/2025 4:17:26 PM**
+Updated at **1/28/2025 8:58:08 AM**
 
 ## 使用说明
 
