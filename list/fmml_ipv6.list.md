@@ -1,4 +1,4 @@
-# List for **fanmingming/live ipv6**
+# List for **fanmingming/live domainv6(Invalid)**
 
 > M3U: [fmml_ipv6.m3u](./fmml_ipv6.m3u ), TXT: [fmml_ipv6.txt](./txt/fmml_ipv6.txt )
 
@@ -8,7 +8,7 @@
 | --- | ------------ | ---- | ------ |
 
 
-Updated at **1/29/2025 8:58:08 AM**
+Updated at **1/29/2025 4:16:06 PM**
 
 ## 使用说明
 

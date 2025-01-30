@@ -84,7 +84,7 @@
 | 76 | 武术世界 | IPv4 直链 | <http://1.197.249.77:9901/tsfile/live/1012_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 77 | 百姓调解 | IPv4 直链 | <http://1.197.249.77:9901/tsfile/live/1015_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **1/29/2025 8:58:08 AM**
+Updated at **1/29/2025 4:16:06 PM**
 
 ## 使用说明
 
