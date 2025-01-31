@@ -9,7 +9,7 @@
 | 1 | [BD]北京卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/a29f87ec934fec7b6d0b5ad470f28214b6a2fd33c8b2f2c47d196539774a15f3.m3u8> |
 | 2 | [BD]黑龙江都市 | stream1.freetv.fun | <https://stream1.freetv.fun/41ed0a78c76893cb75c29c68b8b6679f91d1ef736876d6ba582378499c1409f9.m3u8> |
 
-Updated at **1/30/2025 8:57:21 AM**
+Updated at **1/30/2025 4:15:42 PM**
 
 ## 使用说明
 
