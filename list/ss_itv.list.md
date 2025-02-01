@@ -245,7 +245,7 @@
 | 237 | 莆田综合 | IPv4 直链 | <http://117.27.190.42:9998/tsfile/live/23302_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 238 | 金鹰卡通 | IPv4 直链 | <http://113.57.93.165:9900/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **1/31/2025 8:58:24 AM**
+Updated at **1/31/2025 4:15:39 PM**
 
 ## 使用说明
 
