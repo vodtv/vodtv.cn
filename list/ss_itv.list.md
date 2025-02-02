@@ -137,7 +137,7 @@
 | 129 | 山东生活 | IPv4 直链 | <http://221.2.148.205:8154/tsfile/live/1005_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 130 | 山东综艺 | IPv4 直链 | <http://221.2.148.205:8154/tsfile/live/1003_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **2/1/2025 9:01:37 AM**
+Updated at **2/1/2025 4:14:28 PM**
 
 ## 使用说明
 

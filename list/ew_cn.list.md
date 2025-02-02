@@ -382,7 +382,7 @@
 | 374 | [BD]黑龙江视 | stream1.freetv.fun | <https://stream1.freetv.fun/6e7e2ce60b35f196871c0dbc89fc0adaea8f23d50baadfb76c8cd769821d150a.ctv> |
 | 375 | [HD]黑龙江都市 | stream1.freetv.fun | <https://stream1.freetv.fun/286242c2810bacf1a8ecb290e92e2960a85da004a9892dc2904bc75579012ed5.m3u8> |
 
-Updated at **2/1/2025 9:01:37 AM**
+Updated at **2/1/2025 4:14:28 PM**
 
 ## 使用说明
 
