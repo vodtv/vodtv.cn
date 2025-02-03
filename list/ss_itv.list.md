@@ -199,7 +199,7 @@
 | 191 | 金鹰纪实 | IPv4 直链 | <http://117.27.190.42:9998/tsfile/live/23278_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 192 | 龙岩综合 | IPv4 直链 | <http://117.27.190.42:9998/tsfile/live/23297_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **2/2/2025 4:13:48 PM**
+Updated at **2/3/2025 8:59:26 AM**
 
 ## 使用说明
 
