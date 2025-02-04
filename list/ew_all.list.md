@@ -8,7 +8,7 @@
 | --- | ------------ | ---- | ------ |
 | 1 | [BD]黑龙江都市 | stream1.freetv.fun | <https://stream1.freetv.fun/41ed0a78c76893cb75c29c68b8b6679f91d1ef736876d6ba582378499c1409f9.m3u8> |
 
-Updated at **2/3/2025 4:17:10 PM**
+Updated at **2/4/2025 8:58:27 AM**
 
 ## 使用说明
 
