@@ -360,7 +360,7 @@
 | 352 | 湖北经视 | IPv4 直链 | <http://113.57.93.165:9900/tsfile/live/1017_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 353 | 金鹰卡通 | IPv4 直链 | <http://113.57.93.165:9900/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **2/4/2025 4:16:27 PM**
+Updated at **2/5/2025 8:59:10 AM**
 
 ## 使用说明
 
