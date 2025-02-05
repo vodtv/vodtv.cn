@@ -6,9 +6,9 @@
 
 | No. | Channel Name | From | Source |
 | --- | ------------ | ---- | ------ |
-| 1 | [BD]黑龙江都市 | stream1.freetv.fun | <https://stream1.freetv.fun/41ed0a78c76893cb75c29c68b8b6679f91d1ef736876d6ba582378499c1409f9.m3u8> |
+| 1 | [BD]吉林卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/0b90323f7aac29f7c1068a13a8a5316781f89619d1173eb95ceaaa5f7784d888.m3u8> |
 
-Updated at **2/4/2025 8:58:27 AM**
+Updated at **2/4/2025 4:16:27 PM**
 
 ## 使用说明
 

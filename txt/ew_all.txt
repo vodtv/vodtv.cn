@@ -1,2 +1,2 @@
 综合,#genre#
-[BD]黑龙江都市,https://stream1.freetv.fun/41ed0a78c76893cb75c29c68b8b6679f91d1ef736876d6ba582378499c1409f9.m3u8
+[BD]吉林卫视,https://stream1.freetv.fun/0b90323f7aac29f7c1068a13a8a5316781f89619d1173eb95ceaaa5f7784d888.m3u8
