@@ -77,7 +77,7 @@
 | 69 | 海南卫视 | 老友网 | <https://live2.hnntv.cn/srs/tv/lywsgq.m3u8?_upt=295c0b911738803634> |
 | 70 | 兵团卫视 | mobilelive-timeshift.ysp.cctv.cn | <http://mobilelive-timeshift.ysp.cctv.cn/timeshift/ysp/2022606701/timeshift.m3u8?delay=0> |
 
-Updated at **2/6/2025 8:59:07 AM**
+Updated at **2/6/2025 4:16:29 PM**
 
 ## 使用说明
 

@@ -8,7 +8,7 @@
 | --- | ------------ | ---- | ------ |
 | 1 | [BD]吉林卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/0b90323f7aac29f7c1068a13a8a5316781f89619d1173eb95ceaaa5f7784d888.m3u8> |
 
-Updated at **2/6/2025 8:59:07 AM**
+Updated at **2/6/2025 4:16:29 PM**
 
 ## 使用说明
 
