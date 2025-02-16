@@ -278,7 +278,7 @@
 | 270 | 高尔夫网球 | IPv4 直链 | <http://180.213.174.225:9901/tsfile/live/1047_1.m3u8?key=txiptv&playlive=1&authid=0> |
 | 271 | 齐鲁 | IPv4 直链 | <http://124.128.73.58:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **2/15/2025 8:58:38 AM**
+Updated at **2/15/2025 4:14:49 PM**
 
 ## 使用说明
 
