@@ -1,1 +1,3 @@
 #EXTM3U x-tvg-url="https://epg.pw/xmltv/epg_lite.xml"
+#EXTINF:-1 tvg-name="青海卫视" tvg-id="" tvg-country="中国大陆" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2022/05/31/large/20220531153842547224_70.jpg" group-title="综合",[HD]青海卫视
+https://stream1.freetv.fun/8ede28fb8d35f118c93237f2d33a4c868a55539a4ee87af0031f8b5a03683523.m3u8
