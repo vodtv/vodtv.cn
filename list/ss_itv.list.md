@@ -364,7 +364,7 @@
 | 356 | 陕西银铃 | IPv4 直链 | <http://36.40.236.160:9999/tsfile/live/1009_1.m3u8?key=txiptv&playlive=0&authid=0> |
 | 357 | 齐鲁 | IPv4 直链 | <http://124.128.73.58:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0> |
 
-Updated at **2/19/2025 8:59:38 AM**
+Updated at **2/19/2025 4:17:10 PM**
 
 ## 使用说明
 
