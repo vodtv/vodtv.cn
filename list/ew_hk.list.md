@@ -48,11 +48,11 @@
 | 40 | [BD]港台电视 32 | stream1.freetv.fun | <https://stream1.freetv.fun/ab70b1502a96924b0672f5746e3d1cc294f2043956e03267c765b703667726f7.ctv> |
 | 41 | [BD]无线新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/b1feaaf52b422e940f5a234a921e8bf90bcd32a6678ec37f2393350c6c5de45c.ctv> |
 | 42 | [BD]无线新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/a5939b915562fd0fa5b663475ec27ae72074b246a4675c8812de73566f836931.ctv> |
-| 43 | [VGA]甄子丹电影 | stream1.freetv.fun | <https://stream1.freetv.fun/dd36ce8639d3e960f752ae060b9918fc61e28ae5fc35aafba8a2d935a0fb954c.ctv> |
-| 44 | [BD]美亚电影 | stream1.freetv.fun | <https://stream1.freetv.fun/624253af94a4a957f7fab1139fed6ce3cbdce7cce2c2239e828e89d5ca074062.m3u8> |
+| 43 | [HD]甄子丹电影 | stream1.freetv.fun | <https://stream1.freetv.fun/dd36ce8639d3e960f752ae060b9918fc61e28ae5fc35aafba8a2d935a0fb954c.ctv> |
+| 44 | [HD]美亚电影 | stream1.freetv.fun | <https://stream1.freetv.fun/2cb279c9a42cd826e8afb1da83ad153bc8e4dfdef7ac294f7f521f6f8f116c1b.m3u8> |
 | 45 | [HD]tvb翡翠 | stream1.freetv.fun | <https://stream1.freetv.fun/e0810f349d52a45fd1faf771402e6a04596a8e2398155f25e1141dc4d7746e4d.ctv> |
 | 46 | [BD]翡翠台 | stream1.freetv.fun | <https://stream1.freetv.fun/ba009d94229ed40a5d9289178463fba7aa31fb0622f8ab2d66c01147828743ab.m3u8> |
-| 47 | [VGA]耀才财经 | stream1.freetv.fun | <https://stream1.freetv.fun/4eb5076e2c3d0b2d37160044f2676c072abecaaa7b3e9ddc24230af1e824d4cb.m3u8> |
+| 47 | [SD]耀才财经新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/326c50e7e75ef1014f2116eae9f99a8416e8c083b0798af769fd2fe3b87d719e.m3u8> |
 | 48 | [BD]电影01 | stream1.freetv.fun | <https://stream1.freetv.fun/b609f9ba92814ec781d1ed8bd7ce5d87be36984fe6e619bb12cd16664dd5e216.m3u8> |
 | 49 | [HD]香港有线新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/4c65fc12a950810e9f068c55b2abf43cf7937762e9c5d4d44381205743c731bf.ctv> |
 | 50 | [SD]香港卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/79e4d77e2f29a2ca7f7cabbbe2ee02d32a4f2f7fb91ae94d0fb9573c9f94b4ab.ctv> |
@@ -65,7 +65,7 @@
 | 57 | [SD]凤凰电影 | stream1.freetv.fun | <https://stream1.freetv.fun/9ed301e39bb8ca159e243f22b480bf96dd911e48e89709a29959a5aab65608cf.ctv> |
 | 58 | [SD]凤凰香港 | stream1.freetv.fun | <https://stream1.freetv.fun/6cb8a9c38e100c68fc4e71f08896b5827211f113002c55ca82dec4d0b25730fe.m3u8> |
 
-Updated at **2/21/2025 9:00:09 AM**
+Updated at **2/21/2025 4:16:28 PM**
 
 ## 使用说明
 

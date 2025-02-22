@@ -27,8 +27,6 @@ https://stream1.freetv.fun/ed381b51057904fc753ed8a325839ec3739c8fd39d0ae87c54806
 https://stream1.freetv.fun/55a0a90e38bdb3a1466ae803ea6791abbef34b85ee4deb6be24caf9089a3e22e.ctv
 #EXTINF:-1 tvg-name="ELTA体育1(备用)" tvg-id="368589" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2024/11/18/large/20241118091830413331_76.png" group-title="运动",[BD]elta奥运7
 https://stream1.freetv.fun/34573234dc3cbf2930736a655a67c5e00496f80866913b4e24721efbb909892c.m3u8
-#EXTINF:-1 tvg-name="ELTA体育2(备用)" tvg-id="368590" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/25/large/20250125055335647139_92.png" group-title="运动",[BD]cct4美洲
-https://stream1.freetv.fun/1e10325fedd33f5390cf02f401381ef4ff67597f774bdbbc9576beb3f08966b1.ctv
 #EXTINF:-1 tvg-name="ELTA体育4(备用)" tvg-id="368592" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/25/large/20250125055529748409_19.png" group-title="运动",[HD]delta tv
 https://stream1.freetv.fun/b0071b71c41630a04047123536e6962a5a90e7996838637297146365dff282b3.m3u8
 #EXTINF:-1 tvg-name="Eleven Sports1" tvg-id="" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2024/03/09/large/20240309021436743554_65.png" group-title="运动",[BD]eleven sports 1
@@ -61,8 +59,6 @@ https://stream1.freetv.fun/3755f66478283ddf741976fcab316095c250fd57b92808527623d
 https://stream1.freetv.fun/c168a6f829ad002b4dd691a4b30a539a79fd910f3dfb8222444a6c2ae66988c1.m3u8
 #EXTINF:-1 tvg-name="TVBS欢乐台HD" tvg-id="370191" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/28/large/20250128055954129777_18.png" group-title="综艺",[BD]tvbs欢乐
 https://stream1.freetv.fun/34dc7b4981ac62f6c596085f0b3cd421ce22b144d9521373f405a7c658f43a50.ctv
-#EXTINF:-1 tvg-name="TVBS综合" tvg-id="" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2017/03/05/large/20170305021031030605_79.png" group-title="综合",[BD]tvb1综合
-https://stream1.freetv.fun/bce550f410e74d256c1cf7821f06566455d7b0c74442958596cdf43e22065102.m3u8
 #EXTINF:-1 tvg-name="TVN(TW)" tvg-id="368802" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2024/06/05/large/20240605164735768642_24.png" group-title="综艺",[BD]tvn
 https://stream1.freetv.fun/f2309922c3fb9ae16d9469bf93816f6b4b111cd8f111c8ad25e03e379882b66e.m3u8
 #EXTINF:-1 tvg-name="Taiwan Plus" tvg-id="368832" tvg-country="台湾" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2022/11/26/large/20221126155629392519_70.jpg" group-title="新闻",[BD]taiwan plus tv
@@ -97,8 +93,6 @@ https://stream1.freetv.fun/0a69db542fb0ffb28f514894c0121fab614596f933505273a7d04
 https://stream1.freetv.fun/54d476d99182fbf22a138d5c1dadcb6514ce41b0f90e4b4a76ff86f785eb0cbb.m3u8
 #EXTINF:-1 tvg-name="公视" tvg-id="" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724132344493469_30.png" group-title="综合",[BD]公视
 https://stream1.freetv.fun/a809786ff294c0a859b13ccfe17cb9eac4be6f497cc15e2636e9ea416d19287e.ctv
-#EXTINF:-1 tvg-name="公视HD" tvg-id="368562" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724132219452361_49.png" group-title="综合",[HD]公视
-https://stream1.freetv.fun/ce142f552e33695d8200c8112f6fc58589951e5ab569200e8d1a17673d1b0be0.ctv
 #EXTINF:-1 tvg-name="公视二台" tvg-id="" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2022/05/07/large/20220507044539624048_42.png" group-title="综合",[HD]ptsxs小公视720
 https://stream1.freetv.fun/ca6355af1ed58595d492f59a1882f17ba6d6e0c7b2e41ae6e5582d6200321f4d.m3u8
 #EXTINF:-1 tvg-name="台视HD" tvg-id="368558" tvg-country="台湾" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724092817835507_62.png" group-title="综合",[HD]台视
