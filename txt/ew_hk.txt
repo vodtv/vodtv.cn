@@ -29,8 +29,9 @@
 
 运动,#genre#
 [SD]hse24_trend,https://stream1.freetv.fun/e91654f903bfd8fedc46738d3b2960ff984a8f8be580202af67cc66aae3810e5.m3u8
-[HD]sports_2,https://stream1.freetv.fun/933911acd9ce751a31d2a1290205992ec885122b8e6be12adc0a8034d3383cf5.m3u8
+[BD]now_sports_premierleague_2,https://stream1.freetv.fun/420c338e3d7cbf37cc8d97ac2544f25df280179f67f149250b617aa06c60b776.ctv
 [VGA]now,https://stream1.freetv.fun/12ef9b5d00924abdbf5dc2545381a1571b3e5e4a4aff5e5e924cd0fde0a969ca.m3u8
+[BD]now_sports_premier_eague_3-fhd,https://stream1.freetv.fun/3db835c7009d228a37d1aed42a32d006ad61f43609526a9594723f058eb0257d.ctv
 
 新闻,#genre#
 [SD]cctv1,https://stream1.freetv.fun/4faae13a7e0b625d2e21a7a196b674678a84014547bb47990862025124273872.m3u8
