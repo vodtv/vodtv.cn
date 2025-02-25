@@ -48,7 +48,7 @@
 | 40 | [BD]三立新闻台 | stream1.freetv.fun | <https://stream1.freetv.fun/ea74b932d9d126c79dbea6485ac7119fb16be08f6e7a4494cd2647641c93361d.m3u8> |
 | 41 | [BD]三立台湾 | stream1.freetv.fun | <https://stream1.freetv.fun/b02bd01dece7d9086087806b32129fdf937015058b0bdcfd5183b15ae0c81bfa.ctv> |
 | 42 | [HD]中天娱乐 | stream1.freetv.fun | <https://stream1.freetv.fun/6e731a583558b18aeb638aee1225a4c8cdab6f367c51130697829a789f8a6134.m3u8> |
-| 43 | [HD]中天新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/0efa038ef8b00da22a46c019893c5170b1b49731e8b26ede0655c7f76e5dbfa7.ctv> |
+| 43 | [BD]中天新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/857501eecc3f5e76152bb2141e43acfa74c5c1f8b65679074f1099f1ff47fa46.m3u8> |
 | 44 | [BD]中天综合 | stream1.freetv.fun | <https://stream1.freetv.fun/448ea05fe06ec8f25e5f6123b02c9bd2d8747c0414d79b36f054d69e58a4301c.ctv> |
 | 45 | [BD]中视 | stream1.freetv.fun | <https://stream1.freetv.fun/48023223cf3a94ab9dcdbef7b2e3c566429aeaba44f3e41d03a955e1202ad492.m3u8> |
 | 46 | [BD]中视新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/1f65ec8b6675703b095472e420c7221064aacbf75df7208d59989992d78de738.m3u8> |
@@ -115,7 +115,7 @@
 | 107 | [HD]龙华洋片 | stream1.freetv.fun | <https://stream1.freetv.fun/458429f81d1a14007fd3d6f5a8ec3cdd04e16d2237f1f1647eaf3c027cc96505.ctv> |
 | 108 | [BD]龙华电影 | stream1.freetv.fun | <https://stream1.freetv.fun/b44f3f8206b7073445564de4284c7899fe6665a88f13e2e4043ef41dec4daed0.m3u8> |
 
-Updated at **2/24/2025 9:01:52 AM**
+Updated at **2/24/2025 4:17:43 PM**
 
 ## 使用说明
 
