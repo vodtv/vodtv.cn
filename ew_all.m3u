@@ -27,8 +27,8 @@ https://stream1.freetv.fun/3608077903f414206083459a194ad0afafbbc87556755b042a0d6
 https://stream1.freetv.fun/5e8c1e3a97a30f74d4a12db63254feca462e6dc5d0b668092ce1315d96d67613.m3u8
 #EXTINF:-1 tvg-name="CCTV5+" tvg-id="378824" tvg-country="中国大陆" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/25/large/20250125001757126121_81.png" group-title="运动",[BD]cctv5 plus
 https://stream1.freetv.fun/0affc85b808124f239fc1a50c7c975da538a17c2def9b78d7d73d596e5d4bff3.m3u8
-#EXTINF:-1 tvg-name="CCTV8" tvg-id="378827" tvg-country="中国大陆" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/25/large/20250125001717964200_12.png" group-title="电影",[BD]cctv8
-https://stream1.freetv.fun/1c33cf1240b47f2a9dd09a8bc52489ad35135765828cbc4cdd5619da0ddd570d.m3u8
+#EXTINF:-1 tvg-name="CCTV8" tvg-id="378827" tvg-country="中国大陆" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2025/01/25/large/20250125001717964200_12.png" group-title="电影",[SD]cctv8
+https://stream1.freetv.fun/d4735f1f761ea33c83e2a22929a80fefcb9298f8f47cda8651c62077854306b2.m3u8
 #EXTINF:-1 tvg-name="CGTN" tvg-id="" tvg-country="中国大陆" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2020/03/22/large/20200322211010158445_97.png" group-title="新闻",[SD]cgtn
 https://stream1.freetv.fun/6723248de2e481ba139fb6b36925ec8f4409526bb9c328e669fa45c2e1ef97f0.m3u8
 #EXTINF:-1 tvg-name="三沙卫视" tvg-id="" tvg-country="中国大陆" tvg-language="国语" tvg-logo="https://epg.pw/media/images/channel/2022/05/14/large/20220514162237808392_17.jpg" group-title="其它",[SD]三沙卫视

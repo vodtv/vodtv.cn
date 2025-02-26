@@ -16,7 +16,7 @@
 | 8 | [BD]dazn combat | stream1.freetv.fun | <https://stream1.freetv.fun/4b7dd8783813ae17d685cb64fafff1501573a48e0cc0c1105656b5c10be4076d.m3u8> |
 | 9 | [BD]dazn ringside | stream1.freetv.fun | <https://stream1.freetv.fun/5e244891093b7b31047892bffce919e4d2d85a65633181d2218054923aed4f7a.m3u8> |
 | 10 | [BD]discovery channel cee hd | stream1.freetv.fun | <https://stream1.freetv.fun/94376536df0cfe2fdad4a6e4bf5b7fa6cd6d6fe49d9a53e99bcb2344979ffced.m3u8> |
-| 11 | [HD]discovery science | stream1.freetv.fun | <https://stream1.freetv.fun/035902f8b3b563e0b5a7cd2ef2ade48b6c805f0d378d4265059b9948e469c036.ctv> |
+| 11 | [BD]discovery science | stream1.freetv.fun | <https://stream1.freetv.fun/035902f8b3b563e0b5a7cd2ef2ade48b6c805f0d378d4265059b9948e469c036.ctv> |
 | 12 | [HD]discovery theater | stream1.freetv.fun | <https://stream1.freetv.fun/ed381b51057904fc753ed8a325839ec3739c8fd39d0ae87c54806d2f439eeed2.ctv> |
 | 13 | [HD]elta影剧 | stream1.freetv.fun | <https://stream1.freetv.fun/55a0a90e38bdb3a1466ae803ea6791abbef34b85ee4deb6be24caf9089a3e22e.ctv> |
 | 14 | [BD]elta奥运7 | stream1.freetv.fun | <https://stream1.freetv.fun/34573234dc3cbf2930736a655a67c5e00496f80866913b4e24721efbb909892c.m3u8> |
@@ -31,11 +31,11 @@
 | 23 | [BD]love nature | stream1.freetv.fun | <https://stream1.freetv.fun/0c552589b4fcf164ed142e83d60eeb4e0fe7569f82dfb443b89ae78eb3c7abce.m3u8> |
 | 24 | [VGA]mezzo | stream1.freetv.fun | <https://stream1.freetv.fun/22644b6b17b378a9a1998ecd8a7132d5a1ea99884fda7b44872ae1a878cb06a2.m3u8> |
 | 25 | [HD]momo综合 | f13h.mine.nu:1935 | <rtmp://f13h.mine.nu:1935/sat/tv761> |
-| 26 | [HD]nat geo | stream1.freetv.fun | <https://stream1.freetv.fun/25764ff8977e46f69f07dfd235ef37be6dfbf338c492c45b5092adf631ee4cca.ctv> |
-| 27 | [BD]ROCK ENTERTAINMENT | stream1.freetv.fun | <https://stream1.freetv.fun/b42774d80539e2751241303bfb3f71fd79f4408048e14e962d5a5a6b79242b87.ctv> |
-| 28 | [HD]folklore tv | stream1.freetv.fun | <https://stream1.freetv.fun/9e6141b8834b4f5fa1a82cbf6177dfd71a700e17f92ea49481f8dfe7fda6c1d7.m3u8> |
-| 29 | [BD]smart知识 | stream1.freetv.fun | <https://stream1.freetv.fun/12ecae4cc6c8d3d5c35f72b3da78469285750287c9a1c4784daff4cc81e8601a.m3u8> |
-| 30 | [BD]tvbs | stream1.freetv.fun | <https://stream1.freetv.fun/8367c93681f2d6627b3575b8919e7df4a246630f0640fbf2ccb3f1aa0ff740a4.ctv> |
+| 26 | [BD]nat geo | stream1.freetv.fun | <https://stream1.freetv.fun/25764ff8977e46f69f07dfd235ef37be6dfbf338c492c45b5092adf631ee4cca.ctv> |
+| 27 | [BD]pet club tv | stream1.freetv.fun | <https://stream1.freetv.fun/b3dba2bf19d632d892e3eafc0bb6065cd219f3b73ef17ed90c9db9d992659e38.m3u8> |
+| 28 | [BD]ROCK ENTERTAINMENT | stream1.freetv.fun | <https://stream1.freetv.fun/b42774d80539e2751241303bfb3f71fd79f4408048e14e962d5a5a6b79242b87.ctv> |
+| 29 | [HD]folklore tv | stream1.freetv.fun | <https://stream1.freetv.fun/9e6141b8834b4f5fa1a82cbf6177dfd71a700e17f92ea49481f8dfe7fda6c1d7.m3u8> |
+| 30 | [BD]smart知识 | stream1.freetv.fun | <https://stream1.freetv.fun/12ecae4cc6c8d3d5c35f72b3da78469285750287c9a1c4784daff4cc81e8601a.m3u8> |
 | 31 | [BD]TVBS Asia | stream1.freetv.fun | <https://stream1.freetv.fun/3755f66478283ddf741976fcab316095c250fd57b92808527623d76ff2861730.m3u8> |
 | 32 | [BD]TVBS新闻 | stream1.freetv.fun | <https://stream1.freetv.fun/c168a6f829ad002b4dd691a4b30a539a79fd910f3dfb8222444a6c2ae66988c1.m3u8> |
 | 33 | [BD]tvbs欢乐 | stream1.freetv.fun | <https://stream1.freetv.fun/34dc7b4981ac62f6c596085f0b3cd421ce22b144d9521373f405a7c658f43a50.ctv> |
@@ -117,7 +117,7 @@
 | 109 | [HD]龙华洋片 | stream1.freetv.fun | <https://stream1.freetv.fun/458429f81d1a14007fd3d6f5a8ec3cdd04e16d2237f1f1647eaf3c027cc96505.ctv> |
 | 110 | [BD]龙华电影 | stream1.freetv.fun | <https://stream1.freetv.fun/b44f3f8206b7073445564de4284c7899fe6665a88f13e2e4043ef41dec4daed0.m3u8> |
 
-Updated at **2/25/2025 4:17:25 PM**
+Updated at **2/26/2025 9:01:02 AM**
 
 ## 使用说明
 

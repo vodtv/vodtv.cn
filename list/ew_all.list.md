@@ -20,7 +20,7 @@
 | 12 | [BD]cctv4 | stream1.freetv.fun | <https://stream1.freetv.fun/3608077903f414206083459a194ad0afafbbc87556755b042a0d675e387be6c7.m3u8> |
 | 13 | [SD]cctv5 | stream1.freetv.fun | <https://stream1.freetv.fun/5e8c1e3a97a30f74d4a12db63254feca462e6dc5d0b668092ce1315d96d67613.m3u8> |
 | 14 | [BD]cctv5 plus | stream1.freetv.fun | <https://stream1.freetv.fun/0affc85b808124f239fc1a50c7c975da538a17c2def9b78d7d73d596e5d4bff3.m3u8> |
-| 15 | [BD]cctv8 | stream1.freetv.fun | <https://stream1.freetv.fun/1c33cf1240b47f2a9dd09a8bc52489ad35135765828cbc4cdd5619da0ddd570d.m3u8> |
+| 15 | [SD]cctv8 | stream1.freetv.fun | <https://stream1.freetv.fun/d4735f1f761ea33c83e2a22929a80fefcb9298f8f47cda8651c62077854306b2.m3u8> |
 | 16 | [SD]cgtn | stream1.freetv.fun | <https://stream1.freetv.fun/6723248de2e481ba139fb6b36925ec8f4409526bb9c328e669fa45c2e1ef97f0.m3u8> |
 | 17 | [SD]三沙卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/2a5dac9321f1a32d70a91b4c7f5751748dd9a2090a355367ae1ece84a703d1e1.m3u8> |
 | 18 | [SD]内蒙古卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/5449f2d57a27706d5b13071efab41c175da68c2cc31af7c2734df6d796390d65.m3u8> |
@@ -56,7 +56,7 @@
 | 48 | [SD]青海卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/8ede28fb8d35f118c93237f2d33a4c868a55539a4ee87af0031f8b5a03683523.m3u8> |
 | 49 | [BD]黑龙江卫视 | stream1.freetv.fun | <https://stream1.freetv.fun/faaa180e5dde3f3454cfd09bbcaafe76cfa251c0baf0593632713bf3301e3b59.m3u8> |
 
-Updated at **2/25/2025 4:17:25 PM**
+Updated at **2/26/2025 9:01:02 AM**
 
 ## 使用说明
 

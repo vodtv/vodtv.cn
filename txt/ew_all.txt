@@ -44,7 +44,7 @@
 
 电影,#genre#
 [BD]cctv11,https://stream1.freetv.fun/c23a4f52a9d9d0b34759b80498722011be190bd0d11d4425312946cb5f42cc75.m3u8
-[BD]cctv8,https://stream1.freetv.fun/1c33cf1240b47f2a9dd09a8bc52489ad35135765828cbc4cdd5619da0ddd570d.m3u8
+[SD]cctv8,https://stream1.freetv.fun/d4735f1f761ea33c83e2a22929a80fefcb9298f8f47cda8651c62077854306b2.m3u8
 
 新闻,#genre#
 [SD]cctv13,https://stream1.freetv.fun/85f23fdf2b656f5b7ae368f7b615ef3b6333d5583743534e79ba9fda21988b35.m3u8
