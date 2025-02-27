@@ -54,13 +54,12 @@
 音乐,#genre#
 [BD]cctv15,https://stream1.freetv.fun/b17180549193f12c2104b05f75c124ca1702e96917aba74a23c8ac88fd7ea0df.m3u8
 
-运动,#genre#
-[BD]cctv16,https://stream1.freetv.fun/acb05aeed72dc43978040a6f2e0c111e59ea1026f3ccf606796f598c6cc1f3c0.m3u8
-[SD]cctv5,https://stream1.freetv.fun/5e8c1e3a97a30f74d4a12db63254feca462e6dc5d0b668092ce1315d96d67613.m3u8
-[BD]cctv5_plus,https://stream1.freetv.fun/0affc85b808124f239fc1a50c7c975da538a17c2def9b78d7d73d596e5d4bff3.m3u8
-
 综艺,#genre#
 [SD]cctv3,https://stream1.freetv.fun/402f7ef23bdc0f37b7c76b114d7167bb4228d5b525a0de2140f63127c085c1c7.m3u8
+
+运动,#genre#
+[SD]cctv5,https://stream1.freetv.fun/5e8c1e3a97a30f74d4a12db63254feca462e6dc5d0b668092ce1315d96d67613.m3u8
+[BD]cctv5_plus,https://stream1.freetv.fun/0affc85b808124f239fc1a50c7c975da538a17c2def9b78d7d73d596e5d4bff3.m3u8
 
 测试,#genre#
 [BD]淘电影,https://stream1.freetv.fun/0beb38c048edd201d36f6520aa4c0bcc5aec8e1be2c9de410136055d0982fd67.m3u8
