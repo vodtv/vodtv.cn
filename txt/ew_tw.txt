@@ -6,7 +6,7 @@
 [BD]亚洲旅游,https://stream1.freetv.fun/eb82250a3a363114586eddaf0775bd48ae7e26348676bd7753031166f118b826.m3u8
 [BD]人间卫视,https://stream1.freetv.fun/f3c2a5fa1f577636eac760c96c165c988cfc5552416425a79ec9bad11382d07e.m3u8
 [VGA]唯心电视,https://stream1.freetv.fun/7d651c567d48727fc8f95cef7d2b349246baef656e557211c784bc62024b10d0.m3u8
-[HD]大爱1,https://stream1.freetv.fun/42f86811d9b74b312d703097ce5bd0a18f7adda90f7fc0f249c7d96fa0d15619.m3u8
+[HD]大爱,https://stream1.freetv.fun/8dab0126668b960d4130c12b25e9278ffda43f5b66fa986287ed34cd97cbd721.m3u8
 [BD]大爱2,https://stream1.freetv.fun/fccdee5659dfd45d93efddb44de44613ea55be5d22329aa3454de0d523af87ef.m3u8
 [HD]好消息,https://stream1.freetv.fun/797529276770285bb5212acd5798702e0db85532c78121a94f600759dec5dabf.m3u8
 [BD]好消息2,https://stream1.freetv.fun/99a7112e32330890db56fd04e059dc59c9fdc4bf19c9167967a3e22b131d2441.m3u8
@@ -25,7 +25,7 @@
 [BD]经典电影,https://stream1.freetv.fun/a8fb7adb8dbbc9bb8251b6dca1f06bde4a42896fc3c871353438d667450360b1.ctv
 [BD]纬来戏剧,https://stream1.freetv.fun/56b4921591b649278f5ebc0e857875a28b2c31eed19216e6e1c4826b48afff62.m3u8
 [BD]纬来电影,https://stream1.freetv.fun/72eed2c8e30beebb70d7931478cf693b3e1c401ff3a17f11cd1e9e98f7d16ccd.m3u8
-[BD]美亚电影,https://stream1.freetv.fun/f224cca65b94181503763368a9664b47c93a2d968a694d6a735ac9b5e6df3496.ctv
+[SD]美亚电影,https://stream1.freetv.fun/364ab897bc6f681e9a63a87348e5234e25e3582b43777c2f449bd4081b94f578.ctv
 [BD]台湾戏剧,https://stream1.freetv.fun/4afa10a686f626f156f95ab344d0451b798633981cb4e906cc37a3c6c0773a1f.m3u8
 [BD]龙祥电影,https://stream1.freetv.fun/8e9e5cb24c50e6f6c340ada5657e9d1099b9686d1ad10e5c41986ca5e504cc47.ctv
 [BD]龙华偶像,https://stream1.freetv.fun/eaf4acb212690a3a5d4d587aecaf7cd1a0d98d91763fe65a82d7294841cf75a7.m3u8

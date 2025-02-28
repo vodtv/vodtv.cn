@@ -51,7 +51,7 @@
 [BD]无线新闻,https://stream1.freetv.fun/a5939b915562fd0fa5b663475ec27ae72074b246a4675c8812de73566f836931.ctv
 [HD]香港有线新闻,https://stream1.freetv.fun/1b440a21b089797aecfd8328b5f587036dbeb394a97b3baaaca595ca6692ef93.m3u8
 [BD]凤凰美洲,https://stream1.freetv.fun/576d60de2787685083ce1df208a6ae088e350b8ef108c46a98bb8b3cd19563b6.m3u8
-[BD]凤凰资讯,https://stream1.freetv.fun/03d62c50cbe49812502981022401d52d7e5e209cc9be8efefa5c83f326da5566.m3u8
+[HD]凤凰资讯,https://stream1.freetv.fun/10657ccf76d0f20d4fe8c4596d94152ad1126b8e28537fe469f3da39c15f72fd.ctv
 
 知识,#genre#
 [BD]discovery_kids,https://stream1.freetv.fun/60cb824bbcc18e0e8ae5574020d115d2d73ae1e13c727b5e6ee5ef4ea9fd7e67.ctv
@@ -65,7 +65,6 @@
 电影,#genre#
 [BD]cowboy_movie_channel,https://stream1.freetv.fun/23bcc3921c432ac028de2772a267aecb87ededc75d71a110cd2a1e076333aaa8.m3u8
 [BD]now爆谷星影,https://stream1.freetv.fun/3e18bf84f5f57d92f80d46eb243ce7a1c4baa181aff383e6eb434ee0079fe189.m3u8
-[BD]Popc,https://stream1.freetv.fun/227a88c6eb14e2c197f7a05481ee54ac37bd5b046e70ae0e5358b8616e8fda80.m3u8
 [BD]tvbs亚洲,https://stream1.freetv.fun/c88adc69fe22cc05c7ff2984ad14db99f461e6dda12687cb7bbaf5e03a357a38.m3u8
 [HD]tvb无线功夫,https://stream1.freetv.fun/f0adb29a9585edc65496ab0f82abcd50f3596334fb38ee5c9e64b65003ed1601.ctv
 [BD]tvb星河,https://stream1.freetv.fun/eee97f3ab8d484adff720fc3c90eb1f280b02264d5d2e3971262bb416aab5767.ctv
