@@ -1,4 +1,4 @@
-# @duxweb/vitepress-theme
+# @vodtv/theme
 
 现代、优雅、可定制的 VitePress 文档主题，适合技术文档与项目站点。
 
@@ -16,9 +16,9 @@
 
 ### 1. 安装主题
 ```bash
-pnpm add @duxweb/vitepress-theme
+pnpm add @vodtv/theme
 # 或
-npm i @duxweb/vitepress-theme
+npm i @vodtv/theme
 ```
 
 ### 2. 最小化配置（推荐）
@@ -26,7 +26,7 @@ npm i @duxweb/vitepress-theme
 
 ```ts
 // .vitepress/config.mts
-import { withDuxTheme } from '@duxweb/vitepress-theme/config'
+import { withDuxTheme } from '@vodtv/theme/config'
 
 export default withDuxTheme({
   title: 'My Docs',
@@ -45,8 +45,8 @@ export default withDuxTheme({
 
 ```ts
 // .vitepress/theme/index.ts
-import theme from '@duxweb/vitepress-theme'
-import '@duxweb/vitepress-theme/dist/index.css'
+import theme from '@vodtv/theme'
+import '@vodtv/theme/dist/index.css'
 
 export default {
   extends: theme
@@ -69,7 +69,7 @@ graph TD
 
 ## 搜索功能说明
 - 主题内置本地搜索，已实现"动态导入 + 优雅降级"
-- 使用 `withDuxTheme` 时会自动注入所需 Vite 配置，搜索可完整启用
+- 使用 `withTheme` 时会自动注入所需 Vite 配置，搜索可完整启用
 
 ## 首页示例
 ```md
