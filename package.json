@@ -7,10 +7,10 @@
   "description": "vodtv theme and docs | VitePress主题收纳与演示仓库",
   "scripts": {
     "dev": "pnpm -C packages/theme build && vitepress dev",
-    "build": "vitepress build",
-    "build-theme": "",
-    "preview": "vitepress preview",
-    "all-build": "pnpm -r build",
+    "build": "pnpm -r build",
+    "build:docs": "vitepress build",
+    "build:theme": "pnpm -C packages/theme build",
+    "preview": "vitepress preview",    
     "release": "pnpm -C packages/theme release"
   },
   "devDependencies": {
