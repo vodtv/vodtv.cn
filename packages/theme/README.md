@@ -22,13 +22,13 @@ npm i @vodtv/theme
 ```
 
 ### 2. 最小化配置（推荐）
-`withDuxTheme` 会自动注入 `vite.ssr.noExternal`、`optimizeDeps.exclude`，并启用 Mermaid 运行时渲染。
+`withTheme` 会自动注入 `vite.ssr.noExternal`、`optimizeDeps.exclude`，并启用 Mermaid 运行时渲染。
 
 ```ts
 // .vitepress/config.mts
-import { withDuxTheme } from '@vodtv/theme/config'
+import { withTheme } from '@vodtv/theme/config'
 
-export default withDuxTheme({
+export default withTheme({
   title: 'My Docs',
   description: 'Modern VitePress Theme',
   themeConfig: {
