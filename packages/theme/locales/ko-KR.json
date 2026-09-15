@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "죄송합니다. 찾으시는 페이지가 존재하지 않습니다.",
+    "backToHome": "홈으로 돌아가기",
+    "previousPage": "뒤로 가기"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "결제 방법 선택",
+    "recentSupporters": "최근 후원자",
+    "totalSupporters": "후원자",
+    "totalAmount": "총 금액"
+  },
+  "search": {
+    "button": {
+      "buttonText": "검색",
+      "buttonAriaLabel": "검색"
+    },
+    "modal": {
+      "displayDetails": "상세 목록 표시",
+      "resetButtonTitle": "검색 초기화",
+      "backButtonTitle": "검색 닫기",
+      "noResultsText": "결과를 찾을 수 없습니다",
+      "footer": {
+        "selectText": "선택",
+        "selectKeyAriaLabel": "엔터",
+        "navigateText": "탐색",
+        "navigateUpKeyAriaLabel": "위쪽 화살표",
+        "navigateDownKeyAriaLabel": "아래쪽 화살표",
+        "closeText": "닫기",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "메뉴",
+    "mobileTitle": "메뉴",
+    "docNavTitle": "문서 내비게이션"
+  },
+  "docFooter": {
+    "editLinkText": "이 페이지 편집",
+    "lastUpdatedText": "최종 업데이트",
+    "prevPageText": "이전",
+    "nextPageText": "다음"
+  },
+  "readingTime": {
+    "time": "읽는 시간",
+    "words": "글자",
+    "minute": "1 분",
+    "minutes": "{n} 분"
+  },
+  "jump": {
+    "redirecting": "선호하는 언어로 리디렉션 중...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "또는 언어 선택",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "초"
+  },
+  "ui": {
+    "copyCode": "복사",
+    "switchTheme": {
+      "dark": "다크 모드로 전환",
+      "light": "라이트 모드로 전환"
+    },
+    "language": {
+      "switchLanguage": "언어 전환",
+      "ariaLabel": "언어"
+    }
+  }
+}

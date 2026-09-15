@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "Lo siento, la página que buscas no existe.",
+    "backToHome": "Volver al inicio",
+    "previousPage": "Volver atrás"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "Seleccionar método de pago",
+    "recentSupporters": "Partidarios recientes",
+    "totalSupporters": "Partidarios",
+    "totalAmount": "Cantidad total"
+  },
+  "search": {
+    "button": {
+      "buttonText": "Buscar",
+      "buttonAriaLabel": "Buscar"
+    },
+    "modal": {
+      "displayDetails": "Mostrar lista detallada",
+      "resetButtonTitle": "Restablecer búsqueda",
+      "backButtonTitle": "Cerrar búsqueda",
+      "noResultsText": "No se encontraron resultados",
+      "footer": {
+        "selectText": "Seleccionar",
+        "selectKeyAriaLabel": "Intro",
+        "navigateText": "Navegar",
+        "navigateUpKeyAriaLabel": "Flecha arriba",
+        "navigateDownKeyAriaLabel": "Flecha abajo",
+        "closeText": "Cerrar",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "Menú",
+    "mobileTitle": "Menú",
+    "docNavTitle": "Navegación de documentación"
+  },
+  "docFooter": {
+    "editLinkText": "Editar esta página",
+    "lastUpdatedText": "Última actualización",
+    "prevPageText": "Anterior",
+    "nextPageText": "Siguiente"
+  },
+  "ui": {
+    "copyCode": "Copiar",
+    "switchTheme": {
+      "dark": "Cambiar a modo oscuro",
+      "light": "Cambiar a modo claro"
+    },
+    "language": {
+      "switchLanguage": "Cambiar idioma",
+      "ariaLabel": "idioma"
+    }
+  },
+  "readingTime": {
+    "time": "Tiempo de lectura",
+    "words": "palabras",
+    "minute": "1 minuto",
+    "minutes": "{n} minutos"
+  },
+  "jump": {
+    "redirecting": "Redirigiendo al idioma preferido...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "O elegir idioma",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "s"
+  }
+}

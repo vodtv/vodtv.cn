@@ -1,0 +1,243 @@
+/**
+ * 文档内容排版样式 - prose content styles
+ */
+
+@layer components {
+  /* 现代文档内容样式 */
+  .prose-content {
+    @apply text-gray-800 dark:text-gray-200 leading-7 max-w-none text-[15px];
+    font-feature-settings: "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* 标题样式 - 现代设计 */
+  .prose-content h1,
+  .prose-content h2,
+  .prose-content h3,
+  .prose-content h4,
+  .prose-content h5,
+  .prose-content h6 {
+    @apply font-semibold text-gray-900 dark:text-gray-50 scroll-mt-20;
+  }
+  
+  .prose-content h1 {
+    @apply text-3xl mb-4 mt-0 font-bold;
+  }
+  
+  .prose-content h2 {
+    @apply text-2xl mt-6 mb-4;
+    @apply pt-6 border-t border-gray-200 dark:border-gray-800;
+  }
+  
+  .prose-content h2:first-child {
+    @apply border-none pt-0 mt-0;
+  }
+  
+
+  .prose-content h3 {
+    @apply text-xl mt-6 mb-3;
+  }
+  
+  .prose-content h4 {
+    @apply text-lg mt-6 mb-3;
+  }
+  
+  .prose-content h5 {
+    @apply text-base mt-6 mb-3 font-medium;
+  }
+  
+  .prose-content h6 {
+    @apply text-sm mt-6 mb-3 font-medium uppercase tracking-wider text-gray-600 dark:text-gray-400;
+  }
+
+  /* 标题锚点链接 */
+  .prose-content .header-anchor {
+    @apply text-gray-400 hover:text-primary-500 !ml-2 opacity-0 transition-opacity duration-200 no-underline border-0;
+  }
+
+  .prose-content .header-anchor::before {
+    content: '#';
+    @apply font-mono;
+  }
+
+  /* 重置标题锚点链接的悬停效果 */
+  .prose-content .header-anchor:hover {
+    @apply bg-transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .prose-content h1:hover .header-anchor,
+  .prose-content h2:hover .header-anchor,
+  .prose-content h3:hover .header-anchor,
+  .prose-content h4:hover .header-anchor,
+  .prose-content h5:hover .header-anchor,
+  .prose-content h6:hover .header-anchor {
+    @apply opacity-100;
+  }
+  
+  /* 段落样式 */
+  .prose-content p {
+    @apply my-3 text-gray-700 dark:text-gray-300 leading-7;
+  }
+  
+  /* 强调和斜体 */
+  .prose-content strong {
+    @apply font-semibold text-gray-900 dark:text-gray-100;
+  }
+  
+  .prose-content em {
+    @apply italic text-gray-800 dark:text-gray-200;
+  }
+  
+  /* 列表样式 - 现代化 */
+  .prose-content ul,
+  .prose-content ol {
+    @apply mb-5 space-y-3;
+    padding-left: 1.125rem;
+  }
+  
+  .prose-content ul {
+    list-style: none;
+  }
+  
+  .prose-content ul > li {
+    position: relative;
+  }
+  
+  .prose-content ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.125rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    @apply bg-primary-500 top-3.5;
+  }
+  
+  .prose-content ol {
+    @apply list-decimal;
+    counter-reset: item;
+  }
+  
+  .prose-content ol > li {
+    @apply relative;
+    counter-increment: item;
+  }
+  
+  .prose-content li {
+    @apply text-gray-700 dark:text-gray-300 m-0 leading-8;
+  }
+  
+  .prose-content li > p {
+  }
+
+  
+  /* 嵌套列表 */
+  .prose-content ul ul,
+  .prose-content ul ol,
+  .prose-content ol ul,
+  .prose-content ol ol {
+    @apply my-0;
+  }
+  
+  /* 链接样式 */
+  .prose-content a {
+    @apply text-primary-600 dark:text-primary-400 font-medium mx-1;
+    @apply hover:text-primary-700 dark:hover:text-primary-300;
+    @apply transition-colors duration-200;
+  }
+  
+  .prose-content a:hover {
+    @apply border-b border-primary-500;
+  }
+  
+  /* 引用块 - 现代化设计 */
+  .prose-content blockquote {
+    @apply relative bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/50;
+    @apply rounded-xl pl-6 pr-6 py-5 mb-6 not-italic;
+    @apply text-blue-900 dark:text-blue-100;
+  }
+  
+  .prose-content blockquote::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0.25rem;
+    @apply bg-blue-500 rounded-l-xl;
+  }
+  
+  .prose-content blockquote p {
+    @apply mb-0 text-blue-800 dark:text-blue-200 font-medium;
+  }
+  
+  /* 分割线 */
+  .prose-content hr {
+    @apply border-0 my-12;
+    height: 1px;
+    background: linear-gradient(to right, transparent, theme('colors.gray.300'), transparent);
+  }
+  
+  html.dark .prose-content hr {
+    background: linear-gradient(to right, transparent, theme('colors.gray.600'), transparent);
+  }
+  
+  /* 表格样式 - 现代设计 */
+  .prose-content table {
+    @apply w-full border-separate mb-6 text-sm;
+    border-spacing: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px theme('colors.gray.200');
+  }
+  
+  html.dark .prose-content table {
+    box-shadow: 0 0 0 1px theme('colors.gray.700');
+  }
+  
+  .prose-content th {
+    @apply bg-gray-50 dark:bg-gray-800/50 px-4 py-3 text-left font-semibold;
+    @apply text-gray-900 dark:text-gray-100 text-xs uppercase tracking-wider;
+  }
+  
+  .prose-content td {
+    @apply px-4 py-3 text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700;
+  }
+  
+  .prose-content tr:first-child th:first-child {
+    border-top-left-radius: 0.75rem;
+  }
+  
+  .prose-content tr:first-child th:last-child {
+    border-top-right-radius: 0.75rem;
+  }
+  
+  .prose-content tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0.75rem;
+  }
+  
+  .prose-content tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0.75rem;
+  }
+  
+  .prose-content tbody tr:hover {
+    @apply bg-gray-50/50 dark:bg-gray-800/20;
+  }
+  
+  /* 图片样式 */
+  .prose-content img {
+    @apply rounded-xl shadow-lg mx-auto my-8 max-w-full h-auto;
+    @apply ring-1 ring-gray-200 dark:ring-gray-700;
+  }
+  
+  /* 内联代码 */
+  .prose-content :not(pre) > code {
+    @apply px-2 py-1 text-sm font-mono bg-gray-100 dark:bg-gray-800;
+    @apply text-gray-800 dark:text-gray-200 rounded-md;
+    @apply ring-1 ring-gray-200 dark:ring-gray-700;
+    font-size: 0.875em;
+  }
+}

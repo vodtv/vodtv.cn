@@ -1,0 +1,225 @@
+/**
+ * VitePress 代码高亮样式
+ * VitePress 使用 Shiki 进行语法高亮
+ */
+
+@layer components {
+  /* VitePress 代码块容器 */
+  .prose-content div[class*="language-"] {
+    @apply relative bg-gray-50 dark:bg-gray-950/50 border border-gray-200 dark:border-gray-800 rounded-lg mb-6 overflow-hidden;
+  }
+  
+  /* 语言标签 */
+  .prose-content div[class*="language-"] .lang {
+    @apply absolute top-3 right-12 text-xs text-gray-500 dark:text-gray-400 font-mono uppercase z-10;
+  }
+  
+  /* 复制按钮 */
+  .prose-content div[class*="language-"] .copy {
+    @apply absolute top-1.5 right-1.5 w-8 h-8 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white rounded border border-gray-300 dark:border-gray-600 opacity-0 hover:opacity-100 transition-opacity duration-200 text-xs cursor-pointer flex items-center justify-center;
+  }
+  
+  .prose-content div[class*="language-"]:hover .copy {
+    @apply opacity-100;
+  }
+  
+  /* 代码块本体 */
+  .prose-content div[class*="language-"] pre {
+    @apply bg-transparent text-gray-800 dark:text-gray-100 p-4 overflow-x-auto m-0 font-mono text-sm;
+  }
+  
+  /* 行号模式的代码块 */
+  .prose-content div[class*="language-"].line-numbers-mode {
+    @apply pl-0;
+  }
+  
+  .prose-content div[class*="language-"].line-numbers-mode pre {
+    @apply pl-12;
+  }
+  
+  /* 行号包装器 */
+  .prose-content .line-numbers-wrapper {
+    @apply absolute top-0 left-0 w-10 py-4 text-center bg-gray-100 dark:bg-gray-900/50 border-r border-gray-300 dark:border-gray-800 text-gray-500 dark:text-gray-400 font-mono text-xs leading-6 select-none z-1 h-full;
+  }
+  
+  /* Shiki 代码内容 */
+  .prose-content .shiki {
+    @apply bg-transparent;
+  }
+  
+  .prose-content .shiki code {
+    @apply bg-transparent p-0 text-inherit font-mono flex flex-col;
+  }
+  
+  .prose-content .shiki .line {
+    @apply block text-sm m-0 p-0 leading-6;
+  }
+
+  .prose-content .shiki .line.highlighted {
+    @apply !bg-primary-500/10 !bg-primary-700/10;
+  }
+  .prose-content .shiki .line.highlighted.error {
+    @apply !bg-red-500/10 !bg-red-700/10;
+  }
+  .prose-content .shiki .line.highlighted.warning {
+    @apply !bg-yellow-500/10 !bg-yellow-700/10;
+  }
+
+  .prose-content .shiki .line.diff {
+    @apply relative;
+  }
+
+  .prose-content .shiki .line.diff.remove {
+    @apply !bg-red-500/10 !bg-red-700/10;
+  }
+
+  .prose-content .shiki .line.diff.remove::after {
+    content: "-";
+    @apply absolute right-2 top-0.5 text-red-500 font-mono text-sm;
+  }
+
+  .prose-content .shiki .line.diff.add {
+    @apply !bg-green-500/10 !bg-green-700/10;
+  }
+
+  .prose-content .shiki .line.diff.add::after {
+    content: "+";
+    @apply absolute right-2 top-0.5 text-green-500 font-mono text-sm;
+  }
+
+  /* 焦点代码行样式 */
+  .prose-content .has-focused-lines .line:not(.has-focus) {
+    @apply opacity-100 blur-[2px];
+  }
+
+  .prose-content .has-focused-lines:hover .line:not(.has-focus) {
+    @apply opacity-100 blur-none;
+  }
+
+  .prose-content .has-focused-lines .line.has-focus {
+    @apply opacity-100 blur-none;
+  }
+  
+  /* 行内代码样式 */
+  .prose-content code:not(.shiki code) {
+    @apply bg-primary-50 dark:bg-primary-950/30 px-2 py-1 rounded-md text-sm font-mono;
+    @apply text-primary-700 dark:text-primary-300;
+    @apply font-medium mx-1 whitespace-nowrap;
+  }
+  
+  /* Shiki 主题适配 */
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+  
+  html:not(.dark) .shiki,
+  html:not(.dark) .shiki span {
+    color: var(--shiki-light) !important;
+    background-color: var(--shiki-light-bg) !important;
+    font-style: var(--shiki-light-font-style) !important;
+    font-weight: var(--shiki-light-font-weight) !important;
+    text-decoration: var(--shiki-light-text-decoration) !important;
+  }
+  
+  /* VitePress 特定样式 */
+  .prose-content .vp-adaptive-theme {
+    /* VitePress 自适应主题容器 */
+  }
+  
+  .prose-content .vp-code {
+    /* VitePress 代码块 */
+  }
+  
+  /* VitePress 代码组样式 */
+  .prose-content .vp-code-group {
+    @apply border border-gray-200 dark:border-gray-800 rounded-lg mb-6 overflow-hidden;
+    @apply bg-white dark:bg-gray-900/30;
+  }
+  
+  .prose-content .vp-code-group .tabs {
+    @apply bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800;
+    @apply flex flex-wrap px-0;
+  }
+  
+  .prose-content .vp-code-group .tabs input[type="radio"] {
+    @apply sr-only;
+  }
+  
+  .prose-content .vp-code-group .tabs label {
+    @apply inline-flex items-center px-4 py-3 text-sm font-medium cursor-pointer;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-gray-900 dark:hover:text-gray-200;
+    @apply border-b-2 border-transparent;
+    @apply transition-all duration-200;
+  }
+  
+  .prose-content .vp-code-group .tabs input[type="radio"]:checked + label {
+    @apply text-primary-600 dark:text-primary-400;
+    @apply border-primary-500 dark:border-primary-400;
+  }
+  
+  .prose-content .vp-code-group .blocks {
+    @apply relative;
+  }
+  
+  /* 默认隐藏所有代码块 */
+  .prose-content .vp-code-group .blocks > div {
+    @apply hidden;
+    @apply border-0 rounded-none mb-0;
+  }
+  
+  /* 显示激活的代码块 - 使用 JS 控制的 active 类 */
+  .prose-content .vp-code-group .blocks > div.active {
+    @apply block;
+  }
+  
+  /* 代码组内的代码块样式调整 */
+  .prose-content .vp-code-group .blocks > div {
+    @apply bg-gray-50 dark:bg-gray-950/50;
+  }
+  
+  .prose-content .vp-code-group .blocks > div > pre {
+    @apply rounded-none border-0 bg-transparent;
+  }
+  
+  /* 确保复制按钮在代码组中可见 */
+  .prose-content .vp-code-group .blocks > div .copy {
+    @apply opacity-100;
+  }
+  
+  /* VitePress 自适应主题容器样式调整 */
+  .prose-content .vp-code-group.vp-adaptive-theme .blocks > div {
+    @apply bg-gray-50 dark:bg-gray-950/50 border-0;
+  }
+}
+
+/* VitePress 特定的代码块样式增强 */
+@layer utilities {
+  /* 代码块滚动条样式 */
+  .prose-content div[class*="language-"] pre::-webkit-scrollbar {
+    @apply h-2;
+  }
+  
+  .prose-content div[class*="language-"] pre::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+  
+  .prose-content div[class*="language-"] pre::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+  
+  .prose-content div[class*="language-"] pre::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+  
+  /* 复制按钮伪元素内容 */
+  .prose-content div[class*="language-"] .copy::before {
+    content: "";
+    @apply w-4 h-4 icon-[heroicons--document-duplicate];
+  }
+}

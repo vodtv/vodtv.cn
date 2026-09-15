@@ -1,0 +1,97 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
+  
+  <!-- 模拟二维码图案 -->
+  <!-- 三个定位角 -->
+  <g fill="#000000">
+    <!-- 左上角 -->
+    <rect x="10" y="10" width="30" height="30"/>
+    <rect x="15" y="15" width="20" height="20" fill="#ffffff"/>
+    <rect x="20" y="20" width="10" height="10" fill="#000000"/>
+    
+    <!-- 右上角 -->
+    <rect x="160" y="10" width="30" height="30"/>
+    <rect x="165" y="15" width="20" height="20" fill="#ffffff"/>
+    <rect x="170" y="20" width="10" height="10" fill="#000000"/>
+    
+    <!-- 左下角 -->
+    <rect x="10" y="160" width="30" height="30"/>
+    <rect x="15" y="165" width="20" height="20" fill="#ffffff"/>
+    <rect x="20" y="170" width="10" height="10" fill="#000000"/>
+  </g>
+  
+  <!-- 模拟二维码数据点 -->
+  <g fill="#000000">
+    <!-- 随机分布的数据点 -->
+    <rect x="50" y="20" width="5" height="5"/>
+    <rect x="60" y="20" width="5" height="5"/>
+    <rect x="80" y="20" width="5" height="5"/>
+    <rect x="90" y="20" width="5" height="5"/>
+    <rect x="110" y="20" width="5" height="5"/>
+    <rect x="130" y="20" width="5" height="5"/>
+    
+    <rect x="20" y="50" width="5" height="5"/>
+    <rect x="30" y="50" width="5" height="5"/>
+    <rect x="60" y="50" width="5" height="5"/>
+    <rect x="70" y="50" width="5" height="5"/>
+    <rect x="90" y="50" width="5" height="5"/>
+    <rect x="100" y="50" width="5" height="5"/>
+    <rect x="120" y="50" width="5" height="5"/>
+    <rect x="140" y="50" width="5" height="5"/>
+    <rect x="160" y="50" width="5" height="5"/>
+    <rect x="180" y="50" width="5" height="5"/>
+    
+    <rect x="50" y="70" width="5" height="5"/>
+    <rect x="80" y="70" width="5" height="5"/>
+    <rect x="110" y="70" width="5" height="5"/>
+    <rect x="140" y="70" width="5" height="5"/>
+    <rect x="170" y="70" width="5" height="5"/>
+    
+    <rect x="30" y="90" width="5" height="5"/>
+    <rect x="60" y="90" width="5" height="5"/>
+    <rect x="90" y="90" width="5" height="5"/>
+    <rect x="120" y="90" width="5" height="5"/>
+    <rect x="150" y="90" width="5" height="5"/>
+    <rect x="180" y="90" width="5" height="5"/>
+    
+    <!-- 中心区域 -->
+    <rect x="80" y="80" width="40" height="40" fill="none" stroke="#000000" stroke-width="2"/>
+    <rect x="85" y="85" width="30" height="30" fill="none" stroke="#000000" stroke-width="1"/>
+    
+    <!-- 更多数据点 -->
+    <rect x="20" y="110" width="5" height="5"/>
+    <rect x="40" y="110" width="5" height="5"/>
+    <rect x="130" y="110" width="5" height="5"/>
+    <rect x="150" y="110" width="5" height="5"/>
+    <rect x="170" y="110" width="5" height="5"/>
+    
+    <rect x="50" y="130" width="5" height="5"/>
+    <rect x="70" y="130" width="5" height="5"/>
+    <rect x="130" y="130" width="5" height="5"/>
+    <rect x="160" y="130" width="5" height="5"/>
+    <rect x="180" y="130" width="5" height="5"/>
+    
+    <rect x="50" y="150" width="5" height="5"/>
+    <rect x="80" y="150" width="5" height="5"/>
+    <rect x="110" y="150" width="5" height="5"/>
+    <rect x="140" y="150" width="5" height="5"/>
+    <rect x="170" y="150" width="5" height="5"/>
+    
+    <rect x="60" y="170" width="5" height="5"/>
+    <rect x="90" y="170" width="5" height="5"/>
+    <rect x="120" y="170" width="5" height="5"/>
+    <rect x="150" y="170" width="5" height="5"/>
+    <rect x="180" y="170" width="5" height="5"/>
+  </g>
+  
+  <!-- 微信支付文字 -->
+  <text x="100" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#07c160">
+    微信支付
+  </text>
+  
+  <!-- 占位符说明文字 -->
+  <text x="100" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666666">
+    Demo QR Code
+  </text>
+</svg>

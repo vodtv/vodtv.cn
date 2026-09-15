@@ -1,0 +1,30 @@
+/* VitePress 主题样式 - 基于  Docs 主题 */
+@import "tailwindcss";
+
+/* 导入样式模块 */
+@import "./base.css";
+@import "./components.css";
+@import "./pages/single-page.css";
+@import "./pages/changelog.css";
+@import "./pages/sponsor.css";
+@import "./pages/jump.css";
+@import "./nav-dropdown.css";
+@import "./search.css";
+@import "./docs.css";
+@import "./code.css";
+@import "./theme-toggle.css";
+@import "./mermaid.css";
+
+
+/* 加载 Iconify 插件，完整预编译 heroicons 图标集合 */
+@plugin "@iconify/tailwind4" {
+  prefixes: heroicons;
+}
+
+/* 完整预编译所有 1288 个 heroicons 图标 - 从文件加载 */
+@source "./heroicons-safelist.txt";
+
+
+/* 自动扫描当前包的组件文件 */
+@source "../components/**/*";
+@source "../composables/**/*";

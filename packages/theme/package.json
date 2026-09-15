@@ -1,0 +1,89 @@
+{
+  "name": "@vodtv/theme",
+  "version": "1.1.9",
+  "description": "A modern VitePress theme",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "style": "./dist/esm/vitepress-theme.css",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./config": {
+      "types": "./dist/types/config.d.ts",
+      "import": "./dist/esm/config.js",
+      "require": "./dist/cjs/config.cjs"
+    },
+    "./shims/sanitize-url": {
+      "types": "./dist/types/shims/sanitize-url.d.ts",
+      "import": "./dist/esm/shims/sanitize-url.js",
+      "require": "./dist/cjs/shims/sanitize-url.cjs"
+    },
+    "./shims/dayjs": {
+      "types": "./dist/types/shims/dayjs.d.ts",
+      "import": "./dist/esm/shims/dayjs.js",
+      "require": "./dist/cjs/shims/dayjs.cjs"
+    },
+    "./dist/index.css": "./dist/esm/theme.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "pnpm run clean && vite build && (vue-tsc --declaration --emitDeclarationOnly --outDir dist/types || true)",
+    "build:watch": "vite build --watch",
+    "dev": "pnpm run build:watch",
+    "prepublishOnly": "pnpm run build",
+    "release": "npm publish --access public"
+  },
+  "dependencies": {
+    "@iconify/tailwind4": "^1.0.6",
+    "@vueuse/core": "^11.3.0",
+    "dayjs": "^1.11.20",
+    "minisearch": "^7.1.2",
+    "vitepress-mermaid-renderer": "^1.1.8",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.2",
+    "@iconify-json/tabler": "^1.2.20",
+    "@iconify/tailwind": "^1.2.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/glob": "^9.0.0",
+    "@types/node": "^22.17.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "glob": "^11.0.3",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitepress": "^1.6.4",
+    "vue-tsc": "^3.0.5"
+  },
+  "peerDependencies": {
+    "vitepress": "^1.6.4"
+  },
+  "keywords": [
+    "vitepress",
+    "theme",
+    "vue",
+    "documentation"
+  ],
+  "author": "vodtv",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vodtv/theme"
+  }
+}

@@ -1,0 +1,142 @@
+/**
+ * VitePress 自定义块样式 - 简约设计
+ */
+
+@layer components {
+  /* 自定义块基础样式 - 简约风格 */
+  .prose-content .custom-block {
+    @apply relative mb-4 p-4 rounded-lg border-l-4;
+    @apply bg-gray-50 dark:bg-gray-800/50;
+  }
+
+  .prose-content .custom-block .custom-block-title {
+    @apply font-semibold text-sm mb-2 mt-0 flex items-center gap-2;
+  }
+
+  .prose-content .custom-block .custom-block-title::before {
+    content: "";
+    @apply w-5 h-5 flex-shrink-0;
+  }
+
+  .prose-content .custom-block p {
+    @apply leading-relaxed;
+  }
+
+  .prose-content .custom-block p:last-child {
+    @apply mb-0;
+  }
+
+  /* Note/Info 块 */
+  .prose-content .custom-block.info,
+  .prose-content .custom-block.note {
+    @apply border-l-blue-500 bg-blue-50 dark:bg-blue-950/20;
+  }
+
+  .prose-content .custom-block.info .custom-block-title,
+  .prose-content .custom-block.note .custom-block-title {
+    @apply text-blue-700 dark:text-blue-300;
+  }
+
+  .prose-content .custom-block.info .custom-block-title::before,
+  .prose-content .custom-block.note .custom-block-title::before {
+    @apply icon-[heroicons--information-circle] text-blue-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.info p,
+  .prose-content .custom-block.note p {
+    @apply text-blue-800 dark:text-blue-200;
+  }
+
+  /* Tip 块 */
+  .prose-content .custom-block.tip {
+    @apply border-l-green-500 bg-green-50 dark:bg-green-950/20;
+  }
+
+  .prose-content .custom-block.tip .custom-block-title {
+    @apply text-green-700 dark:text-green-300;
+  }
+
+  .prose-content .custom-block.tip .custom-block-title::before {
+    @apply icon-[heroicons--light-bulb] text-green-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.tip p {
+    @apply text-green-800 dark:text-green-200;
+  }
+
+  /* Important 块 */
+  .prose-content .custom-block.important {
+    @apply border-l-purple-500 bg-purple-50 dark:bg-purple-950/20;
+  }
+
+  .prose-content .custom-block.important .custom-block-title {
+    @apply text-purple-700 dark:text-purple-300;
+  }
+
+  .prose-content .custom-block.important .custom-block-title::before {
+    @apply icon-[heroicons--star] text-purple-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.important p {
+    @apply text-purple-800 dark:text-purple-200;
+  }
+
+  /* Warning 块 */
+  .prose-content .custom-block.warning {
+    @apply border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20;
+  }
+
+  .prose-content .custom-block.warning .custom-block-title {
+    @apply text-yellow-700 dark:text-yellow-300;
+  }
+
+  .prose-content .custom-block.warning .custom-block-title::before {
+    @apply icon-[heroicons--exclamation-triangle] text-yellow-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.warning p {
+    @apply text-yellow-800 dark:text-yellow-200;
+  }
+
+  /* Danger/Caution 块 */
+  .prose-content .custom-block.danger,
+  .prose-content .custom-block.caution {
+    @apply border-l-red-500 bg-red-50 dark:bg-red-950/20;
+  }
+
+  .prose-content .custom-block.danger .custom-block-title,
+  .prose-content .custom-block.caution .custom-block-title {
+    @apply text-red-700 dark:text-red-300;
+  }
+
+  .prose-content .custom-block.danger .custom-block-title::before {
+    @apply icon-[heroicons--x-circle] text-red-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.caution .custom-block-title::before {
+    @apply icon-[heroicons--shield-exclamation] text-red-500 w-5 h-5;
+  }
+
+  .prose-content .custom-block.danger p,
+  .prose-content .custom-block.caution p {
+    @apply text-red-800 dark:text-red-200;
+  }
+
+  /* Details 块 */
+  .prose-content .custom-block.details {
+    @apply border-l-gray-400 bg-gray-50 dark:bg-gray-800/30;
+  }
+
+  .prose-content .custom-block.details .custom-block-title {
+    @apply text-gray-700 dark:text-gray-300 cursor-pointer;
+    @apply hover:text-gray-900 dark:hover:text-gray-100;
+  }
+
+  .prose-content .custom-block.details .custom-block-title::before {
+    @apply icon-[heroicons--document-text] text-gray-400 w-5 h-5;
+  }
+
+  .prose-content .custom-block.details p {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+}

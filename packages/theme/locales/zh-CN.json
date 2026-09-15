@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "抱歉，您访问的页面不存在。",
+    "backToHome": "返回首页",
+    "previousPage": "返回上一页"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "选择支付方式",
+    "recentSupporters": "最近的支持者",
+    "totalSupporters": "支持者",
+    "totalAmount": "总金额"
+  },
+  "search": {
+    "button": {
+      "buttonText": "搜索",
+      "buttonAriaLabel": "搜索"
+    },
+    "modal": {
+      "displayDetails": "显示详细列表",
+      "resetButtonTitle": "重置搜索",
+      "backButtonTitle": "关闭搜索",
+      "noResultsText": "没有找到结果",
+      "footer": {
+        "selectText": "选择",
+        "selectKeyAriaLabel": "回车",
+        "navigateText": "导航",
+        "navigateUpKeyAriaLabel": "上箭头",
+        "navigateDownKeyAriaLabel": "下箭头",
+        "closeText": "关闭",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "目录",
+    "mobileTitle": "目录",
+    "docNavTitle": "文档导航"
+  },
+  "docFooter": {
+    "editLinkText": "编辑此页",
+    "lastUpdatedText": "最后更新",
+    "prevPageText": "上一篇",
+    "nextPageText": "下一篇"
+  },
+  "readingTime": {
+    "time": "阅读时间",
+    "words": "字",
+    "minute": "1 分钟",
+    "minutes": "{n} 分钟"
+  },
+  "ui": {
+    "copyCode": "复制",
+    "switchTheme": {
+      "dark": "切换到暗色模式",
+      "light": "切换到亮色模式"
+    },
+    "language": {
+      "switchLanguage": "切换语言",
+      "ariaLabel": "语言"
+    }
+  },
+  "jump": {
+    "redirecting": "正在跳转到首选语言...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "或选择语言",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "秒"
+  }
+}

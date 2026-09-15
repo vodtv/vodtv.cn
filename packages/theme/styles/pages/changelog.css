@@ -1,0 +1,44 @@
+/**
+ * 更新日志页面样式
+ */
+
+.changelog-container {
+  @apply min-h-screen w-full flex flex-col;
+}
+
+/* 主内容区域 */
+.changelog-main {
+  @apply flex-1;
+}
+
+.changelog-main-container {
+  @apply container mx-auto px-6 py-12 max-w-5xl;
+}
+
+/* 时间线样式 */
+.changelog-content {
+  @apply relative pl-8 md:pl-12;
+}
+
+.changelog-content::before {
+  content: '';
+  @apply absolute left-1 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-primary-300 to-transparent;
+}
+
+/* 移除 prose-content 的 h2 上边框 */
+.changelog-content h2 {
+  @apply border-t-0 pt-0 flex items-center;
+}
+
+/* 版本号时间线标记 */
+.changelog-content h2::before {
+  content: '';
+  @apply absolute -left-4 md:-left-12.5 w-4 h-4 bg-primary-500 rounded-full;
+  @apply ring-4 ring-white dark:ring-gray-900;
+}
+
+/* 新版本标记 */
+.changelog-content h2:first-of-type::after {
+  content: 'NEW';
+  @apply ml-3 px-2 py-1 text-xs font-bold text-white bg-green-500 rounded-full animate-pulse;
+}

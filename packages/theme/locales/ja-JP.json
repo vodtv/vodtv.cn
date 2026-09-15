@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "申し訳ございませんが、お探しのページが見つかりません。",
+    "backToHome": "ホームに戻る",
+    "previousPage": "戻る"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "支払い方法を選択",
+    "recentSupporters": "最近のサポーター",
+    "totalSupporters": "サポーター",
+    "totalAmount": "総額"
+  },
+  "search": {
+    "button": {
+      "buttonText": "検索",
+      "buttonAriaLabel": "検索"
+    },
+    "modal": {
+      "displayDetails": "詳細リストを表示",
+      "resetButtonTitle": "検索をリセット",
+      "backButtonTitle": "検索を閉じる",
+      "noResultsText": "結果が見つかりません",
+      "footer": {
+        "selectText": "選択",
+        "selectKeyAriaLabel": "Enter",
+        "navigateText": "ナビゲート",
+        "navigateUpKeyAriaLabel": "上矢印",
+        "navigateDownKeyAriaLabel": "下矢印",
+        "closeText": "閉じる",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "目次",
+    "mobileTitle": "目次",
+    "docNavTitle": "ドキュメントナビゲーション"
+  },
+  "docFooter": {
+    "editLinkText": "このページを編集",
+    "lastUpdatedText": "最終更新",
+    "prevPageText": "前へ",
+    "nextPageText": "次へ"
+  },
+  "readingTime": {
+    "time": "読了時間",
+    "words": "文字",
+    "minute": "1 分",
+    "minutes": "{n} 分"
+  },
+  "ui": {
+    "copyCode": "コピー",
+    "switchTheme": {
+      "dark": "ダークモードに切り替え",
+      "light": "ライトモードに切り替え"
+    },
+    "language": {
+      "switchLanguage": "言語を切り替え",
+      "ariaLabel": "言語"
+    }
+  },
+  "jump": {
+    "redirecting": "希望の言語にリダイレクトしています...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "または言語を選択",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "秒"
+  }
+}

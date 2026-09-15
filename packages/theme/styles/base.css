@@ -1,0 +1,158 @@
+/**
+ * 基础样式和变量定义
+ */
+
+
+/* 内置工具类定义 - 修复 TailwindCSS 4.0 group 问题 */
+@utility group {
+  &:hover .group-hover\: *,
+  &:focus .group-focus\: *,
+  &:active .group-active\: * {
+    @slot;
+  }
+}
+
+/* 自定义深色模式变体 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 主题变量定义 */
+@theme {
+  /* 灰色调色板 */
+  --color-gray-50: var(--color-zinc-50);
+  --color-gray-100: var(--color-zinc-100);
+  --color-gray-200: var(--color-zinc-200);
+  --color-gray-300: var(--color-zinc-300);
+  --color-gray-400: var(--color-zinc-400);
+  --color-gray-500: var(--color-zinc-500);
+  --color-gray-600: var(--color-zinc-600);
+  --color-gray-700: var(--color-zinc-700);
+  --color-gray-800: var(--color-zinc-800);
+  --color-gray-900: var(--color-zinc-900);
+  --color-gray-950: var(--color-zinc-950);
+
+  /* 绿色主题调色板 */
+  --color-primary-50: var(--color-emerald-50);
+  --color-primary-100: var(--color-emerald-100);
+  --color-primary-200: var(--color-emerald-200);
+  --color-primary-300: var(--color-emerald-300);
+  --color-primary-400: var(--color-emerald-400);
+  --color-primary-500: var(--color-emerald-500);
+  --color-primary-600: var(--color-emerald-600);
+  --color-primary-700: var(--color-emerald-700);
+  --color-primary-800: var(--color-emerald-800);
+  --color-primary-900: var(--color-emerald-900);
+  --color-primary-950: var(--color-emerald-850);
+
+  /* 自定义断点 */
+  --breakpoint-3xl: 1920px;
+
+  /* 自定义字体 */
+  --font-family-display: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* 自定义动画变量 */
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-slide-in: slide-in 0.7s ease-out forwards;
+  --animate-scale-in: scale-in 0.3s ease-out forwards;
+  
+  /* 动画时间函数 */
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+
+  /* 动画关键帧定义 */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-in {
+    from { transform: translateY(1rem); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes scale-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes doc-nav-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* 自定义变体 */
+@custom-variant data-theme-dark (&:where([data-theme="dark"] *));
+
+/* 响应式设计辅助 */
+@variant supports-backdrop-blur {
+  @supports (backdrop-filter: blur(0)) {
+    @slot;
+  }
+}
+
+/* 全局基础样式 */
+@layer base {
+  /* HTML 根元素样式 */
+  html {
+    @apply antialiased scroll-smooth bg-white text-gray-900 font-sans leading-relaxed;
+  }
+
+  html.dark {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  /* 选中文本样式 */
+  ::selection {
+    @apply bg-primary-100 text-primary-900;
+  }
+  
+  html.dark ::selection {
+    @apply bg-primary-900/50 text-primary-100;
+  }
+  
+  /* 焦点可见性 */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500;
+  }
+  
+  /* 滚动条样式 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.400') theme('colors.gray.100');
+  }
+  
+  html.dark * {
+    scrollbar-color: theme('colors.gray.600') theme('colors.gray.900');
+  }
+  
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  
+  html.dark *::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-full;
+  }
+  
+  html.dark *::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "Sorry, the page you are looking for does not exist.",
+    "backToHome": "Back to Home",
+    "previousPage": "Go Back"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "Select Payment Method",
+    "recentSupporters": "Recent Supporters",
+    "totalSupporters": "Supporters",
+    "totalAmount": "Total Amount"
+  },
+  "search": {
+    "button": {
+      "buttonText": "Search",
+      "buttonAriaLabel": "Search"
+    },
+    "modal": {
+      "displayDetails": "Display detailed list",
+      "resetButtonTitle": "Reset search",
+      "backButtonTitle": "Close search",
+      "noResultsText": "No results found",
+      "footer": {
+        "selectText": "Select",
+        "selectKeyAriaLabel": "Enter",
+        "navigateText": "Navigate",
+        "navigateUpKeyAriaLabel": "Up arrow",
+        "navigateDownKeyAriaLabel": "Down arrow",
+        "closeText": "Close",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "Menu",
+    "mobileTitle": "Menu",
+    "docNavTitle": "Documentation Navigation"
+  },
+  "docFooter": {
+    "editLinkText": "Edit this page",
+    "lastUpdatedText": "Last updated",
+    "prevPageText": "Previous",
+    "nextPageText": "Next"
+  },
+  "readingTime": {
+    "time": "Reading Time",
+    "words": "words",
+    "minute": "1 minute",
+    "minutes": "{n} minutes"
+  },
+  "ui": {
+    "copyCode": "Copy",
+    "switchTheme": {
+      "dark": "Switch to dark mode",
+      "light": "Switch to light mode"
+    },
+    "language": {
+      "switchLanguage": "Switch language",
+      "ariaLabel": "language"
+    }
+  },
+  "jump": {
+    "redirecting": "Redirecting to preferred language...",
+    "redirectingSecondary": "正在跳转到首选语言...",
+    "orChooseLanguage": "Or choose language",
+    "orChooseLanguageSecondary": "或选择语言",
+    "countdown": "s"
+  }
+}

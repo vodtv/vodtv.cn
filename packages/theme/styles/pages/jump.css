@@ -1,0 +1,26 @@
+/* Jump Layout Styles */
+.jump-layout {
+  /* 确保全屏显示 */
+  min-height: 100vh;
+  
+  /* 自定义滚动条（如果需要） */
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.primary.300') transparent;
+}
+
+.jump-layout::-webkit-scrollbar {
+  width: 6px;
+}
+
+.jump-layout::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.jump-layout::-webkit-scrollbar-thumb {
+  background-color: theme('colors.primary.300');
+  border-radius: 3px;
+}
+
+.jump-layout::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.primary.400');
+}

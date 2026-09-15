@@ -1,0 +1,66 @@
+/**
+ * 自定义搜索组件样式
+ */
+
+@layer components {
+  /* 搜索弹窗动画 */
+  .search-modal {
+    animation: search-fade-in 0.2s ease-out;
+  }
+
+  .search-container {
+    animation: search-slide-up 0.2s ease-out;
+  }
+
+  /* 键盘快捷键样式 */
+  .search-footer kbd {
+    @apply inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 text-xs font-mono bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-600;
+  }
+  
+  /* 搜索按钮的快捷键样式 */
+  .search-kbd {
+    @apply inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1 text-xs font-mono bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600;
+  }
+  
+}
+
+@layer utilities {
+  /* 搜索动画关键帧 */
+  @keyframes search-fade-in {
+    from { 
+      opacity: 0; 
+    }
+    to { 
+      opacity: 1; 
+    }
+  }
+
+  @keyframes search-slide-up {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 滚动条样式 */
+  .search-results::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .search-results::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .search-results::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  .search-results::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+
+}

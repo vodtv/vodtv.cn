@@ -1,0 +1,91 @@
+/**
+ * 单页文档样式
+ */
+
+.page-container {
+  @apply w-full min-h-screen flex flex-col;
+}
+
+.page-main {
+  @apply flex-1;
+}
+
+.page-content {
+  @apply container mx-auto px-6 py-12 max-w-6xl;
+}
+
+.page-content h1 {
+  @apply text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-gray-100;
+}
+
+.page-content h2 {
+  @apply text-2xl font-semibold mt-6 mb-3 text-gray-800 dark:text-gray-200;
+}
+
+.page-content h3 {
+  @apply text-xl font-medium mt-4 mb-2 text-gray-700 dark:text-gray-300;
+}
+
+.page-content h4 {
+  @apply text-lg font-medium mt-3 mb-2 text-gray-600 dark:text-gray-400;
+}
+
+.page-content p {
+  @apply leading-relaxed mb-4 text-gray-600 dark:text-gray-400;
+}
+
+.page-content ul, .page-content ol {
+  @apply my-4 ml-6 text-gray-600 dark:text-gray-400;
+}
+
+.page-content li {
+  @apply mb-2;
+}
+
+.page-content blockquote {
+  @apply border-l-4 border-primary-500 pl-4 italic my-4 text-gray-600 dark:text-gray-400;
+}
+
+.page-content code {
+  @apply bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.page-content pre {
+  @apply bg-gray-900 dark:bg-gray-950 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+.page-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.page-content a {
+  @apply text-primary-600 dark:text-primary-400 hover:underline;
+}
+
+.page-content img {
+  @apply rounded-lg shadow-md my-6 max-w-full h-auto;
+}
+
+.page-content table {
+  @apply w-full my-6 overflow-x-auto block;
+}
+
+.page-content th {
+  @apply text-left font-semibold border-b-2 border-gray-300 dark:border-gray-600 pb-2 px-4;
+}
+
+.page-content td {
+  @apply border-b border-gray-200 dark:border-gray-700 py-2 px-4;
+}
+
+.page-content hr {
+  @apply my-8 border-gray-300 dark:border-gray-600;
+}
+
+.page-content strong {
+  @apply font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.page-content em {
+  @apply italic;
+}

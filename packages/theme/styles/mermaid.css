@@ -1,0 +1,54 @@
+/* Dux VitePress Theme - Mermaid 样式优化 */
+:where(.mermaid, .dux-mermaid) {
+  /* 容器样式 */
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgb(248 250 252 / 0.5);
+  border: 1px solid rgb(226 232 240);
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+
+.dark :where(.mermaid, .dux-mermaid) {
+  background: rgb(15 23 42 / 0.5);
+  border-color: rgb(51 65 85);
+}
+
+/* 响应式适配 */
+:where(.mermaid, .dux-mermaid) svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 字体优化 */
+:where(.mermaid, .dux-mermaid) .node text,
+:where(.mermaid, .dux-mermaid) .edge text,
+:where(.mermaid, .dux-mermaid) .cluster text {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.875rem;
+}
+
+/* 暗黑模式适配 */
+.dark :where(.mermaid, .dux-mermaid) .node rect,
+.dark :where(.mermaid, .dux-mermaid) .node circle,
+.dark :where(.mermaid, .dux-mermaid) .node polygon {
+  fill: rgb(30 41 59) !important;
+  stroke: rgb(71 85 105) !important;
+}
+
+.dark :where(.mermaid, .dux-mermaid) .node text,
+.dark :where(.mermaid, .dux-mermaid) .edge text {
+  fill: rgb(226 232 240) !important;
+}
+
+.dark :where(.mermaid, .dux-mermaid) .edge path {
+  stroke: rgb(100 116 139) !important;
+}
+
+/* 打印优化 */
+@media print {
+  :where(.mermaid, .dux-mermaid) {
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+  }
+}

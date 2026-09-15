@@ -1,0 +1,68 @@
+/**
+ * View Transitions API 支持的主题切换动画
+ */
+
+@layer utilities {
+  /* View Transitions 动画 */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 9999;
+  }
+
+  .dark::view-transition-old(root) {
+    z-index: 9999;
+  }
+
+  .dark::view-transition-new(root) {
+    z-index: 1;
+  }
+
+  /* 主题切换按钮动画 */
+  .theme-toggle {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .theme-toggle .sun-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    transition: all 0.3s ease;
+  }
+
+  .theme-toggle .moon-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg) scale(0);
+    transition: all 0.3s ease;
+  }
+
+  .dark .theme-toggle .sun-icon {
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0);
+  }
+
+  .dark .theme-toggle .moon-icon {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+
+  /* 悬浮效果 */
+  .theme-toggle:hover {
+    background-color: rgb(0 0 0 / 0.05);
+  }
+
+  .dark .theme-toggle:hover {
+    background-color: rgb(255 255 255 / 0.05);
+  }
+}

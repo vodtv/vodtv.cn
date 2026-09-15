@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "Извините, страница, которую вы ищете, не существует.",
+    "backToHome": "Вернуться на главную",
+    "previousPage": "Назад"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "Выбрать способ оплаты",
+    "recentSupporters": "Недавние спонсоры",
+    "totalSupporters": "Спонсоры",
+    "totalAmount": "Общая сумма"
+  },
+  "search": {
+    "button": {
+      "buttonText": "Поиск",
+      "buttonAriaLabel": "Поиск"
+    },
+    "modal": {
+      "displayDetails": "Показать подробный список",
+      "resetButtonTitle": "Сбросить поиск",
+      "backButtonTitle": "Закрыть поиск",
+      "noResultsText": "Результаты не найдены",
+      "footer": {
+        "selectText": "Выбрать",
+        "selectKeyAriaLabel": "Enter",
+        "navigateText": "Навигация",
+        "navigateUpKeyAriaLabel": "Стрелка вверх",
+        "navigateDownKeyAriaLabel": "Стрелка вниз",
+        "closeText": "Закрыть",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "Меню",
+    "mobileTitle": "Меню",
+    "docNavTitle": "Навигация по документации"
+  },
+  "docFooter": {
+    "editLinkText": "Редактировать эту страницу",
+    "lastUpdatedText": "Последнее обновление",
+    "prevPageText": "Предыдущая",
+    "nextPageText": "Следующая"
+  },
+  "ui": {
+    "copyCode": "Копировать",
+    "switchTheme": {
+      "dark": "Переключиться на темный режим",
+      "light": "Переключиться на светлый режим"
+    },
+    "language": {
+      "switchLanguage": "Переключить язык",
+      "ariaLabel": "язык"
+    }
+  },
+  "readingTime": {
+    "time": "Время чтения",
+    "words": "слов",
+    "minute": "1 минута",
+    "minutes": "{n} минут"
+  },
+  "jump": {
+    "redirecting": "Перенаправление на предпочитаемый язык...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "Или выбрать язык",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "с"
+  }
+}

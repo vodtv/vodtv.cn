@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "Désolé, la page que vous recherchez n'existe pas.",
+    "backToHome": "Retour à l'accueil",
+    "previousPage": "Retour"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "Sélectionner le mode de paiement",
+    "recentSupporters": "Supporters récents",
+    "totalSupporters": "Supporters",
+    "totalAmount": "Montant total"
+  },
+  "search": {
+    "button": {
+      "buttonText": "Rechercher",
+      "buttonAriaLabel": "Rechercher"
+    },
+    "modal": {
+      "displayDetails": "Afficher la liste détaillée",
+      "resetButtonTitle": "Réinitialiser la recherche",
+      "backButtonTitle": "Fermer la recherche",
+      "noResultsText": "Aucun résultat trouvé",
+      "footer": {
+        "selectText": "Sélectionner",
+        "selectKeyAriaLabel": "Entrée",
+        "navigateText": "Naviguer",
+        "navigateUpKeyAriaLabel": "Flèche vers le haut",
+        "navigateDownKeyAriaLabel": "Flèche vers le bas",
+        "closeText": "Fermer",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "Menu",
+    "mobileTitle": "Menu",
+    "docNavTitle": "Navigation de la documentation"
+  },
+  "docFooter": {
+    "editLinkText": "Modifier cette page",
+    "lastUpdatedText": "Dernière mise à jour",
+    "prevPageText": "Précédent",
+    "nextPageText": "Suivant"
+  },
+  "ui": {
+    "copyCode": "Copier",
+    "switchTheme": {
+      "dark": "Passer au mode sombre",
+      "light": "Passer au mode clair"
+    },
+    "language": {
+      "switchLanguage": "Changer de langue",
+      "ariaLabel": "langue"
+    }
+  },
+  "readingTime": {
+    "time": "Temps de lecture",
+    "words": "mots",
+    "minute": "1 minute",
+    "minutes": "{n} minutes"
+  },
+  "jump": {
+    "redirecting": "Redirection vers la langue préférée...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "Ou choisir la langue",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "s"
+  }
+}

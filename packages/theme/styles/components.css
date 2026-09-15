@@ -1,0 +1,134 @@
+/**
+ * 组件样式定义
+ */
+
+/* 导入页面Hero组件样式 */
+@import './components/page-hero.css';
+
+@layer components {
+  /* 徽章组件 */
+  .badge-primary {
+    @apply inline-flex items-center px-4 py-2 rounded-full backdrop-blur-sm bg-primary-100/50 dark:bg-primary-900/50 border border-primary-200/30 dark:border-primary-700/30;
+  }
+  
+  /* 按钮组件 */
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 px-8 py-4 bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 px-8 py-4 bg-white/70 hover:bg-white dark:bg-gray-800/70 dark:hover:bg-gray-700 border border-gray-200/50 dark:border-gray-600/50 text-gray-700 dark:text-gray-200 shadow-md hover:shadow-lg backdrop-blur-sm;
+  }
+  
+  .btn-ghost {
+    @apply inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 h-9 px-3 border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800;
+  }
+  
+  /* 卡片组件 */
+  .card-glass {
+    @apply relative backdrop-blur-sm border rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/70 dark:bg-gray-800/70 border-white/20 dark:border-gray-700/20;
+  }
+  
+  .card-hero {
+    @apply relative backdrop-blur-sm border rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 p-8 bg-white/60 dark:bg-gray-800/60 border-white/20 dark:border-gray-700/20;
+  }
+  
+  /* 图标容器 */
+  .icon-gradient {
+    @apply flex items-center justify-center shadow-lg bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl text-white;
+  }
+  
+  /* 文本样式 */
+  .text-primary-gradient {
+    @apply bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 dark:from-primary-400 dark:via-primary-300 dark:to-primary-200 bg-clip-text text-transparent;
+  }
+  
+  .text-hero-title {
+    @apply text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+  }
+  
+  .text-section-title {
+    @apply text-4xl md:text-5xl font-bold text-gray-900 dark:text-white;
+  }
+  
+  .text-card-title {
+    @apply text-xl font-bold text-gray-900 dark:text-white;
+  }
+  
+  /* 容器布局 */
+  .container-section {
+    @apply relative container mx-auto px-6;
+  }
+  
+  .container {
+    @apply w-full max-w-screen-2xl mx-auto;
+  }
+  
+  .section-padding {
+    @apply py-20 lg:py-32;
+  }
+  
+  /* 输入框 */
+  .input {
+    @apply inline-flex h-9 w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1 text-sm transition-colors placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
+
+/* 语义化颜色工具类 */
+.text-foreground {
+  color: hsl(var(--foreground));
+}
+
+.text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+
+.text-muted {
+  @apply text-gray-600 dark:text-gray-300 leading-relaxed;
+}
+
+.bg-accent {
+  background-color: hsl(var(--accent));
+}
+
+.border-border {
+  border-color: hsl(var(--border));
+}
+
+/* 动画效果工具类 */
+.fade-in {
+  opacity: 0;
+  animation: var(--animate-fade-in);
+}
+
+.scale-in {
+  transform: scale(0.95);
+  opacity: 0;
+  animation: var(--animate-scale-in);
+}
+
+.slide-in {
+  transform: translateY(1rem);
+  opacity: 0;
+  animation: var(--animate-slide-in);
+}
+
+/* z-index 工具类 */
+@layer utilities {
+  .z-1 {
+    z-index: 1;
+  }
+
+  .z-10 {
+    z-index: 10;
+  }
+
+  .z-50 {
+    z-index: 50;
+  }
+}
+
+/* 文档导航动画 */
+.doc-nav {
+  animation: doc-nav-fade-in 0.3s ease-out;
+}

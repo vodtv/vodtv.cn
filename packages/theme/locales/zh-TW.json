@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "抱歉，您訪問的頁面不存在。",
+    "backToHome": "返回首頁",
+    "previousPage": "返回上一頁"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "選擇支付方式",
+    "recentSupporters": "最近的支持者",
+    "totalSupporters": "支持者",
+    "totalAmount": "總金額"
+  },
+  "search": {
+    "button": {
+      "buttonText": "搜尋",
+      "buttonAriaLabel": "搜尋"
+    },
+    "modal": {
+      "displayDetails": "顯示詳細清單",
+      "resetButtonTitle": "重置搜尋",
+      "backButtonTitle": "關閉搜尋",
+      "noResultsText": "沒有找到結果",
+      "footer": {
+        "selectText": "選擇",
+        "selectKeyAriaLabel": "回車",
+        "navigateText": "導航",
+        "navigateUpKeyAriaLabel": "上箭頭",
+        "navigateDownKeyAriaLabel": "下箭頭",
+        "closeText": "關閉",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "目錄",
+    "mobileTitle": "目錄",
+    "docNavTitle": "文檔導航"
+  },
+  "docFooter": {
+    "editLinkText": "編輯此頁",
+    "lastUpdatedText": "最後更新",
+    "prevPageText": "上一篇",
+    "nextPageText": "下一篇"
+  },
+  "readingTime": {
+    "time": "閱讀時間",
+    "words": "字",
+    "minute": "1 分鐘",
+    "minutes": "{n} 分鐘"
+  },
+  "ui": {
+    "copyCode": "複製",
+    "switchTheme": {
+      "dark": "切換到暗色模式",
+      "light": "切換到亮色模式"
+    },
+    "language": {
+      "switchLanguage": "切換語言",
+      "ariaLabel": "語言"
+    }
+  },
+  "jump": {
+    "redirecting": "正在跳轉到首選語言...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "或選擇語言",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "秒"
+  }
+}

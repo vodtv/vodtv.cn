@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "404",
+    "content": "Entschuldigung, die Seite, die Sie suchen, existiert nicht.",
+    "backToHome": "Zur Startseite",
+    "previousPage": "Zurück"
+  },
+  "sponsor": {
+    "selectPaymentMethod": "Zahlungsart auswählen",
+    "recentSupporters": "Neueste Unterstützer",
+    "totalSupporters": "Unterstützer",
+    "totalAmount": "Gesamtbetrag"
+  },
+  "search": {
+    "button": {
+      "buttonText": "Suchen",
+      "buttonAriaLabel": "Suchen"
+    },
+    "modal": {
+      "displayDetails": "Detaillierte Liste anzeigen",
+      "resetButtonTitle": "Suche zurücksetzen",
+      "backButtonTitle": "Suche schließen",
+      "noResultsText": "Keine Ergebnisse gefunden",
+      "footer": {
+        "selectText": "Auswählen",
+        "selectKeyAriaLabel": "Enter",
+        "navigateText": "Navigieren",
+        "navigateUpKeyAriaLabel": "Pfeil nach oben",
+        "navigateDownKeyAriaLabel": "Pfeil nach unten",
+        "closeText": "Schließen",
+        "closeKeyAriaLabel": "ESC"
+      }
+    }
+  },
+  "sidebar": {
+    "toggleButtonText": "Menü",
+    "mobileTitle": "Menü",
+    "docNavTitle": "Dokumentations-Navigation"
+  },
+  "docFooter": {
+    "editLinkText": "Diese Seite bearbeiten",
+    "lastUpdatedText": "Zuletzt aktualisiert",
+    "prevPageText": "Vorherige",
+    "nextPageText": "Nächste"
+  },
+  "ui": {
+    "copyCode": "Kopieren",
+    "switchTheme": {
+      "dark": "Zum dunklen Modus wechseln",
+      "light": "Zum hellen Modus wechseln"
+    },
+    "language": {
+      "switchLanguage": "Sprache wechseln",
+      "ariaLabel": "Sprache"
+    }
+  },
+  "readingTime": {
+    "time": "Lesezeit",
+    "words": "Wörter",
+    "minute": "1 Minute",
+    "minutes": "{n} Minuten"
+  },
+  "jump": {
+    "redirecting": "Weiterleitung zur bevorzugten Sprache...",
+    "redirectingSecondary": "Redirecting to preferred language...",
+    "orChooseLanguage": "Oder Sprache wählen",
+    "orChooseLanguageSecondary": "Or choose language",
+    "countdown": "s"
+  }
+}

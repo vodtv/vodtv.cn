@@ -1,0 +1,226 @@
+/**
+ * 捐助页面样式
+ */
+
+.sponsor-container {
+  @apply min-h-screen w-full flex flex-col;
+}
+
+/* 主内容区域 */
+.sponsor-main {
+  @apply flex-1;
+}
+
+.sponsor-main-container {
+  @apply container mx-auto px-6 py-12 max-w-7xl;
+}
+
+/* 捐助网格布局 */
+.sponsor-grid {
+  @apply grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12;
+}
+
+/* 捐助表单 */
+.sponsor-form {
+  @apply xl:col-span-2 space-y-8;
+}
+
+/* 捐助卡片 */
+.sponsor-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700;
+}
+
+.sponsor-card-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white mb-6;
+}
+
+/* 金额选择网格 */
+.sponsor-amounts-grid {
+  @apply grid grid-cols-3 gap-3 mb-6;
+}
+
+.sponsor-amount-btn {
+  @apply px-4 py-3 text-center font-semibold rounded-xl transition-all duration-200 border-2;
+}
+
+.sponsor-amount-btn-active {
+  @apply bg-primary-500 text-white border-primary-500 shadow-lg transform scale-105;
+}
+
+.sponsor-amount-btn-inactive {
+  @apply bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600;
+}
+
+/* 自定义金额 */
+.sponsor-custom-amount {
+  @apply relative flex items-center;
+}
+
+.sponsor-custom-amount-symbol {
+  @apply absolute left-3 text-gray-500 dark:text-gray-400 font-semibold;
+}
+
+.sponsor-custom-amount-input {
+  @apply w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+/* 支付方式 */
+.sponsor-payment-methods {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-3 mb-6;
+}
+
+.sponsor-payment-btn {
+  @apply flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200;
+}
+
+.sponsor-payment-icon {
+  @apply h-5 w-5;
+}
+
+.sponsor-payment-qrcode {
+  @apply mt-6 text-center;
+}
+
+.sponsor-payment-qrcode-wrapper {
+  @apply bg-gray-50 dark:bg-gray-700 rounded-xl p-6;
+}
+
+.sponsor-payment-qrcode-img {
+  @apply w-48 h-48 mx-auto mb-4 rounded-lg shadow-md;
+}
+
+.sponsor-payment-qrcode-text {
+  @apply text-sm font-medium text-gray-600 dark:text-gray-400;
+}
+
+.sponsor-payment-link {
+  @apply inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-colors;
+}
+
+.sponsor-payment-description {
+  @apply text-sm text-gray-600 dark:text-gray-400 mt-3;
+}
+
+/* 留言文本域 */
+.sponsor-message-textarea {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+/* 侧边栏 */
+.sponsor-sidebar {
+  @apply xl:col-span-1;
+}
+
+.sponsor-sidebar-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 sticky top-24;
+}
+
+.sponsor-sidebar-title {
+  @apply flex items-center gap-3 text-lg font-bold text-gray-900 dark:text-white mb-6;
+}
+
+.sponsor-sidebar-icon {
+  @apply h-5 w-5 text-primary-500;
+}
+
+/* 支持者列表 */
+.sponsor-list {
+  @apply mb-8;
+}
+
+.sponsor-list-item {
+  @apply flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors;
+}
+
+.sponsor-avatar {
+  @apply w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0;
+}
+
+.sponsor-info {
+  @apply flex-1 min-w-0;
+}
+
+.sponsor-info-header {
+  @apply flex items-center justify-between mb-1;
+}
+
+.sponsor-info-name {
+  @apply font-medium text-gray-900 dark:text-white;
+}
+
+.sponsor-info-amount {
+  @apply text-primary-600 dark:text-primary-400 font-bold;
+}
+
+.sponsor-info-message {
+  @apply text-sm text-gray-600 dark:text-gray-400 mb-1 line-clamp-2;
+}
+
+.sponsor-info-date {
+  @apply text-xs text-gray-500 dark:text-gray-500;
+}
+
+/* 统计信息 */
+.sponsor-stats {
+  @apply border-t border-gray-200 dark:border-gray-700 pt-6;
+}
+
+.sponsor-stats-grid {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.sponsor-stats-value {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+
+.sponsor-stats-label {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+/* 说明内容 */
+.sponsor-content {
+  @apply max-w-4xl mx-auto mb-12;
+}
+
+/* 感谢信息 */
+.sponsor-thanks {
+  @apply text-center bg-gradient-to-r from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-12;
+}
+
+.sponsor-thanks-icon {
+  @apply h-16 w-16 mx-auto mb-6 text-primary-500;
+}
+
+.sponsor-thanks-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-4;
+}
+
+.sponsor-thanks-text {
+  @apply text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto;
+}
+
+/* 响应式调整 */
+@media (max-width: 1279px) {
+  .sponsor-grid {
+    @apply grid-cols-1;
+  }
+}
+
+/* 动画效果 */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 工具类 */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

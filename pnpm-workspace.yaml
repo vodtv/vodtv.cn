@@ -1,0 +1,8 @@
+packages:
+  - packages/*
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  vue-demi: true
+overrides:
+  '@vodtv/theme': link:packages/theme
