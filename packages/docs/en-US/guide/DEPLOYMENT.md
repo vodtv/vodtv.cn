@@ -1,38 +1,38 @@
-## 🚀 部署
+## 🚀 Deployment
 
-### 💻 最低配置要求
+### 💻 Minimum System Requirements
 
-为确保流畅运行，建议服务器满足以下最低配置：
+To ensure smooth operation, your server should meet the following minimum specifications:
 
-#### Docker 自托管部署
-- **CPU**: 2 核心（推荐 4 核心）
-- **内存**: 2GB RAM（推荐 4GB）
-- **存储**: 10GB 可用空间（推荐 20GB，用于视频缓存和数据库）
-- **网络**: 10Mbps 上行带宽（推荐 100Mbps）
+#### Docker Self‑Hosted Deployment
+- **CPU**: 2 cores (4 cores recommended)
+- **RAM**: 2GB RAM (4GB recommended)
+- **Storage**: 10GB free space (20GB recommended for video cache and database)
+- **Network**: 10Mbps uplink bandwidth (100Mbps recommended)
 
-#### Vercel / Render / EdgeOne 云端部署
-- **无需自备服务器**：平台自动分配资源
-- **Vercel**: 无服务器架构，按需自动扩容
-- **Render**: 免费版提供 750 小时/月运行时间，适合个人项目
-- **EdgeOne Pages**: 腾讯云边缘计算，国内访问友好
+#### Vercel / Render / EdgeOne Cloud Deployment
+- **No private server required**: Resources are allocated automatically by the platform
+- **Vercel**: Serverless architecture with auto‑scaling on demand
+- **Render**: Free tier provides 750 runtime hours per month for personal use
+- **EdgeOne Pages**: Tencent Cloud edge‑computing platform with good access performance inside mainland China
 
-#### ⚠️ 常见卡顿原因
-- ❌ **CPU 不足**：单核或低频 CPU 会导致视频转码和搜索缓慢
-- ❌ **内存不足**：少于 2GB 内存会导致频繁 OOM（内存溢出）
-- ❌ **网络带宽低**：上行带宽低于 5Mbps 会导致视频播放卡顿
-- ❌ **磁盘 I/O 慢**：使用机械硬盘会影响数据库和缓存性能
+#### ⚠️ Common Causes of Stuttering / Slow Performance
+- ❌ **Insufficient CPU**: Single‑core or low‑frequency CPUs cause slow video transcoding and searching
+- ❌ **Insufficient RAM**: Less than 2GB RAM leads to frequent OOM (out‑of‑memory) crashes
+- ❌ **Low network bandwidth**: Uplink below 5Mbps results in stuttering video playback
+- ❌ **Slow disk I/O**: HDDs degrade database and cache performance
 
-**💡 提示**：如果遇到卡顿问题，请先检查服务器配置是否满足最低要求！
+**💡 Tip**: If you experience stuttering, first verify your server meets the minimum hardware requirements!
 
 ---
 
-### 🐳 Docker 自托管部署
+### 🐳 Docker Self‑Hosted Deployment
 
-本项目**仅支持 Docker 或其他基于 Docker 的平台**部署（如 Dockge、Portainer、Komodo 等）。
+This project **only supports deployment via Docker or Docker‑compatible platforms** (Dockge, Portainer, Komodo, etc.).
 
-### 📦 推荐部署方案：Kvrocks 存储
+### 📦 Recommended Deployment: Kvrocks Storage
 
-Kvrocks 是基于 RocksDB 的持久化 Redis 协议兼容存储，推荐用于生产环境。
+Kvrocks is a persistent Redis‑compatible storage engine built on RocksDB, recommended for production use.
 
 ```yml
 services:
@@ -47,12 +47,12 @@ services:
       - PASSWORD=your_secure_password
       - NEXT_PUBLIC_STORAGE_TYPE=kvrocks
       - KVROCKS_URL=redis://moontv-kvrocks:6666
-      - VIDEO_CACHE_DIR=/app/video-cache  # 视频缓存目录
-      # 可选：站点配置
+      - VIDEO_CACHE_DIR=/app/video-cache  # Video cache directory
+      # Optional site configuration
       - SITE_BASE=https://your-domain.com
       - NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
     volumes:
-      - video-cache:/app/video-cache  # 视频缓存持久化
+      - video-cache:/app/video-cache  # Persist video cache
     networks:
       - moontv-network
     depends_on:
@@ -73,14 +73,15 @@ networks:
 
 volumes:
   kvrocks-data:
-  video-cache:  # 视频缓存 volume
+  video-cache:  # Video cache volume
+
 ```
 
-### 🔴 Redis 存储（有数据丢失风险）
+### 🔴 Redis Storage (Risk of Data Loss)
 
-Redis 默认配置可能导致数据丢失，需要开启持久化。
+Default Redis configuration may lose data; persistence must be enabled.
 
-```yml
+```
 services:
   moontv-core:
     image: ghcr.io/szemeng76/VODTV:latest
@@ -113,15 +114,15 @@ networks:
     driver: bridge
 ```
 
-### ☁️ Upstash 云端存储（Docker）
+### ☁️ Upstash Cloud Storage (Docker)
 
-适合无法自托管数据库的场景，完全托管的 Redis 服务。
+Suitable when you cannot host your own database; fully‑managed Redis service.
 
-1. 在 [upstash.com](https://upstash.com/) 注册账号并新建 Redis 实例
-2. 复制 **HTTPS ENDPOINT** 和 **TOKEN**
-3. 使用以下配置：
+1. Register an account at [upstash.com](https://upstash.com/) and create a new Redis instance
+2. Copy your **HTTPS ENDPOINT** and **TOKEN**
+3. Use the following compose configuration:
 
-```yml
+```
 services:
   moontv-core:
     image: ghcr.io/szemeng76/VODTV:latest
@@ -137,420 +138,407 @@ services:
       - UPSTASH_TOKEN=your_upstash_token
 ```
 
-### 🚀 飞牛OS（fnOS）部署
+### 🚀 fnOS (FeiNiu OS) Deployment
 
-飞牛OS 是一款国产免费 NAS 系统，原生支持 Docker Compose，适合家庭 NAS 用户部署。
+fnOS is a domestic free NAS system with native Docker Compose support, ideal for home‑NAS users.
 
-#### 部署方式一：Web 界面部署（推荐）
+#### Deployment Option 1: Web UI Deployment (Recommended)
 
-1. **登录飞牛OS管理界面**
-   - 访问飞牛OS的 Web 管理界面
-   - 进入 "Docker" 或 "容器管理" 页面
+1. **Log into fnOS admin panel**
+   - Open the fnOS web management page
+   - Navigate to "Docker" or "Container Management"
+2. **Create Compose project**
+   - Click "New Compose Project" or "Add Service"
+   - Project name: `VODTV`
+   - Paste the [Kvrocks storage config](#-recommended-deployment-kvrocks-storage) into the editor
+3. **Modify configuration**
+   - Change `PASSWORD` to a strong password
+   - (Optional) Update `SITE_BASE` to your public access URL
+4. **Start services**
+   - Click "Start" or "Deploy"
+   - Wait for containers to finish starting
+5. **Access the application**
+   - Open browser: `http://<fnOS‑IP>:3000`
+   - Log in with your configured administrator credentials
 
-2. **创建 Compose 项目**
-   - 点击 "新建 Compose 项目" 或 "添加服务"
-   - 项目名称：`VODTV`
-   - 将上方的 [Kvrocks 存储配置](#-推荐部署方案kvrocks-存储) 粘贴到配置框中
+#### Deployment Option 2: SSH Command‑Line Deployment
 
-3. **修改配置**
-   - 修改 `PASSWORD` 为强密码
-   - （可选）修改 `SITE_BASE` 为您的访问地址
+```
+# SSH into fnOS
+ssh root@<fnOS‑IP>
 
-4. **启动服务**
-   - 点击 "启动" 或 "部署" 按钮
-   - 等待容器启动完成
-
-5. **访问应用**
-   - 浏览器访问：`http://飞牛OS的IP:3000`
-   - 使用设置的管理员账号登录
-
-#### 部署方式二：SSH 命令行部署
-
-```bash
-# SSH 登录到飞牛OS
-ssh root@飞牛OS的IP
-
-# 创建项目目录
+# Create project folder
 mkdir -p /volume1/docker/VODTV
 cd /volume1/docker/VODTV
 
-# 创建 docker-compose.yml 文件
+# Create docker-compose.yml
 nano docker-compose.yml
-# 将 Kvrocks 配置粘贴进去，保存退出
+# Paste the Kvrocks compose config, save and exit
 
-# 启动服务
+# Start containers
 docker-compose up -d
 
-# 查看日志
+# View logs
 docker-compose logs -f
 ```
 
-#### 📝 飞牛OS 部署注意事项
+#### 📝 fnOS Deployment Notes
 
-- **镜像加速**：建议在飞牛OS中配置 Docker 镜像加速（设置 → Docker → 镜像仓库），推荐使用轩辕镜像
-- **端口冲突**：确保 3000 端口未被占用，如有冲突可修改为其他端口（如 `3001:3000`）
-- **数据持久化**：Volume `kvrocks-data` 会自动创建在飞牛OS的 Docker 数据目录
-- **反向代理**：可配合飞牛OS的反向代理功能，实现域名访问和 HTTPS
-- **更新镜像**：在 Docker 管理界面选择容器 → 更新镜像 → 重启
+- **Docker mirror acceleration**: It is recommended to configure Docker registry mirror in fnOS (Settings → Docker → Registry Mirrors)
+- **Port conflict**: Ensure port 3000 is free. If occupied, remap e.g. `3001:3000`
+- **Data persistence**: The `kvrocks-data` volume will be automatically created inside fnOS Docker data directory
+- **Reverse proxy**: Use fnOS built‑in reverse‑proxy to enable custom domain names and HTTPS
+- **Updating images**: Inside Docker management UI, select container → update image → restart
 
-#### ✨ 飞牛OS 部署优势
+#### ✨ fnOS Deployment Benefits
 
-- ✅ **图形化管理**：Web 界面操作简单直观
-- ✅ **一键更新**：内置容器镜像更新功能
-- ✅ **数据安全**：NAS 级别的数据保护和备份
-- ✅ **网络加速**：支持配置镜像加速源
-- ✅ **资源监控**：实时查看容器资源占用
+- ✅ **Graphical management**: Intuitive web interface
+- ✅ **One‑click image updates**: Built‑in container update function
+- ✅ **NAS‑grade data safety & backup**
+- ✅ **Docker registry mirror support**
+- ✅ **Live resource monitoring for containers**
 
 ---
 
-### 🤗 Hugging Face Space 部署（免费）
+### 🤗 Hugging Face Space Deployment (Free)
 
-[Hugging Face Spaces](https://huggingface.co/spaces) 提供免费的 Docker 容器托管服务，配置为 **2 核 CPU、16GB 内存、50GB 存储**，非常适合个人使用。
+[Hugging Face Spaces](https://huggingface.co/spaces) provides free Docker container hosting: **2‑core CPU, 16GB RAM, 50GB storage**, great for personal usage.
 
-#### 部署步骤
+#### Deployment Steps
 
-1. **创建 Hugging Face 账号**
-   - 访问 [huggingface.co](https://huggingface.co/) 注册账号
+1. **Create Hugging Face account**
+   - Register at [huggingface.co](https://huggingface.co/)
+2. **Create a new Space**
+   - Go to [huggingface.co/new-space](https://huggingface.co/new-space)
+   - Enter your Space name e.g. `VODTV`
+   - **Space SDK**: select `Docker`
+   - **Space hardware**: select `CPU basic` (free tier)
+   - Click `Create Space`
+3. **Configure README.md metadata**
 
-2. **创建新 Space**
-   - 访问 [huggingface.co/new-space](https://huggingface.co/new-space)
-   - 填写 Space 名称（如 `VODTV`）
-   - **Space SDK** 选择 `Docker`
-   - **Space hardware** 选择 `CPU basic`（免费）
-   - 点击 `Create Space`
+At repository root, create/edit `README.md` and add the YAML frontmatter:
 
-3. **配置 README.md**
+```
+---
+title: VODTV
+emoji: 🎬
+colorFrom: green
+colorTo: blue
+sdk: docker
+app_port: 3000
+pinned: false
+---
+```
 
-   在 Space 仓库根目录创建或编辑 `README.md`，添加以下 YAML 元数据：
+> 
+> 💡 **Critical setting**: `app_port: 3000` tells Hugging Face the application listens on port 3000
 
-   ```yaml
-   ---
-   title: VODTV
-   emoji: 🎬
-   colorFrom: green
-   colorTo: blue
-   sdk: docker
-   app_port: 3000
-   pinned: false
-   ---
-   ```
+4. **Create Dockerfile**
 
-   > 💡 **关键配置**：`app_port: 3000` 告诉 HF 应用运行在 3000 端口
+At repository root create `Dockerfile` with one line:
 
-4. **创建 Dockerfile**
+```
+FROM ghcr.io/szemeng76/VODTV:latest
+```
 
-   在 Space 仓库根目录创建 `Dockerfile`，仅需一行：
+> 
+> 💡 This directly pulls the official prebuilt Docker image, no local build required
 
-   ```dockerfile
-   FROM ghcr.io/szemeng76/VODTV:latest
-   ```
+5. **Set environment secrets**
 
-   > 💡 这会直接使用 VODTV 官方 Docker 镜像，无需构建
+Inside your Space page open `Settings` > `Variables and secrets`, add these secrets:
 
-5. **配置环境变量（Secrets）**
+表格
 
-   在 Space 页面点击 `Settings` > `Variables and secrets`，添加以下 Secrets：
+| Variable Name | Description | Example Value |
+| --- | --- | --- |
+| `USERNAME` | Admin username | `admin` |
+| `PASSWORD` | Admin password | `your_secure_password` |
+| `NEXT_PUBLIC_STORAGE_TYPE` | Storage backend type | `upstash` |
+| `UPSTASH_URL` | Upstash REST URL | `https://xxx.upstash.io` |
+| `UPSTASH_TOKEN` | Upstash Token | `AxxxQ==` |
+| `DISABLE_HERO_TRAILER` | Disable homepage trailer | `true` |
 
-   | 变量名 | 说明 | 示例值 |
-   |--------|------|--------|
-   | `USERNAME` | 管理员账号 | `admin` |
-   | `PASSWORD` | 管理员密码 | `your_secure_password` |
-   | `NEXT_PUBLIC_STORAGE_TYPE` | 存储类型 | `upstash` |
-   | `UPSTASH_URL` | Upstash REST URL | `https://xxx.upstash.io` |
-   | `UPSTASH_TOKEN` | Upstash Token | `AxxxQ==` |
-   | `DISABLE_HERO_TRAILER` | 禁用首页预告片 | `true` |
+> 
+> ⚠️ **Notice**: HF Spaces have no persistent local storage, you **must** use an external database like Upstash
+> 
+> 
+> 💡 **Recommendation**: Set `DISABLE_HERO_TRAILER=true`. Trailer URLs are time‑limited and cannot be cached on ephemeral platforms.
 
-   > ⚠️ **注意**：HF Space 无持久化存储，必须使用 Upstash 等外部数据库
-   >
-   > 💡 **建议**：设置 `DISABLE_HERO_TRAILER=true` 禁用首页预告片，因为预告片 URL 带时间戳会定时过期，无持久化存储的平台无法缓存视频，每次刷新都要重新下载
+6. **Wait for deployment**
+   - Commit your files; Hugging Face will fetch the image and boot automatically
+   - When finished, open `https://huggingface.co/spaces/<your‑username>/VODTV`
 
-6. **等待部署完成**
-   - 提交文件后，HF 会自动拉取镜像并启动容器
-   - 部署完成后，访问 `https://huggingface.co/spaces/你的用户名/VODTV`
-
-#### 📁 完整文件结构
+#### 📁 Complete File Structure
 
 ```
 your-space/
-├── README.md      # 包含 YAML 元数据
+├── README.md      # Contains YAML front‑matter
 └── Dockerfile     # FROM ghcr.io/szemeng76/VODTV:latest
 ```
 
-#### ✨ Hugging Face Space 优势
+#### ✨ Hugging Face Space Benefits
 
-- ✅ **完全免费**：2 核 CPU、16GB 内存、50GB 存储
-- ✅ **无需服务器**：托管在 HF 云端
-- ✅ **自动 HTTPS**：自带 SSL 证书
-- ✅ **简单部署**：只需两个文件
-- ✅ **使用官方镜像**：无需构建，直接拉取
+- ✅ **100% free**: 2‑core CPU,16GB RAM,50GB storage
+- ✅ **No private server needed**: Fully hosted
+- ✅ **Auto‑HTTPS**: Built‑in SSL certificate
+- ✅ **Minimal setup**: Only two required files
+- ✅ **Official prebuilt image**: Direct pull without building locally
 
-#### ⚠️ Hugging Face Space 注意事项
+#### ⚠️ Hugging Face Space Caveats
 
-- **无持久化存储**：必须使用 Upstash 等外部数据库存储数据
-- **冷启动**：长时间无访问后首次访问较慢（约 30-60 秒）
-- **48小时休眠**：免费版 48 小时无访问会自动休眠，再次访问会重新启动
-- **公开仓库**：Space 仓库默认公开，Secrets 除外
-- **流量限制**：免费版有一定流量限制，个人使用足够
+- **No local persistent storage**: External database (Upstash) mandatory
+- **Cold start**: First load after idle is slow (~30‑60 seconds)
+- **48‑hour sleep**: Free tier suspends after 48 hours without traffic, restarts on next visit
+- **Public repository**: Space repo is public by default (secrets remain hidden)
+- **Traffic quota limits**: Free tier has bandwidth limits, sufficient for personal use
 
-#### 🔗 相关链接
+#### 🔗 Useful Links
 
-- [Hugging Face Spaces 文档](https://huggingface.co/docs/hub/spaces)
-- [Docker Spaces 文档](https://huggingface.co/docs/hub/spaces-sdks-docker)
-- [Upstash 免费 Redis](https://upstash.com/)
-
----
-
-### 🌐 EdgeOne Pages 部署（免费）
-
-[EdgeOne Pages](https://edgeone.ai/products/pages) 是腾讯云提供的边缘计算平台，类似于 Vercel，支持 Next.js SSR/SSG/ISR 部署，适合国内用户访问。
-
-> 💡 本项目已内置 `edgeone.json` 配置文件，连接仓库后 EdgeOne 会自动识别构建设置，**无需手动配置构建命令和输出目录**。
-
-#### 部署步骤
-
-1. **准备工作**
-   - 注册 [EdgeOne](https://edgeone.ai/) 账号
-   - 在 [Upstash](https://upstash.com/) 创建 Redis 实例（EdgeOne Pages 无持久化存储，**不支持 SQLite**）
-   - Fork 本项目到你的 GitHub/GitLab 账号
-
-2. **创建 Pages 项目**
-   - 登录 EdgeOne 控制台
-   - 进入 "Pages" > "创建项目"
-   - 选择 "连接 Git 仓库"
-   - 授权并选择你 Fork 的 VODTV 仓库
-
-3. **确认构建设置**
-
-   项目根目录的 `edgeone.json` 已预配置好所有构建参数，EdgeOne 会自动读取：
-
-   | 设置项 | 值 | 说明 |
-   |--------|-----|------|
-   | 安装命令 | `pnpm install --frozen-lockfile` | 自动读取 |
-   | 构建命令 | `pnpm edgeone:build` | 自动读取 |
-   | 输出目录 | `.edgeone` | 自动读取 |
-   | Node.js 版本 | `24` | 自动读取 |
-   | 函数最大执行时长 | `120s` | 自动读取 |
-
-   > ⚠️ 如果控制台显示构建命令为 `pnpm build`，请手动改为 `pnpm edgeone:build`，输出目录改为 `.edgeone`，Node 版本改为 `24`。
-
-4. **配置环境变量**
-
-   在项目设置中添加以下环境变量：
-
-   ```dotenv
-   # 必填：管理员账号
-   USERNAME=admin
-   PASSWORD=your_secure_password
-
-   # 必填：存储配置（必须使用 Upstash、Redis 或 KVRocks，不支持 SQLite）
-   NEXT_PUBLIC_STORAGE_TYPE=upstash
-   UPSTASH_URL=https://your-redis-instance.upstash.io
-   UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
-
-   # 推荐：禁用首页预告片（无持久化存储平台建议开启）
-   DISABLE_HERO_TRAILER=true
-
-   # 可选：站点配置
-   SITE_BASE=https://your-project.edgeone.app
-   NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
-
-   # 可选：豆瓣代理配置（推荐）
-   NEXT_PUBLIC_DOUBAN_PROXY_TYPE=cmliussss-cdn-tencent
-   NEXT_PUBLIC_DOUBAN_IMAGE_PROXY_TYPE=cmliussss-cdn-tencent
-   ```
-
-5. **部署项目**
-   - 点击 "部署" 按钮
-   - 等待构建完成（首次约 3-5 分钟）
-   - 部署成功后会分配 `xxx.edgeone.app` 域名
-
-6. **绑定自定义域名（可选）**
-   - 在项目设置中点击 "域名"
-   - 添加自定义域名并配置 DNS 解析
-
-#### ✨ EdgeOne Pages 优势
-
-- ✅ **国内访问友好**：腾讯云边缘节点，国内访问速度快
-- ✅ **免费额度充足**：每月 300 万 Edge Functions 请求、100 万 Cloud Functions 请求、500 次构建、流量无限制
-- ✅ **自动 HTTPS**：免费 SSL 证书
-- ✅ **Git 自动部署**：推送代码自动触发构建
-- ✅ **支持 Next.js SSR**：完整支持服务端渲染
-- ✅ **零配置构建**：内置 `edgeone.json`，连接仓库即可部署
-
-#### ⚠️ EdgeOne Pages 注意事项
-
-- **无 Docker 支持**：EdgeOne Pages 是无服务器平台，仅支持源码构建部署
-- **不支持 SQLite**：平台无持久化文件系统，SQLite 数据库在每次冷启动后会丢失，必须使用 `upstash`、`redis` 或 `kvrocks`
-- **函数执行限制**：单次请求最长执行 120 秒（已在 `edgeone.json` 中配置）
-- **不支持视频缓存**：无本地文件系统，视频缓存功能不可用
-
-#### 🔗 相关链接
-
-- [EdgeOne Pages 免费额度](https://pages.edgeone.ai/pricing)
-- [EdgeOne Pages 文档（国际区）](https://edgeone.ai/zh/document/160427672961769472)
-- [EdgeOne Pages 文档（中国区）](https://cloud.tencent.com/document/product/1552/127366)
-- [Upstash 免费 Redis](https://upstash.com/)
+- https://huggingface.co/docs/hub/spaces
+- https://huggingface.co/docs/hub/spaces-sdks-docker
+- [Upstash free Redis](https://upstash.com/)
 
 ---
 
-### ▲ Vercel 部署
+### 🌐 EdgeOne Pages Deployment (Free)
 
-[Vercel](https://vercel.com/) 是 Next.js 官方推荐的部署平台，无服务器架构，自动扩容，适合全球用户访问。
+[EdgeOne Pages](https://edgeone.ai/products/pages) is a Tencent Cloud edge‑computing platform similar to Vercel, supporting Next.js SSR / SSG / ISR, with good performance for users inside China.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SzeMeng76/VODTV)
+> 
+> 💡 This repository includes a built‑in `edgeone.json` config. After connecting your Git repository, EdgeOne automatically reads build settings; **no manual build‑command configuration is needed**.
 
-#### 部署步骤
+#### Deployment Steps
 
-1. **准备工作**
-   - 注册 [Vercel](https://vercel.com/) 账号
-   - 在 [Upstash](https://upstash.com/) 创建 Redis 实例（Vercel 无持久化存储）
-   - Fork 本项目到你的 GitHub 账号
+1. **Prerequisites**
+   - Register an account on [EdgeOne](https://edgeone.ai/)
+   - Create a Redis instance at [Upstash](https://upstash.com/) (EdgeOne Pages has no persistent local storage; SQLite is not supported)
+   - Fork this repository to your GitHub/GitLab account
+2. **Create Pages project**
+   - Sign into EdgeOne console
+   - Open "Pages" → "Create Project"
+   - Choose "Connect Git repository"
+   - Authorize and select your forked VODTV repository
+3. **Verify build settings**
 
-2. **导入项目**
-   - 登录 Vercel 控制台
-   - 点击 "Add New..." > "Project"
-   - 选择你 Fork 的 VODTV 仓库并导入
+`edgeone.json` in repo root pre‑configures all build parameters; EdgeOne reads automatically:
 
-3. **配置构建设置**
-   - **Framework Preset**：`Next.js`（自动检测）
-   - **Build Command**：`pnpm build`（默认）
-   - **Output Directory**：`.next`（默认）
-   - **Install Command**：`pnpm install`（默认）
+表格
 
-4. **配置环境变量**
+| Setting | Value | Description |
+| --- | --- | --- |
+| Install command | `pnpm install --frozen-lockfile` | Auto‑loaded |
+| Build command | `pnpm edgeone:build` | Auto‑loaded |
+| Output directory | `.edgeone` | Auto‑loaded |
+| Node.js version | `24` | Auto‑loaded |
+| Max function duration | `120s` | Auto‑loaded |
 
-   在项目 Settings > Environment Variables 中添加：
+> 
+> ⚠️ If console shows `pnpm build`, manually change build command to `pnpm edgeone:build`, output folder to `.edgeone`, Node.js version to `24`.
 
-   ```dotenv
-   # 必填：管理员账号
-   USERNAME=admin
-   PASSWORD=your_secure_password
+4. **Configure environment variables**
 
-   # 必填：存储配置（必须使用 Upstash）
-   NEXT_PUBLIC_STORAGE_TYPE=upstash
-   UPSTASH_URL=https://your-redis-instance.upstash.io
-   UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
+Add these environment variables in project settings:
 
-   # 推荐：禁用首页预告片（无持久化存储平台建议开启）
-   DISABLE_HERO_TRAILER=true
+```
+# Required admin credentials
+USERNAME=admin
+PASSWORD=your_secure_password
 
-   # 可选：站点配置
-   SITE_BASE=https://your-project.vercel.app
-   NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
-   ```
+# Required storage (must use Upstash / Redis / Kvrocks, SQLite unsupported)
+NEXT_PUBLIC_STORAGE_TYPE=upstash
+UPSTASH_URL=https://your-redis-instance.upstash.io
+UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
 
-5. **部署项目**
-   - 点击 "Deploy"
-   - 等待构建完成（首次约 3-5 分钟）
-   - 部署成功后会分配 `xxx.vercel.app` 域名
+# Recommended: disable homepage trailer for ephemeral platforms
+DISABLE_HERO_TRAILER=true
 
-6. **绑定自定义域名（可选）**
-   - 在项目 Settings > Domains 中添加自定义域名
-   - 按提示配置 DNS 记录
+# Optional site settings
+SITE_BASE=https://your-project.edgeone.app
+NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
 
-#### ✨ Vercel 部署优势
+# Optional Douban proxy (recommended)
+NEXT_PUBLIC_DOUBAN_PROXY_TYPE=cmliussss-cdn-tencent
+NEXT_PUBLIC_DOUBAN_IMAGE_PROXY_TYPE=cmliussss-cdn-tencent
+```
 
-- ✅ **Next.js 官方平台**：最佳兼容性和性能优化
-- ✅ **自动 HTTPS**：免费 SSL 证书
-- ✅ **全球 CDN**：Edge Network 全球加速
-- ✅ **Git 自动部署**：推送代码自动触发构建
-- ✅ **无服务器架构**：按需自动扩容，无需管理服务器
-- ✅ **预览部署**：每个 PR 自动生成预览环境
+5. **Deploy the project**
+   - Click "Deploy"
+   - Wait for build (~3‑5 minutes for first deployment)
+   - After deployment you get a `xxx.edgeone.app` domain
+6. **(Optional) Bind custom domain**
+   - In project settings open "Domains"
+   - Add your custom domain and configure DNS records
 
-#### ⚠️ Vercel 注意事项
+#### ✨ EdgeOne Pages Benefits
 
-- **必须使用 Upstash**：无持久化文件系统，需要外部数据库
-- **函数执行限制**：Hobby 计划 Serverless Functions 执行时间限制 60 秒
-- **不支持视频缓存**：无本地文件系统，视频缓存功能不可用
-- **带宽限制**：Hobby 计划每月 100GB 带宽
-- **国内访问**：部分地区可能需要自定义域名优化访问
+- ✅ **Good access inside China**: Tencent edge nodes
+- ✅ **Generous free tier**: 3 000 000 monthly Edge Function requests, 1 000 000 Cloud Function requests, 500 builds per month, unlimited traffic
+- ✅ **Automatic HTTPS**: Free SSL certificates
+- ✅ **Git‑triggered deploy**: Rebuild automatically on git push
+- ✅ **Full Next.js SSR support**
+- ✅ **Zero‑config builds**: Uses built‑in `edgeone.json`
+
+#### ⚠️ EdgeOne Pages Caveats
+
+- **No Docker runtime**: Source‑only serverless deployment
+- **SQLite not supported**: Ephemeral filesystem; data resets after cold restart, must use Upstash / Redis / Kvrocks
+- **Function timeout**: Maximum single request execution time 120s (configured in `edgeone.json`)
+- **Video cache unavailable**: No persistent local filesystem
+
+#### 🔗 Useful Links
+
+- [EdgeOne Pages Free Tier](https://pages.edgeone.ai/pricing)
+- [EdgeOne Pages Docs (International)](https://edgeone.ai/zh/document/160427672961769472)
+- [EdgeOne Pages Docs (CN)](https://cloud.tencent.com/document/product/1552/127366)
+- [Upstash free Redis](https://upstash.com/)
+
+---
+
+### ▲ Vercel Deployment
+
+[Vercel](https://vercel.com/) is the official recommended deployment platform for Next.js. Serverless with auto‑scaling, suitable for global audiences.
+
+#### Deployment Steps
+
+1. **Prerequisites**
+   - Register a [Vercel](https://vercel.com/) account
+   - Create Redis instance at [Upstash](https://upstash.com/) (Vercel has no persistent disk storage)
+   - Fork the repository into your GitHub account
+2. **Import project**
+   - Open Vercel dashboard
+   - Click "Add New..." > "Project"
+   - Select your forked VODTV repository to import
+3. **Verify build configuration**
+   - **Framework Preset**: `Next.js` (auto‑detected)
+   - **Build Command**: `pnpm build` (default)
+   - **Output Directory**: `.next` (default)
+   - **Install Command**: `pnpm install` (default)
+4. **Set environment variables**
+
+Go to Project Settings > Environment Variables and add:
+
+```
+# Required admin credentials
+USERNAME=admin
+PASSWORD=your_secure_password
+
+# Required storage backend (Upstash mandatory)
+NEXT_PUBLIC_STORAGE_TYPE=upstash
+UPSTASH_URL=https://your-redis-instance.upstash.io
+UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
+
+# Recommended: disable homepage trailer for serverless platforms
+DISABLE_HERO_TRAILER=true
+
+# Optional site configuration
+SITE_BASE=https://your-project.vercel.app
+NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
+```
+
+5. **Deploy project**
+   - Click "Deploy"
+   - Wait for first build (~3‑5 minutes)
+   - You will receive a `xxx.vercel.app` domain after deployment completes
+6. **(Optional) Custom domain binding**
+   - Go to Settings > Domains, add your custom domain and configure DNS records
+
+#### ✨ Vercel Deployment Benefits
+
+- ✅ **Official Next.js platform**: Best compatibility & optimizations
+- ✅ **Automatic HTTPS**: Free SSL certificates
+- ✅ **Global CDN edge network**
+- ✅ **Git‑triggered automatic deployments**
+- ✅ **Serverless auto‑scaling, no server management needed**
+- ✅ **Preview deployments for every Pull Request**
+
+#### ⚠️ Vercel Caveats
+
+- **Upstash is mandatory**: No persistent local disk storage
+- **Function timeout limit**: Hobby plan serverless function max 60‑second execution
+- **Video cache unavailable**: No local persistent filesystem
+- **Bandwidth quota**: Hobby plan monthly bandwidth cap at 100GB
+- **Mainland China connectivity**: Custom domain may be required to improve access from China
 
 ---
 
-### 🟢 Render 部署（免费）
+### 🟢 Render Deployment (Free Tier)
 
-[Render](https://render.com/) 提供免费的 Web Service 托管，支持 Docker 部署，适合个人项目。
+[Render](https://render.com/) offers free Web Service hosting with native Docker support for personal projects.
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SzeMeng76/VODTV)
+#### Option 1: Docker Deployment (Recommended)
 
-#### 方式一：Docker 部署（推荐）
+1. **Prerequisites**
+   - Register a [Render](https://render.com/) account
+   - Provision Redis instance at [Upstash](https://upstash.com/)
+   - Fork repository to your GitHub account
+2. **Create new Web Service**
+   - Open Render Dashboard
+   - Click "New +" > "Web Service"
+   - Connect GitHub account and select your forked VODTV repository
+3. **Service configuration**
+   - **Name**: `VODTV` (customizable)
+   - **Region**: Pick region closest to your users
+   - **Runtime**: `Docker`
+   - **Instance Type**: `Free` or upgrade as needed
+4. **Environment variables**
 
-1. **准备工作**
-   - 注册 [Render](https://render.com/) 账号
-   - 在 [Upstash](https://upstash.com/) 创建 Redis 实例
-   - Fork 本项目到你的 GitHub 账号
+Add these variables inside Environment panel:
 
-2. **创建 Web Service**
-   - 登录 Render Dashboard
-   - 点击 "New +" > "Web Service"
-   - 连接你的 GitHub 账号，选择 Fork 的 VODTV 仓库
+```
+# Required admin credentials
+USERNAME=admin
+PASSWORD=your_secure_password
 
-3. **配置服务**
-   - **Name**：`VODTV`（自定义）
-   - **Region**：选择离用户最近的区域
-   - **Runtime**：`Docker`
-   - **Instance Type**：`Free`（免费版）或根据需求选择
+# Required storage backend (Upstash recommended)
+NEXT_PUBLIC_STORAGE_TYPE=upstash
+UPSTASH_URL=https://your-redis-instance.upstash.io
+UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
 
-4. **配置环境变量**
+# Recommended: disable homepage trailer
+DISABLE_HERO_TRAILER=true
 
-   在 Environment 中添加：
+# Optional site configuration
+SITE_BASE=https://your-service.onrender.com
+NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
+```
 
-   ```dotenv
-   # 必填：管理员账号
-   USERNAME=admin
-   PASSWORD=your_secure_password
+5. **Launch deployment**
+   - Click "Create Web Service"
+   - Render will build from repository Dockerfile automatically
+   - First build takes approx 5‑10 minutes
+   - Your service is available at `xxx.onrender.com` after deployment
 
-   # 必填：存储配置（推荐使用 Upstash）
-   NEXT_PUBLIC_STORAGE_TYPE=upstash
-   UPSTASH_URL=https://your-redis-instance.upstash.io
-   UPSTASH_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==
+#### Option 2: Native Node.js Deployment
 
-   # 推荐：禁用首页预告片
-   DISABLE_HERO_TRAILER=true
+If you prefer not to run via Docker, deploy directly as a Node.js service:
 
-   # 可选：站点配置
-   SITE_BASE=https://your-service.onrender.com
-   NEXT_PUBLIC_SITE_NAME=VODTV Enhanced
-   ```
+1. Create Web Service and select your Git repository
+2. Build runtime settings
+   - **Runtime**: `Node`
+   - **Build Command**: `pnpm install && pnpm build`
+   - **Start Command**: `pnpm start`
+   - Set environment variable `NODE_VERSION=20`
+3. Use identical environment variables listed above
 
-5. **部署**
-   - 点击 "Create Web Service"
-   - Render 会自动使用项目中的 Dockerfile 构建和部署
-   - 首次构建约 5-10 分钟
-   - 部署成功后会分配 `xxx.onrender.com` 域名
+#### ✨ Render Deployment Benefits
 
-#### 方式二：Node.js 原生部署
+- ✅ **Free tier available**: 750 runtime hours per month
+- ✅ **Native Docker support**: Uses repository Dockerfile directly
+- ✅ **Automatic HTTPS**: Free SSL certificates
+- ✅ **Git‑based auto deployments on push**
+- ✅ **Web UI configuration, no local CLI required**
 
-如果不想使用 Docker，也可以作为 Node.js 服务部署：
+#### ⚠️ Render Caveats
 
-1. **创建 Web Service** 并选择 Git 仓库
-2. **配置构建设置**
-   - **Runtime**：`Node`
-   - **Build Command**：`pnpm install && pnpm build`
-   - **Start Command**：`pnpm start`
-   - **Node Version**：在 Environment 中设置 `NODE_VERSION=20`
-3. **配置环境变量**（同上）
+- **Free tier cold‑start**: Service sleeps after 15‑minute inactivity; ~30‑60s wake‑up delay
+- **Free tier resource limits**: 512MB RAM, 0.1 vCPU
+- **External database recommended**: Free tier disk storage is non‑persistent
+- **Build‑time quota**: 750 build minutes per month for free tier
+- **Custom domains are supported for free tier**
 
-#### ✨ Render 部署优势
+#### 🔗 Useful Links
 
-- ✅ **免费版可用**：每月 750 小时免费运行时间
-- ✅ **Docker 原生支持**：直接使用项目 Dockerfile
-- ✅ **自动 HTTPS**：免费 SSL 证书
-- ✅ **Git 自动部署**：推送代码自动触发构建
-- ✅ **操作简单**：Web 界面配置，无需命令行
-
-#### ⚠️ Render 注意事项
-
-- **免费版冷启动**：15 分钟无访问后服务会休眠，再次访问需要约 30-60 秒启动
-- **免费版资源限制**：512MB 内存，0.1 CPU
-- **推荐使用 Upstash**：免费版磁盘不持久化，建议使用外部数据库
-- **构建时间限制**：免费版每月 750 分钟构建时间
-- **自定义域名**：免费版支持自定义域名
-
-#### 🔗 相关链接
-
-- [Render 文档](https://render.com/docs)
-- [Render 部署 Next.js](https://render.com/docs/deploy-nextjs-app)
-- [Upstash 免费 Redis](https://upstash.com/)
-
----
+- [Render Documentation](https://render.com/docs)
+- https://render.com/docs/deploy-nextjs-app
+- [Upstash free Redis](https://upstash.com/)

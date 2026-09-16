@@ -1,388 +1,399 @@
-# 📺 TVBox 兼容功能使用指南
+# 📺 TVBox Compatibility Feature Usage Guide
 
-## 🎯 功能介绍
+## 🎯 Feature Introduction
 
-VODTV 提供完整的 TVBox 配置接口，将您的视频源无缝导入到 TVBox 应用中。支持多种配置模式、智能 spider jar 管理、安全访问控制等高级功能。
+VODTV delivers a full‑featured TVBox configuration interface for seamless import of your video sources into the TVBox application. It supports multiple output modes, intelligent Spider‑JAR management, secure access control and other advanced capabilities.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 1. 访问配置页面
+### 1. Access the configuration page
 
-在 VODTV 网站中，点击左侧导航栏的"TVBox 配置"菜单，或直接访问：
+Inside the VODTV web UI, click **TVBox Configuration** on the left‑hand navigation bar, or visit directly:
 
 ```
-https://your-domain.com/tvbox
+https://your‑domain.com/tvbox
 ```
 
-### 2. 选择配置模式
+### 2. Select configuration mode
 
-VODTV 提供 4 种配置模式，适应不同使用场景：
+Four configuration modes are available to suit different scenarios:
 
-#### 📊 **标准模式**（推荐）
-```
-https://your-domain.com/api/tvbox?format=json
-```
-- 包含完整配置（IJK 优化、广告过滤、DoH DNS）
-- 支持硬解码和软解码配置
-- 适合大多数用户使用
+#### 📊 **Standard Mode** (Recommended)
 
-#### 🔒 **精简模式**
 ```
-https://your-domain.com/api/tvbox?format=json&mode=safe
+https://your‑domain.com/api/tvbox?format=json
 ```
-- 仅包含核心配置字段
-- 提高 TVBox 兼容性
-- 遇到兼容性问题时使用
 
-#### ⚡ **快速模式**（新增）
-```
-https://your-domain.com/api/tvbox?format=json&mode=fast
-```
-- **优化源切换速度**，减少卡顿
-- 移除 timeout/retry 配置避免等待
-- 解决 SSL handshake 错误
-- **适合频繁切换源的用户**
+‑ Full preset configuration (IJK tuning, ad‑filtering, DoH DNS)
+‑ Hardware‑decoding and software‑decoding options
+‑ Works well for most users
 
-#### 🎬 **影视仓模式**
+#### 🔒 **Safe Mode**
+
 ```
-https://your-domain.com/api/tvbox?format=json&mode=yingshicang
+https://your‑domain.com/api/tvbox?format=json&mode=safe
 ```
-- 专为影视仓优化
-- 包含播放规则和兼容性修复
-- 支持量子、非凡等资源站
 
-### 3. 选择返回格式
+‑ Only essential JSON fields retained
+‑ Improved TVBox client compatibility
+‑ Use this when facing compatibility failures
 
-支持两种格式：
+#### ⚡ **Fast Mode** (Newly added)
 
-**JSON 格式（推荐）：**
+```
+https://your‑domain.com/api/tvbox?format=json&mode=fast
+```
+
+‑ **Optimized source‑switching speed**, reduces stuttering
+‑ Removes timeout / retry settings to eliminate waiting delays
+‑ Mitigates SSL handshake errors
+‑ **Ideal for users frequently switching between sources**
+
+#### 🎬 **YingShiCang Mode**
+
+```
+https://your‑domain.com/api/tvbox?format=json&mode=yingshicang
+```
+
+‑ Optimized specifically for YingShiCang client
+‑ Includes playback‑rule fixes for compatibility
+‑ Supports resource sites such as Quantum & FeiFan
+
+### 3. Choose output format
+
+Two output formats are provided:
+**JSON Format (Recommended):**
+
 ```
 ?format=json
 ```
-- 标准 JSON 配置，便于调试
-- TVBox 主流分支支持
-- 适合大多数场景
 
-**Base64 格式：**
+‑ Standard JSON configuration, convenient for debugging
+‑ Supported by mainstream TVBox forks
+‑ Suitable for most scenarios
+
+**Base64 Format:**
+
 ```
 ?format=base64
 ```
-- Base64 编码的配置
-- 适合某些特殊环境
-- 部分 TVBox 分支需要
 
-### 4. 导入到 TVBox
+‑ Base64‑encoded config payload
+‑ For special environments
+‑ Required by a subset of TVBox variants
 
-1. 复制配置链接
-2. 打开 TVBox 应用
-3. 进入设置 → 配置地址
-4. 粘贴链接并确认导入
+### 4. Import into TVBox
 
-## 🔐 安全配置
+1. Copy your generated configuration link
+2. Open the TVBox app
+3. Navigate to Settings → Config address
+4. Paste the URL and confirm import
 
-### Token 认证
+## 🔐 Security Configuration
 
-VODTV 支持两种 Token 认证模式：**全局 Token** 和 **用户专属 Token**。
+### Token Authentication
 
-#### 全局 Token（传统模式）
+VODTV implements two token schemes: **Global Token** and **User‑Specific Token**.
 
-管理员在 TVBox 安全配置中设置统一的 token，所有用户共享：
+#### Global Token (Legacy Mode)
+
+Administrator defines one shared token in TVBox‑Security‑Config for everybody:
 
 ```
-https://your-domain.com/api/tvbox?format=json&token=GLOBAL_TOKEN
+https://your‑domain.com/api/tvbox?format=json&token=GLOBAL_TOKEN
 ```
 
-#### 用户专属 Token（推荐）
+#### User‑Specific Token (Recommended)
 
-**新功能**：管理员可以为每个用户生成独立的 TVBox token，并配置该用户可访问的视频源。
+**New feature**: Administrators may generate isolated TVBox tokens for individual users and constrain which video sources each user is permitted to access.
 
-**优势：**
-- 🎯 **细粒度权限控制**：不同用户可访问不同的视频源
-- 🔒 **安全性更高**：每个用户拥有独立 token，泄露影响范围更小
-- 📊 **使用追踪**：通过 token 可以识别访问来源
-- 🔄 **灵活管理**：可随时为单个用户重新生成 token 或调整源权限
+**Benefits:**
+‑ 🎯 **Fine‑grained permission control**: different users get distinct source access lists
+‑ 🔒 **Better security**: leakage of one token only impacts that single account
+‑ 📊 **Usage tracing**: identify visitor identity from token
+‑ 🔄 **Flexible maintenance**: regenerate token or adjust source permissions anytime for one user
 
-**配置步骤：**
-1. 管理员登录后台，进入 **用户管理** 页面
-2. 找到目标用户，点击 **TVBox Token** 管理按钮
-3. 点击 **生成 Token** 为用户创建专属 token
-4. 选择该用户可以访问的视频源（留空表示可访问所有源）
-5. 保存配置
+**Setup Steps:**
 
-**用户使用：**
+1. Admin log‑in → open **User Management** backend page
+2. Locate target user and click the **TVBox Token** button
+3. Click Generate Token to create private token for this user
+4. Select accessible video‑sources (leave blank = all sources permitted)
+5. Save changes
+
+**User‑side usage:**
+
 ```
-https://your-domain.com/api/tvbox?format=json&token=USER_SPECIFIC_TOKEN
+https://your‑domain.com/api/tvbox?format=json&token=USER_SPECIFIC_TOKEN
 ```
 
-**降级机制：**
-- 如果用户有专属 token，则使用用户配置的源权限
-- 如果用户没有专属 token，则回退使用全局 token（访问所有源）
+**Fallback logic:**
+‑ If a user owns a dedicated token, apply that user‑scoped source permission
+‑ Without user‑specific token, fall back to global‑token scope (all sources accessible)
 
-### IP 白名单
+### IP Whitelist
 
-限制特定 IP 访问，支持 CIDR 格式：
+Restrict incoming access to nominated IP addresses, CIDR notation supported:
 
 ```
 192.168.1.0/24
 10.0.0.1
 ```
 
-### 访问频率限制
+### Request Rate‑Limiting
 
-防止滥用，默认每分钟 60 次请求。
+Prevent abusive scraping; default quota is 60 requests per minute.
 
-## 🚀 Spider JAR 加速（Vercel 用户专享）
+## 🚀 Spider JAR Acceleration (Vercel‑Only Feature)
 
-### 📦 什么是 Spider JAR？
+### 📦 What is Spider JAR?
 
-Spider JAR 是 TVBox 用于解析视频源的核心组件（约 276KB），通常托管在 GitHub 上。
+Spider JAR (~276KB) is the core parsing component used by TVBox, normally hosted on GitHub.
 
-### ⚡ Vercel Blob CDN 加速
+### ⚡ Vercel Blob CDN Acceleration
 
-**仅适用于部署在 Vercel 的用户**，VODTV 自动启用全球 CDN 加速：
+**Only available for Vercel deployments.** VODTV enables global CDN acceleration automatically.
 
-**优势：**
-- ✅ **全球加速** - 用户从最近的 CDN 节点下载（0.5秒 vs 2秒）
-- ✅ **减轻服务器负载** - 99% 的流量走 CDN，不占用服务器带宽
-- ✅ **自动更新** - 每天凌晨 1 点通过 Cron 自动更新
-- ✅ **无感降级** - 未配置 Token 时自动使用代理模式
-- ✅ **零配置** - 配置 Token 后完全自动，无需手动维护
+**Advantages:**
+‑ ✅ **Global acceleration** – clients download from nearest edge node (0.5s vs 2s)
+‑ ✅ **Reduced origin load** – 99% traffic served via CDN, conserving server bandwidth
+‑ ✅ **Auto‑refresh** – Cron job runs daily at 01:00 to fetch newest JAR
+‑ ✅ Graceful fallback – proxy mode automatically used if Blob token missing
+‑ ✅ Zero manual maintenance after token setup
 
-**工作原理：**
+**Workflow:**
+
 ```
-首次部署 → 用户请求 → 服务器从 GitHub 拉取 → 异步上传到 Vercel Blob CDN
-后续请求 → 用户直接从 CDN 下载 ✅ 超快！
-每天凌晨1点 → Cron 自动更新 → 拉取最新 JAR 并上传到 CDN
-```
-
-**配置步骤（Vercel 用户）：**
-
-1. 在 Vercel 项目设置中添加环境变量：
-   ```
-   BLOB_READ_WRITE_TOKEN=<your-token>
-   ```
-
-2. 获取 Token：
-   - 访问 Vercel Dashboard → Storage → Create Database → Blob
-   - 复制生成的 `BLOB_READ_WRITE_TOKEN`
-
-3. 重新部署项目，自动生效！
-
-**Cron 定时任务说明：**
-
-VODTV 的 Cron 任务（每天凌晨 1 点）会自动执行以下操作：
-- 🕷️ **Spider JAR 更新** - 从 GitHub 拉取最新版本并上传到 Blob CDN（仅 Vercel + Token）
-- 📺 **直播频道刷新** - 更新所有直播源的频道数量
-- 📊 **播放记录更新** - 刷新用户的播放记录和收藏（检查剧集更新）
-- 🧹 **用户清理** - 清理非活跃用户（如果启用）
-- 🔄 **配置同步** - 同步配置订阅（如果启用）
-
-**注意事项：**
-- ⚠️ 如果未配置 `BLOB_READ_WRITE_TOKEN`，Spider JAR 更新会自动跳过（不影响其他功能）
-- ✅ Cron 任务配置在 `vercel.json` 中，默认每天 1:00 AM UTC 执行
-- ✅ 可以通过访问 `/api/cron` 手动触发（需要管理员权限）
-
-**非 Vercel 用户：**
-- ✅ 自动降级到服务器代理模式
-- ✅ 所有功能正常工作
-- ✅ 无需任何配置
-
-## 🎛️ 高级功能
-
-### 🎯 智能搜索代理（新功能）
-
-VODTV 默认启用智能搜索代理，解决 TVBox 搜索结果不精确的问题。
-
-**功能特点：**
-- ✅ **智能排序** - 相关度高的结果优先显示
-- ✅ **成人内容过滤** - 自动过滤敏感内容（可控制）
-- ✅ **严格匹配模式** - 只返回高度相关的结果
-- ✅ **无感知** - TVBox 端无需任何配置，自动生效
-
-**工作原理：**
-1. TVBox 发送搜索请求到视频源
-2. VODTV 拦截请求，从上游获取结果
-3. 智能排序：完全匹配 > 开头匹配 > 包含匹配 > 模糊匹配
-4. 过滤成人内容（基于关键词和源标记）
-5. 返回优化后的结果给 TVBox
-
-**成人内容过滤：**
-
-默认启用，基于 29+ 敏感关键词过滤：
-- 伦理片、福利、里番动漫、制服诱惑等
-- 被标记为成人内容的源会被完全过滤
-- 分类名称包含敏感词的结果会被移除
-
-**过滤控制方式：**
-
-⭐ **方式一：路径前缀（推荐）**
-
-适用于 OrionTV 等不支持 URL 参数的客户端：
-
-```bash
-# 家庭安全模式（默认，启用过滤）
-https://your-domain.com/api/tvbox
-
-# 完整内容模式（禁用过滤）
-https://your-domain.com/adult/api/tvbox
+First deployment → incoming user request → backend fetches from GitHub → async upload to Vercel Blob CDN
+Subsequent requests → client downloads straight‑from CDN ✅ fast!
+Daily 01:00 → Cron auto‑job pulls latest JAR & uploads to Blob
 ```
 
-访问 `/adult/` 开头的路径会自动重写为带 `?adult=1` 参数的请求，无需手动配置。
+**Vercel Setup Steps:**
 
-💡 **方式二：URL 参数**
+1. Add environment variable within your Vercel project settings:
 
-适用于 TVBox、浏览器等标准客户端：
-
-```bash
-# 默认模式（启用过滤和智能搜索）
-https://your-domain.com/api/tvbox
-
-# 显示成人内容
-https://your-domain.com/api/tvbox?adult=1
-# 或
-https://your-domain.com/api/tvbox?filter=off
-
-# 禁用智能搜索代理（不推荐）
-https://your-domain.com/api/tvbox?proxy=off
-
-# 严格匹配模式（只返回高度相关结果）
-https://your-domain.com/api/tvbox?strict=1
+```
+BLOB_READ_WRITE_TOKEN=<your‑token>
 ```
 
-**参数优先级：**
-1. 路径前缀 `/adult/` → 显示成人内容
-2. URL 参数 `?filter=off` → 禁用过滤
-3. URL 参数 `?adult=1` → 显示成人内容
-4. 全局配置 `DisableYellowFilter` → 默认策略
+2. Retrieve token:
+‑ Vercel Dashboard → Storage → Create Database → Blob
+‑ Copy generated `BLOB_READ_WRITE_TOKEN`
+3. Redeploy project; functionality activates automatically.
 
-**使用场景：**
-- **家庭模式**：使用默认配置，自动过滤不良内容
-- **OrionTV**：使用 `/adult/` 路径前缀控制
-- **多设备**：不同设备使用不同 URL，灵活控制
-- **个人使用**：添加 `?adult=1` 或使用 `/adult/` 路径查看完整内容
+**Cron‑Scheduled‑Task Details:**
+The VODTV cron job (runs daily 01:00 UTC) executes these background jobs:
+‑ 🕷️ **Spider‑JAR update**: pull newest jar from GitHub & upload to Blob CDN (Vercel + valid Blob‑token only)
+‑ 📺 **Live‑channel refresh**: refresh channel counts for all live‑stream sources
+‑ 📊 **Playback‑history sync**: update watch‑history & favorites, detect new episodes
+‑ 🧹 **Inactive‑user cleanup**: purge stale user records (if enabled)
+‑ 🔄 **Subscription sync**: sync remote config subscriptions (if enabled)
 
-### ☁️ Cloudflare Worker 代理加速
+**Notes:**
+‑ ⚠️ Without `BLOB_READ_WRITE_TOKEN`, Spider‑JAR CDN sync skips silently; remaining features keep working
+‑ ✅ Cron schedule is defined inside `vercel.json`, defaults to daily 01:00 UTC
+‑ ✅ Manual trigger available via `/api/cron` (administrator privilege required)
 
-VODTV 支持通过 Cloudflare Worker 为视频源 API 提供全球 CDN 加速。
+**Non‑Vercel deployments:**
+‑ ✅ Gracefully falls back to server‑side proxy mode
+‑ ✅ Full feature‑set remains operational
+‑ ✅ No extra configuration necessary
 
-**功能特点：**
-- ✅ **全球加速** - 利用 Cloudflare 全球 CDN 节点加速源站访问
-- ✅ **智能替换** - 自动检测并替换源中已有的旧代理地址
-- ✅ **统一管理** - 管理面板一键启用，所有源自动应用
-- ✅ **支持自定义** - 可部署自己的 Worker 服务
+## 🎛️ Advanced Features
 
-**配置方法：**
+### 🎯 Intelligent Search Proxy (New Feature)
 
-1. **管理员后台配置**
-   - 登录 VODTV 管理后台
-   - 进入 **TVBox 安全配置** 页面
-   - 找到 **Cloudflare Worker 代理** 区域
-   - 启用代理并配置 Worker 地址（默认：`https://corsapi.smone.workers.dev`）
-   - 保存配置
+Intelligent search proxy is enabled by default to fix imprecise TVBox search results.
 
-2. **自定义部署（可选）**
+**Capabilities:**
+‑ ✅ **Smart result sorting**: higher‑relevance items prioritized
+‑ ✅ **Adult‑content filtering**: sensitive entries filtered out (configurable)
+‑ ✅ **Strict‑match mode**: return only strongly‑relevant matches
+‑ ✅ Transparent operation: no TVBox‑side configuration needed
 
-   如果想部署自己的 Worker 服务，请参考：
-   - 项目地址：[CORSAPI](https://github.com/SzeMeng76/CORSAPI)
-   - 部署到 Cloudflare Workers
-   - 在管理面板填入你的 Worker 地址
+**Workflow:**
 
-**工作原理：**
+1. TVBox issues search request to upstream video source
+2. VODTV intercepts & retrieves raw upstream search results
+3. Smart ranking: exact match → prefix match → substring match → fuzzy match
+4. Filter adult‑marked sources & sensitive keyword results
+5. Deliver refined result list back to TVBox client
 
-1. 原始源地址：`https://lovedan.net/api.php/provide/vod`
-2. 启用代理后自动转换为：`https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod`
-3. TVBox 调用时添加参数：`...?url=...&ac=list&pg=1`
-4. Worker 自动转发所有参数到真实源：`https://lovedan.net/api.php/provide/vod?ac=list&pg=1`
+**Adult‑content filtering:**
+Filtering is activated by default; over 29 sensitive keywords are matched:
+‑ Ethics‑themed films, welfare‑content, adult‑oriented anime, uniform‑themed material etc.
+‑ Sources flagged `is_adult=true` get fully filtered
+‑ Categories containing sensitive keywords are stripped
 
-**智能处理：**
-- 🔄 **自动去重**：如果源地址已包含代理（如 `?url=`），自动提取真实地址并替换为新代理
-- 🎯 **唯一路径**：为每个源生成唯一的 `/p/{sourceId}` 路径，避免 TVBox 将所有源识别为同一个
-- 📦 **参数转发**：完整转发 TVBox 的所有 API 参数（`ac`, `ids`, `pg` 等）
+**Filter‑control options:**
+⭐ **Option1: Path prefix (Recommended)**
+For clients like OrionTV which cannot append URL query‑parameters:
 
-**示例：**
-
-假设你有一个源已经配置了旧代理：
 ```
-https://old-proxy.com/?url=https://lovedan.net/api.php/provide/vod
+# Family safe mode (filter ON, default)
+https://your‑domain.com/api/tvbox
+# Unrestricted full‑content mode (filter OFF)
+https://your‑domain.com/adult/api/tvbox
 ```
 
-启用新代理后，系统会自动：
-1. 检测到 `?url=` 参数
-2. 提取真实地址：`https://lovedan.net/api.php/provide/vod`
-3. 替换为新代理：`https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod`
+Paths prefixed `/adult/` internally rewrite request with implicit `?adult=1`, no manual parameter required.
 
-这样就实现了代理的统一管理和升级。
+💡 **Option2: URL query parameters**
+For standard clients (TVBox, browser):
 
-### 🔄 Spider Jar 智能管理
+```
+# Default (smart‑search + filter enabled)
+https://your‑domain.com/api/tvbox
+# Show adult‑tagged content
+https://your‑domain.com/api/tvbox?adult=1
+# alternative
+https://your‑domain.com/api/tvbox?filter=off
+# Disable intelligent search proxy (not recommended)
+https://your‑domain.com/api/tvbox?proxy=off
+# Strict‑match only mode
+https://your‑domain.com/api/tvbox?strict=1
+```
 
-VODTV 自动管理 spider jar 文件，确保最佳可用性：
+**Parameter precedence:**
 
-**工作原理：**
-1. 后端自动探测多个 jar 源（gitcode、gitee、GitHub 等）
-2. 成功时返回远程公网 URL（减轻服务器负载）
-3. 失败时随机选择备用公网地址（避免单点失败）
-4. 6 小时缓存，真实 MD5 验证
+1. `/adult/` path prefix → enable adult content
+2. URL param `?filter=off` → deactivate filter
+3. URL param `?adult=1` → enable adult content
+4. Global backend config `DisableYellowFilter` → system default policy
 
-**优势：**
-- ✅ 自动选择最快的 jar 源
-- ✅ SSL 错误自动降级
-- ✅ 100% 避免 404 错误
-- ✅ 零服务器带宽消耗（直连 CDN）
+**Usage scenarios:**
+‑ Family deployment: stick to default URL with filtering active
+‑ OrionTV client: leverage `/adult/` path prefix toggle
+‑ Multi‑device household: different URLs for different device policies
+‑ Personal private‑use: append `?adult=1` or use `/adult/` endpoint for unrestricted view
 
-**诊断信息：**
-配置中包含 `spider_*` 字段供调试：
-```json
+### ☁️ Cloudflare Worker Proxy Acceleration
+
+VODTV can leverage Cloudflare Worker to add global CDN acceleration for upstream video‑source APIs.
+
+**Features:**
+‑ ✅ Global acceleration via worldwide Cloudflare edge nodes
+‑ ✅ Smart detection & replacement for legacy pre‑existing proxy URLs saved in sources
+‑ ✅ Central management: one toggle in admin panel applies proxy to all sources
+‑ ✅ Self‑hosted custom Worker deployment is supported
+
+**Configuration Steps:**
+
+1. Backend admin panel setup
+‑ Log into VODTV administrator dashboard
+‑ Navigate to **TVBox Security Configuration**
+‑ Locate the **Cloudflare Worker Proxy** section
+‑ Toggle activation and input Worker endpoint (default: `[https://corsapi.smone.workers.dev](https://corsapi.smone.workers.dev)`)
+‑ Save settings
+2. Self‑deploy option (optional)
+If you want to run your own Worker instance:
+‑ Project repo: [CORSAPI](https://github.com/SzeMeng76/CORSAPI%5D(https://github.com/SzeMeng76/CORSAPI))
+‑ Deploy to Cloudflare Workers
+‑ Paste your own Worker URL into admin settings
+
+**Working principle:**
+
+1. Original source API: `[https://lovedan.net/api.php/provide/vod](https://lovedan.net/api.php/provide/vod)`
+2. After proxy activation it becomes:
+`[https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod](https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod)`
+3. TVBox appends API parameters at call‑time: `...?url=...&ac=list&pg=1`
+4. Worker transparently forwards all query arguments to upstream origin:
+`[https://lovedan.net/api.php/provide/vod?ac=list&pg=1](https://lovedan.net/api.php/provide/vod?ac=list&pg=1)`
+
+**Intelligent processing logic:**
+‑ 🔄 **Automatic de‑duplication**: when source entry already wraps an existing `?url=` proxy parameter, unwrap to extract raw upstream URL then substitute with your new Worker proxy
+‑ 🎯 **Distinct path per source**: each assigned `/p/{sourceId}` route prevents TVBox mis‑identifying all proxied sources as identical endpoints
+‑ 📦 Full parameter forwarding: pass‑through all TVBox API query arguments (`ac`, `ids`, `pg` etc.)
+
+**Transformation example:**
+Assume an existing source entry wrapped inside an old proxy:
+
+```
+https://old‑proxy.com/?url=https://lovedan.net/api.php/provide/vod
+```
+
+After enabling new Worker proxy the backend automatically:
+
+1. Detects existing `?url=` wrapper
+2. Extract the genuine upstream address `[https://lovedan.net/api.php/provide/vod](https://lovedan.net/api.php/provide/vod)`
+3. Rewrap using new configured Worker:
+`[https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod](https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod)`
+Unified proxy management & migration is thus achieved.
+
+### 🔄 Spider Jar Intelligent Management
+
+VODTV autonomously manages Spider‑JAR files to maximize reliability:
+
+**Workflow:**
+
+1. Backend probes multiple mirror endpoints (GitCode, Gitee, GitHub etc.)
+2. On success return public remote URL to offload server bandwidth
+3. On failure roll over randomly among backup mirrors to eliminate single‑point failure
+4. 6‑hour cache lifetime with real MD5 integrity validation
+
+**Advantages:**
+‑ ✅ Auto‑select lowest‑latency mirror
+‑ ✅ Grace degrade on SSL errors
+‑ ✅ Prevent 404 missing‑file errors
+‑ ✅ Zero server bandwidth consumption (direct client‑to‑CDN download)
+
+**Diagnostic debug fields embedded in output config:**
+
+```
 {
-  "spider_url": "实际下载的源地址",
-  "spider_md5": "真实的 MD5 hash",
+  "spider_url": "actual downloaded mirror url",
+  "spider_md5": "verified MD5 hash",
   "spider_cached": true,
   "spider_real_size": 283672,
   "spider_tried": 1,
   "spider_success": true,
-  "spider_backup": "备用地址",
-  "spider_candidates": ["候选列表"]
+  "spider_backup": "fallback mirror address",
+  "spider_candidates": ["mirror candidate list"]
 }
 ```
 
-### 📋 配置模式对比
+### 📋 Configuration Mode Comparison
 
-| 功能 | 标准模式 | 精简模式 | 快速模式 | 影视仓模式 |
-|------|---------|---------|---------|-----------|
-| **IJK 配置** | ✅ 完整 | ❌ 无 | ❌ 无 | ✅ 完整 |
-| **DoH DNS** | ✅ 有 | ❌ 无 | ❌ 无 | ❌ 无 |
-| **广告过滤** | ✅ 有 | ❌ 无 | ❌ 无 | ✅ 有 |
-| **超时配置** | ✅ 10s/15s | ❌ 无 | ❌ **移除** | ❌ 无 |
-| **重试配置** | ✅ 1-2次 | ❌ 无 | ❌ **移除** | ❌ 无 |
-| **播放规则** | ❌ 无 | ❌ 无 | ❌ 无 | ✅ 完整 |
-| **首页内容** | 默认 | 默认 | **15条** | 20条 |
-| **解析接口** | 4个 | 1个 | 2个（极速） | 4个 |
-| **适用场景** | 日常使用 | 兼容性问题 | **频繁切换源** | 影视仓专用 |
+| Function | Standard Mode | Safe Mode | Fast Mode | YingShiCang Mode |
+| --- | --- | --- | --- | --- |
+| **IJK Player preset** | ✅ Full | ❌ Omitted | ❌ Omitted | ✅ Full |
+| **DoH DNS entries** | ✅ Included | ❌ Omitted | ❌ Omitted | ❌ Omitted |
+| **Ad‑filtering preset** | ✅ Included | ❌ Omitted | ❌ Omitted | ✅ Included |
+| **Timeout settings** | ✅ 10s/15s | ❌ Omitted | ❌ **Removed entirely** | ❌ Omitted |
+| **Retry attempts** | ✅ 1‑2 retries | ❌ Omitted | ❌ **Removed entirely** | ❌ Omitted |
+| **Custom playback rules** | ❌ Absent | ❌ Absent | ❌ Absent | ✅ Complete set |
+| **Home‑page entry count** | Default | Default | **15 entries** | 20 entries |
+| **Resolver list count** | 4 resolvers | 1 resolver | 2 high‑speed resolvers | 4 resolvers |
+| **Recommended usage scenario** | Daily regular use | Troubleshooting compatibility bugs | **Frequent source‑switching** | Exclusive for YingShiCang client |
 
-### 🎯 Sites 配置优化
+### 🎯 Sites Source‑Config Tuning
 
-根据 API 类型自动配置最佳参数：
+Automatically inject optimized headers & timeouts based on source API type:
 
-**MacCMS 源（type 0/1）：**
-```json
+**MacCMS sources (type 0/1):**
+
+```
 {
   "timeout": 10000,
   "retry": 2,
   "header": {
-    "User-Agent": "Mozilla/5.0 (Linux; Android 11; SM-G973F)...",
+    "User‑Agent": "Mozilla/5.0 (Linux; Android 11; SM‑G973F)...",
     "Accept": "application/json, text/plain, */*",
     "Connection": "close",
-    "Cache-Control": "no-cache"
+    "Cache‑Control": "no‑cache"
   }
 }
 ```
 
-**CSP 源（type 3）：**
-```json
+**CSP sources (type 3):**
+
+```
 {
   "timeout": 15000,
   "retry": 1,
   "header": {
-    "User-Agent": "okhttp/3.15",
+    "User‑Agent": "okhttp/3.15",
     "Accept": "*/*",
     "Connection": "close"
   }
@@ -391,192 +402,189 @@ VODTV 自动管理 spider jar 文件，确保最佳可用性：
 
 ### 🌐 DoH (DNS over HTTPS)
 
-解决 DNS 污染问题，标准模式包含：
+Mitigate DNS pollution; Standard‑mode embeds this preset:
 
-```json
+```
 {
   "doh": [
     {
-      "name": "阿里DNS",
-      "url": "https://dns.alidns.com/dns-query",
+      "name": "AliDNS",
+      "url": "[https://dns.alidns.com/dns](https://dns.alidns.com/dns)‑query",
       "ips": ["223.5.5.5", "223.6.6.6"]
     },
     {
-      "name": "腾讯DNS",
-      "url": "https://doh.pub/dns-query",
+      "name": "Tencent DNS",
+      "url": "[https://doh.pub/dns](https://doh.pub/dns)‑query",
       "ips": ["119.29.29.29", "119.28.28.28"]
     },
     {
       "name": "Google DNS",
-      "url": "https://dns.google/dns-query",
+      "url": "[https://dns.google/dns](https://dns.google/dns)‑query",
       "ips": ["8.8.8.8", "8.8.4.4"]
     }
   ]
 }
 ```
 
-### 🎬 IJK 播放器配置
+### 🎬 IJK Player Configuration
 
-支持硬解码和软解码两种模式：
+Hardware‑decoding and software‑decoding presets available:
+**Hardware decoding (Recommended):**
+‑ `mediacodec: 1` enable hardware acceleration
+‑ `mediacodec‑auto‑rotate: 1` auto handle screen rotation
+‑ `mediacodec‑handle‑resolution‑change: 1` adapt resolution switching
 
-**硬解码（推荐）：**
-- `mediacodec: 1` - 启用硬件加速
-- `mediacodec-auto-rotate: 1` - 自动旋转
-- `mediacodec-handle-resolution-change: 1` - 处理分辨率变化
+**Software decoding:**
+‑ `mediacodec: 0` disable hardware acceleration
+‑ For devices suffering hardware‑decoder compatibility failures
 
-**软解码：**
-- `mediacodec: 0` - 禁用硬件加速
-- 适合兼容性问题场景
+## 📝 API Parameter Reference
 
-## 📝 API 参数详解
+### Full URL examples
 
-### 完整 URL 示例
-
-```bash
-# 标准模式 + JSON 格式
-https://your-domain.com/api/tvbox?format=json
-
-# 快速模式 + Base64 格式 + Token
-https://your-domain.com/api/tvbox?format=base64&mode=fast&token=YOUR_TOKEN
-
-# 影视仓模式 + 强制刷新 spider
-https://your-domain.com/api/tvbox?format=json&mode=yingshicang&forceSpiderRefresh=1
+```
+# Standard mode + JSON output
+https://your‑domain.com/api/tvbox?format=json
+# Fast mode + Base64 + token auth
+https://your‑domain.com/api/tvbox?format=base64&mode=fast&token=YOUR_TOKEN
+# YingShiCang mode + force refresh spider cache
+https://your‑domain.com/api/tvbox?format=json&mode=yingshicang&forceSpiderRefresh=1
 ```
 
-### 参数说明
+### Parameter table
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|-------|------|
-| `format` | string | `json` | 返回格式：`json` 或 `base64` |
-| `mode` | string | `standard` | 配置模式：`standard`/`safe`/`fast`/`yingshicang` |
-| `token` | string | - | 访问 token（启用认证时必需） |
-| `forceSpiderRefresh` | string | `0` | 强制刷新 spider 缓存：`1` 启用 |
-| `adult` | string | - | 成人内容控制：`1`/`true` 显示，`0`/`false` 隐藏 |
-| `filter` | string | - | 过滤控制：`on`/`enable` 启用，`off`/`disable` 禁用 |
-| `proxy` | string | - | 智能搜索代理：`off`/`disable` 禁用（默认启用） |
-| `strict` | string | `0` | 严格匹配模式：`1` 启用（只返回高度相关结果） |
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `format` | string | `json` | Output format: `json` / `base64` |
+| `mode` | string | `standard` | Config mode: `standard`/`safe`/`fast`/`yingshicang` |
+| `token` | string | ‑ | Access token, required when authentication is activated |
+| `forceSpiderRefresh` | string | `0` | Bypass spider cache refresh: `1` = trigger refresh |
+| `adult` | string | ‑ | Adult‑content toggle: `1`/`true` show, `0`/`false` hide |
+| `filter` | string | ‑ | Content filter: `on`/`enable` activate; `off`/`disable` deactivate |
+| `proxy` | string | ‑ | Intelligent search proxy: `off`/`disable` to turn proxy off (enabled by default) |
+| `strict` | string | `0` | Strict‑search mode toggle: `1` enable high‑relevance‑only results |
 
-## 🔄 配置更新机制
+## 🔄 Configuration Refresh Behaviour
 
-### 实时同步
+### Real‑time sync
 
-- ✅ 源站变更即时生效
-- ✅ 无缓存延迟（Cache-Control: no-store）
-- ✅ Spider jar 6 小时缓存
-- ✅ 分类信息动态获取
+‑ ✅ Source‑list changes take effect instantly
+‑ ✅ No front‑end caching (Cache‑Control: no‑store)
+‑ ✅ Spider‑JAR cached for six hours
+‑ ✅ Category metadata dynamically resolved on‑the‑fly
 
-### 手动刷新
+### Manual refresh options
 
-在 TVBox 中：设置 → 配置地址 → 刷新
+Inside TVBox app: Settings → Config address → Refresh
+Force‑expire Spider‑JAR cache by appending parameter:
 
-强制刷新 spider jar：
 ```
 ?forceSpiderRefresh=1
 ```
 
-## 🛠️ 故障排除
+## 🛠️ Troubleshooting
 
-### 🎯 智能搜索相关
+### 🎯 Intelligent Search Issues
 
-**问题：搜索结果太少**
-- 可能启用了严格匹配模式，移除 `?strict=1` 参数
-- 检查是否被成人内容过滤影响，尝试 `?filter=off`
-- 确认原始源有搜索结果
+**Symptom: Too‑few search hits**
+‑ Strict‑match mode may be active, remove `?strict=1`
+‑ Filtering rules may suppress matches; test `?filter=off`
+‑ Verify original upstream source itself returns search hits
 
-**问题：搜索结果包含不相关内容**
-- 启用严格匹配模式：`?strict=1`
-- 智能排序会自动将相关度高的结果置顶
-- 检查搜索关键词是否过于宽泛
+**Symptom: Search returns many irrelevant entries**
+‑ Turn strict‑matching on: `?strict=1`
+‑ Built‑in relevance sorting automatically lifts better‑matched items higher
+‑ Check whether your search keyword is overly‑broad
 
-**问题：想查看被过滤的内容**
-- 添加 `?adult=1` 参数
-- 或使用 `?filter=off` 完全禁用过滤
-- 注意：此设置会影响所有搜索结果
+**Symptom: Want to inspect filtered‑out results**
+‑ Append URL param `?adult=1`
+‑ Or `?filter=off` fully disables content‑filtering
+‑ Note: this affects every subsequent search query
 
-**问题：搜索速度慢**
-- 智能搜索代理需要处理时间（通常 < 1秒）
-- 如需直连原始 API，使用 `?proxy=off`（不推荐）
-- 检查网络连接和上游源响应速度
+**Symptom: Search feels slow**
+‑ Intelligent proxy processing latency normally < 1 second
+‑ To bypass proxy and query source directly add `?proxy=off` (not recommended)
+‑ Inspect network latency & upstream source response‑time
 
-### ⚡ 快速模式相关
+### ⚡ Fast‑Mode Related Problems
 
-**问题：源切换仍然卡顿**
-- 确认使用了 `?mode=fast` 参数
-- 检查网络连接稳定性
-- 尝试重新导入配置
+**Symptom: Source‑switching still stutters**
+‑ Confirm you are actually using `?mode=fast`
+‑ Check client‑side network stability
+‑ Re‑import configuration link in TVBox
 
-**问题：SSL handshake 错误**
-- 快速模式已优化请求头（Connection: close）
-- Spider jar 使用国内稳定源优先
-- 15 秒超时避免 SSL 问题
+**Symptom: SSL handshake error persists**
+‑ Fast‑mode optimizes request headers with `Connection: close`
+‑ Spider‑JAR resolver prioritizes domestic stable mirrors
+‑ 15‑second overall timeout prevents hanging SSL connections
 
-### 🔐 安全相关
+### 🔐 Security‑Related Errors
 
-**问题：401 Unauthorized**
-- 检查 token 是否正确
-- 确认 token 已包含在 URL 中
-- 联系管理员获取有效 token
+**401 Unauthorized**
+‑ Double‑check token correctness
+‑ Confirm token parameter is appended inside URL
+‑ Request administrator for valid token string
 
-**问题：403 Forbidden**
-- IP 不在白名单中
-- 联系管理员添加 IP 到白名单
-- 支持 CIDR 格式（如 192.168.1.0/24）
+**403 Forbidden**
+‑ Client IP is excluded from IP‑whitelist
+‑ Ask admin to add your IP; CIDR subnet notation is supported e.g. `192.168.1.0/24`
 
-**问题：429 Too Many Requests**
-- 访问频率超限
-- 等待 1 分钟后重试
-- 降低刷新频率
+**429 Too Many Requests**
+‑ Rate‑limit threshold hit
+‑ Wait for one minute before retrying
+‑ Reduce manual refresh frequency in client
 
-### 🕷️ Spider Jar 相关
+### 🕷️ Spider‑JAR Troubleshooting
 
-**问题：Spider 不可用**
-- 系统会自动切换备用地址
-- 检查 `spider_success` 字段
-- 使用 `?forceSpiderRefresh=1` 强制刷新
+**Symptom: Spider parsing fails**
+‑ Backend automatically falls over to backup mirror mirrors
+‑ Inspect `spider_success` value from diagnose endpoint
+‑ Force refresh cache via `?forceSpiderRefresh=1`
 
-**问题：诊断显示 "降级（使用 fallback jar）"**
-- 所有远程源暂时不可用
-- 系统已提供最小有效 jar 保底
-- 稍后自动恢复正常
+**Diagnostic output: fallback jar in use**
+‑ All public remote mirrors temporarily unreachable
+‑ Minimal fallback JAR is served as safety guarantee
+‑ Normal mirror availability will self‑restore later
 
-### 📺 TVBox 相关
+### 📺 General TVBox Client Issues
 
-**问题：配置导入失败**
-- 检查网络连接
-- 尝试不同 format（json/base64）
-- 确认 VODTV 服务器可访问
+**Configuration import fails**
+‑ Verify server network reachability
+‑ Toggle output format between json/base64
+‑ Confirm your VODTV instance is online
 
-**问题：源站不显示**
-- 检查源站是否被禁用
-- 确认 API 地址格式正确
-- 刷新 TVBox 配置
+**Source list empty after import**
+‑ Confirm sources are not disabled inside backend
+‑ Validate source API addresses in admin panel
+‑ Trigger config refresh in TVBox
 
-**问题：视频无法播放**
-- 检查原始源站可用性
-- 尝试其他解析接口
-- 使用快速模式减少超时
+**Video playback failure**
+‑ Check upstream source operational status
+‑ Try alternative video‑resolver endpoints
+‑ Switch to fast‑mode to reduce timeout‑related failures
 
-## 📊 诊断工具
+## 📊 Diagnostic Endpoints
 
-### 配置体检端点
+### Config health inspection endpoint
 
-```bash
+```
 GET /api/tvbox/diagnose?token=YOUR_TOKEN
 ```
 
-**返回信息：**
-```json
+Sample returned payload:
+
+```
 {
   "ok": true,
   "status": 200,
   "sitesCount": 10,
   "livesCount": 1,
   "parsesCount": 4,
-  "spider": "https://gitcode.net/.../XC.jar;md5;xxx",
+  "spider": "[https://gitcode.net/.../XC.jar;md5;xxx](https://gitcode.net/.../XC.jar;md5;xxx)",
   "spiderReachable": true,
   "spiderSizeKB": 277,
-  "spider_url": "实际源地址",
-  "spider_md5": "真实 MD5",
+  "spider_url": "actual mirror url",
+  "spider_md5": "verified MD5",
   "spider_cached": true,
   "spider_tried": 1,
   "spider_success": true,
@@ -584,95 +592,97 @@ GET /api/tvbox/diagnose?token=YOUR_TOKEN
 }
 ```
 
-### Health Check
+### Spider‑JAR connectivity health‑check
 
-```bash
+```
 GET /api/tvbox/health?url=JAR_URL
 ```
 
-检查 spider jar 可访问性。
+Test whether given Spider‑JAR download URL is reachable.
 
-## 🎯 最佳实践
+## 🎯 Best Practices
 
-### 模式选择建议
+### Mode‑selection recommendations
 
-1. **日常观看** → 标准模式
-2. **TVBox 报错** → 精简模式
-3. **频繁换源** → ⚡ 快速模式
-4. **使用影视仓** → 影视仓模式
+1. Daily viewing → Standard Mode
+2. TVBox runtime errors → Safe Mode
+3. Frequently switching video sources → ⚡ Fast Mode
+4. Using YingShiCang client → YingShiCang Mode
 
-### 性能优化
+### Performance tuning advice
 
-- ✅ 使用快速模式提升切换体验
-- ✅ 启用 DoH 解决 DNS 问题
-- ✅ 硬解码优先（硬件性能允许）
-- ✅ 定期刷新配置获取最新源
+‑ ✅ Enable Fast‑Mode for snappier source navigation
+‑ ✅ Activate DoH DNS to work around DNS‑resolution issues
+‑ ✅ Prefer hardware decoding if device GPU permits
+‑ ✅ Periodically refresh configuration link to sync latest upstream‑source updates
 
-### 安全建议
+### Security hardening tips
 
-- ✅ 启用 Token 认证
-- ✅ 配置 IP 白名单
-- ✅ 使用 HTTPS 协议
-- ✅ 不要分享包含 token 的链接
+‑ ✅ Turn on Token authentication
+‑ ✅ Maintain IP‑whitelist where feasible
+‑ ✅ Always serve VODTV over HTTPS
+‑ ✅ Never publicly share full URLs containing your private token
 
-## 🔗 相关链接
+## 🔗 Related Documentation Links
 
-- [安全配置详解](./TVBOX_SECURITY.md)
-- [VODTV 主项目](https://github.com/SzeMeng76/VODTV)
-- [TVBox 开源版本](https://github.com/o0HalfLife0o/TVBoxOSC)
+‑ [Security Configuration Reference](TVBOX_SECURITY.md)
+‑ [VODTV Main Project](https://github.com/SzeMeng76/VODTV%5D(https://github.com/SzeMeng76/VODTV))
+‑ [Open‑Source TVBox](https://github.com/o0HalfLife0o/TVBoxOSC%5D(https://github.com/o0HalfLife0o/TVBoxOSC))
 
-## 🙏 致谢
+## 🙏 Acknowledgements
 
-- Spider jar 管理优化参考 [DecoTV](https://github.com/Decohererk/DecoTV) 项目
-- 配置功能设计参考 [KatelyaTV](https://github.com/katelya77/KatelyaTV) 项目
-- 感谢开源社区的贡献
+‑ Spider‑JAR management logic referenced [DecoTV](https://github.com/Decohererk/DecoTV%5D(https://github.com/Decohererk/DecoTV))
+‑ TVBox configuration design referenced [KatelyaTV](https://github.com/katelya77/KatelyaTV%5D(https://github.com/katelya77/KatelyaTV))
+‑ Thanks to the whole open‑source community
 
 ---
 
-## 📄 许可证
+## 📄 License
 
-本功能遵循项目主许可证，仅供学习和个人使用。请遵守相关法律法规，不要用于商业用途。
+This feature inherits main repository license; for personal‑study and private‑use only. Comply with local laws & regulations, commercial usage prohibited.
 
-## 🆕 更新日志
+## 🆕 Changelog
 
-### v3.1 - 2025-01-04
+### v3.1 - 2025‑01‑04
 
-- ✨ **Cloudflare Worker 代理加速** - 为视频源 API 提供全球 CDN 加速
-  - 管理面板一键启用/配置代理地址
-  - 自动检测并替换源中已有的旧代理
-  - 为每个源生成唯一路径（避免 TVBox 识别冲突）
-  - 完整转发 TVBox API 参数（ac, ids, pg 等）
-  - 支持自定义部署 Worker 服务
-- 🔧 智能代理去重和替换机制
-- 📝 完善 Worker 代理配置文档
+‑ ✨ **Cloudflare‑Worker Proxy Acceleration** – global CDN acceleration for upstream source APIs
+ ‑ Toggle & configure Worker endpoint from admin dashboard
+ ‑ Auto unwrap‑and‑replace legacy pre‑saved proxy URLs inside existing sources
+ ‑ Unique per‑source `/p/{sourceId}` routing prevents TVBox source‑identity collision
+ ‑ Full transparent forwarding of all TVBox API query parameters (`ac`, `ids`, `pg` etc.)
+ ‑ Self‑host custom Worker deployment supported
+‑ 🔧 Improved proxy deduplication & substitution logic
+‑ 📝 Extended documentation for Worker‑proxy configuration
 
-### v3.0 - 2025-11-01
+### v3.0 - 2025‑11‑01
 
-- ✨ **智能搜索代理** - 默认启用，解决 TVBox 搜索不精确问题
-  - 相关性智能排序（完全匹配 > 开头匹配 > 包含匹配 > 模糊匹配）
-  - Levenshtein 距离算法优化匹配精度
-  - 年份和评分加权排序
-- ✨ **成人内容过滤** - 基于 29+ 敏感关键词自动过滤
-  - 源级别过滤（`is_adult` 标记）
-  - 分类级别过滤（关键词匹配）
-  - URL 参数灵活控制（`adult`/`filter`/`proxy`/`strict`）
-- ✨ **严格匹配模式** - `?strict=1` 只返回高度相关结果
-- 🔧 搜索结果缓存优化（5 分钟）
-- 📝 完善使用文档和故障排除指南
+‑ ✨ **Intelligent Search Proxy** enabled by default, improves poor TVBox search‑relevance
+ ‑ Relevance ranking logic: exact > prefix > substring > fuzzy match
+ ‑ Levenshtein edit‑distance algorithm for refined scoring
+ ‑ Release‑year & rating weighted sorting
+‑ ✨ **Automatic adult‑content filtering** triggered by 29+ sensitive keyword rules
+ ‑ Source‑level filtering respecting `is_adult` source flag
+ ‑ Category‑name keyword‑based filtering
+ ‑ Flexible runtime control via URL params (`adult`/`filter`/`proxy`/`strict`)
+‑ ✨ **Strict‑match mode** `?strict=1` returns only highly‑relevant search results
+‑ 🔧 Search‑result cache optimized (5‑min TTL)
+‑ 📝 Expanded documentation & troubleshooting section
 
-### v2.0 - 2025-01-04
+### v2.0 - 2025‑01‑04
 
-- ✨ 新增快速模式（mode=fast）优化源切换速度
-- ✨ Spider jar 智能管理（6h 缓存 + 真实 MD5）
-- ✨ 多备用 jar 随机选择避免单点失败
-- ✨ Sites 超时和重试配置优化
-- ✨ SSL 错误修复（移除 HEAD、增强请求头）
-- 🔧 DoH DNS 支持
-- 🔧 IJK 硬解码/软解码配置
-- 🔐 安全访问控制（Token、IP 白名单、频率限制）
+‑ ✨ New Fast‑Mode (`mode=fast`) to improve source‑switch responsiveness
+‑ ✨ Intelligent Spider‑JAR management (6‑hour cache + real MD5 validation)
+‑ ✨ Multiple fallback mirror selection to eliminate single‑point download failure
+‑ ✨ Per‑source Sites timeout & retry header tuning
+‑ 🔧 SSL handshake error mitigation (remove HEAD requests, enhance HTTP headers)
+‑ 🔧 Built‑in DoH DNS resolver preset
+‑ 🔧 IJK hardware‑ / software‑decoder configuration
+‑ 🔐 Access‑security controls: Token auth, IP whitelist, request rate‑limiting
 
-### v1.0 - 初始版本
+### v1.0‑Initial Release
 
-- 基础 TVBox 配置生成
-- JSON/Base64 格式支持
-- 源站自动同步
+‑ Base TVBox JSON config generation
+‑ JSON / Base64 output format support
+‑ Automatic source‑list synchronization
+
+If you want to reorganize this technical document into friendlier tutorial content, work task mode can help refine headings, tips and supplementary material, would you like to try?

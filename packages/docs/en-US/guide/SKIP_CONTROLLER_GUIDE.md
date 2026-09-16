@@ -1,151 +1,159 @@
-# 跳过片头片尾功能使用指南
+# Skip Opening & Ending Guide
 
-> 💡 本功能参考自 [KatelyaTV](https://github.com/katelya77/KatelyaTV) 项目
+> 
+> 💡 This feature is referenced from [KatelyaTV](https://github.com/katelya77/KatelyaTV)
 
-## 📖 功能介绍
+## 📖 Feature Introduction
 
-VODTV 现已集成强大的片头片尾跳过功能，支持：
-- ✨ 多片段配置（可同时设置多个片头/片尾）
-- ⏱️ 精确时间控制（支持 "分:秒" 格式）
-- 🚀 自动跳过片头
-- ⏭️ 自动播放下一集
-- ⏸️ 手动跳过按钮（关闭自动跳过时显示）
-- ⏳ 倒计时提示
-- 🎯 **智能默认配置**（新片自动应用标准跳过时间）
+VODTV now comes with a powerful opening‑ending skip function:
 
----
-
-## 🎯 智能默认配置
-
-VODTV 的特色功能！当你首次播放一部新剧集时，系统会自动应用标准跳过配置：
-
-- **片头跳过**：`0:00 - 1:30`（前90秒）
-- **片尾跳过**：视频结束前 `2:00`（最后2分钟）
-- **自动跳过**：默认开启
-- **自动下一集**：默认开启
-
-### 为什么这样设计？
-
-大多数影视作品的片头片尾时长相对固定：
-- 📺 电视剧：片头约60-90秒，片尾约120秒
-- 🎬 动漫：OP约90秒，ED约90-120秒
-
-**默认配置让你无需手动设置即可享受自动跳过！**
-
-### 如何调整？
-
-如果默认时间不准确，你可以：
-1. 点击"跳过设置"按钮打开配置面板
-2. 修改现有片段的时间
-3. 或删除默认配置，手动添加精确片段
-
-> 💡 提示：默认配置仅在**首次播放新剧集**时自动应用，已有配置的剧集不会被覆盖。
+- ✨ Multi‑segment configuration (multiple opening / ending entries supported)
+- ⏱️ Precise time control (`mm:ss` format supported)
+- 🚀 Auto‑skip opening
+- ⏭️ Auto‑play next episode
+- ⏸️ Manual skip button (shown when auto‑skip is disabled)
+- ⏳ Countdown reminder
+- 🎯 **Smart default preset** (automatically apply standard skip timing for new series)
 
 ---
 
-## 🎯 使用步骤
+## 🎯 Smart Default Preset
 
-### 1️⃣ 打开设置面板
+Signature feature of VODTV! When you play a new series for the first time, standard skip settings are loaded automatically:
 
-在播放页面，播放器上方找到 **"跳过设置"** 按钮（位于"隐藏"按钮左侧）
+- **Opening skip**: `0:00‑1:30` (first 90 seconds)
+- **Ending skip**: Last `2:00` before video ends (final 2 minutes)
+- **Auto‑skip**: Enabled by default
+- **Auto next‑episode**: Enabled by default
+
+### Design rationale
+
+Most TV shows and animations follow relatively fixed opening / ending durations:
+
+- 📺 TV drama: Opening ~60‑90s, ending ~120s
+- 🎬 Anime: OP ~90s, ED ~90‑120s
+
+**Default preset lets you enjoy auto‑skip without manual configuration!**
+
+### How to adjust
+
+If default timing is inaccurate:
+
+1. Click *Skip Settings* to open configuration panel
+2. Modify timings of existing segments
+3. Or delete default entry and add custom segments manually
+
+> 
+> 💡 Note: The default preset is applied **only on the very first playback** for a series. Existing configurations for that show will not be overwritten.
+
+---
+
+## 🎯 Usage Steps
+
+### 1️⃣ Open Settings Panel
+
+On the playback page, locate the **Skip Settings** button above the player (to the left of the Hide button).
 
 ```
-[影片标题]                        [跳过设置]  [隐藏]
+[Video Title]                      [Skip Settings]  [Hide]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                [播放器]
+        [Player]
 ```
 
-点击 **"跳过设置"** 按钮，打开配置面板。
+Click **Skip Settings** to bring up the configuration panel.
 
 ---
 
-### 2️⃣ 配置跳过时间
+### 2️⃣ Configure Skip Timing
 
-配置面板提供两种方式：
+Two configuration methods available inside the panel:
 
-#### 🔵 方式一：快速批量设置（推荐）
+#### 🔵 Method 1: Quick Batch Setup (Recommended)
 
-使用批量设置可以快速配置常见的片头片尾：
+Batch setup for common opening‑ending values:
 
-**片头设置：**
-- **片头开始时间**：通常填 `0:00`（从视频开始）
-- **片头结束时间**：例如 `1:30`（90秒）或直接填 `90`
+**Opening settings:**
 
-**片尾设置：**
-- **片尾模式**：
-  - `剩余时间模式`：根据剩余时间计算（推荐）
-  - `绝对时间模式`：从视频开头计算
-- **片尾开始时间**：
-  - 剩余时间模式：填 `2:00` 表示"还剩2分钟时开始倒计时"
-  - 绝对时间模式：填实际时间点
+- Opening start time: Usually `0:00` (from video beginning)
+- Opening end time: e.g. `1:30` (90 seconds) or raw number `90`
 
-**示例配置：**
+**Ending settings:**
+
+- Ending mode:
+  - `Remaining‑time mode`: Trigger based on remaining playback time (recommended)
+  - `Absolute‑time mode`: Trigger from the start of video
+- Ending start time:
+  - Remaining‑time mode: `2:00` means countdown starts when 2 minutes remain
+  - Absolute‑time mode: Fill in exact playback timestamp
+
+**Example batch config:**
+
 ```
-片头开始: 0:00
-片头结束: 1:30    ← 跳过前90秒
-
-片尾模式: 剩余时间
-片尾开始: 2:00    ← 还剩2分钟时开始倒计时
+Opening start: 0:00
+Opening end: 1:30      ← Skip first 90 seconds
+Ending mode: Remaining‑time
+Ending start: 2:00     ← Countdown begins with 2 minutes left
 ```
 
-点击 **"应用批量设置"** 保存。
+Click **Apply Batch Settings** to save.
 
-#### 🟢 方式二：手动添加片段
+#### 🟢 Method 2: Manually Add Segments
 
-更灵活的方式，可以添加多个跳过片段：
+More flexible for multiple skip ranges:
 
-1. 点击 **"添加片段"** 按钮
-2. 填写片段信息：
-   - **类型**：选择"片头"或"片尾"
-   - **开始时间**：例如 `0:00` 或 `0`
-   - **结束时间**：例如 `1:30` 或 `90`
-   - **描述**（可选）：例如"OP主题曲"
-   - **自动跳过**：勾选后自动跳过此片段
-   - **自动下一集**（仅片尾）：勾选后播放完自动跳转
+1. Click **Add Segment**
+2. Fill segment properties:
+   - **Type**: Opening or Ending
+   - **Start time**: e.g. `0:00` or `0`
+   - **End time**: e.g. `1:30` or `90`
+   - **Description** (optional): e.g. "OP Theme Song"
+   - **Auto‑skip**: Check to automatically jump over this segment
+   - **Auto next‑episode** (Ending only): Check to jump to next episode after playback
+3. Click **Save**
 
-3. 点击 **"保存"** 按钮
+**Multi‑segment example:**
 
-**多片段示例：**
 ```
-片段1: 片头 0:00 - 1:30  (OP主题曲)
-片段2: 片尾 21:30 - 22:00 (ED主题曲)
-片段3: 片尾 23:00 - 23:30 (下集预告)
+Segment1: Opening 0:00‑1:30  (OP Theme Song)
+Segment2: Ending 21:30‑22:00 (ED Theme Song)
+Segment3: Ending 23:00‑23:30 (Next‑episode Preview)
 ```
 
 ---
 
-### 3️⃣ 播放时的效果
+### 3️⃣ Playback Behavior After Configuration
 
-配置完成后，播放视频时会看到：
+#### 🎬 Opening Skip
 
-#### 🎬 片头跳过
-播放到片头时间段时：
-- **自动跳过开启**：自动跳转到片头结束位置
-- **自动跳过关闭**：播放器左上角显示 **"检测到片头 [跳过]"** 按钮，点击手动跳过
+When playback reaches opening range:
+
+- If **Auto‑skip ON**: Jump automatically to end timestamp
+- If **Auto‑skip OFF**: Show button at top‑left corner `Opening detected [Skip]` for manual click
 
 ```
 ┌─────────────────────────────────────────┐
-│ ┌──────────────────┐                    │
-│ │检测到片头  [跳过]│                    │
-│ └──────────────────┘                    │
-│           [正在播放视频]                 │
+│ ┌──────────────────┐                   │
+│ │Opening detected [Skip]│              │
+│ └──────────────────┘                   │
+│           [Video playing]              │
 │                                         │
 │                                         │
 └─────────────────────────────────────────┘
 ```
 
-#### 🎬 片尾跳过
-播放到片尾时间段时：
-- 顶部显示 **倒计时**："5秒后自动播放下一集"
-- 可以点击 **"取消"** 停止倒计时
-- 倒计时结束后自动播放下一集
+#### 🎬 Ending Skip
+
+When playback reaches ending range:
+‑ Top countdown hint shown: `"Auto‑play next episode in 5s" [Cancel]`
+‑ Click **Cancel** to abort countdown
+‑ When countdown finishes, next episode starts automatically
 
 ```
 ┌─────────────────────────────────────────┐
-│  ⏱️ 5秒后自动播放下一集  [取消]           │
+│ ⏱️ Auto‑play next episode in 5s [Cancel]│
 ├─────────────────────────────────────────┤
 │                                         │
-│           [正在播放视频]                 │
+│           [Video playing]               │
 │                                         │
 │                                         │
 └─────────────────────────────────────────┘
@@ -153,133 +161,152 @@ VODTV 的特色功能！当你首次播放一部新剧集时，系统会自动�
 
 ---
 
-## ⚙️ 设置选项说明
+## ⚙️ Settings Explanation
 
-### 全局开关
+### Global Switches
 
-- **自动跳过**：开启后自动跳过所有片段，关闭后显示手动跳过按钮
-- **自动下一集**：开启后片尾倒计时结束自动播放下一集
+‑ **Auto‑skip**: Automatically jump all configured segments; turn off to show manual skip buttons
+‑ **Auto next‑episode**: Auto‑load next episode after ending countdown completes
 
-### 时间格式
+### Supported Time Formats
 
-支持两种时间格式：
+表格
 
-| 格式 | 示例 | 说明 |
-|------|------|------|
-| 分:秒 | `1:30` | 1分30秒 = 90秒 |
-| 秒数 | `90` | 90秒 |
-| 分:秒.小数 | `1:30.5` | 1分30.5秒 = 90.5秒 |
+| Format | Example | Description |
+| --- | --- | --- |
+| mm:ss | `1:30` | 1 min 30 sec = 90 seconds |
+| Raw seconds | `90` | 90 seconds |
+| mm:ss.decimal | `1:30.5` | 1 min 30.5 sec = 90.5 sec |
 
-### 片尾模式
+### Ending Modes
 
-| 模式 | 说明 | 示例 |
-|------|------|------|
-| **剩余时间** | 根据剩余时间触发 | 填 `2:00` = 还剩2分钟时开始 |
-| **绝对时间** | 根据视频播放位置触发 | 填 `20:00` = 播放到20分钟时开始 |
+表格
 
-💡 **推荐使用剩余时间模式**，因为不同视频源的集数长度可能不同。
+| Mode | Description | Example |
+| --- | --- | --- |
+| **Remaining‑time** | Trigger based on remaining playback duration | `2:00` = trigger when 2 minutes left |
+| **Absolute‑time** | Trigger based on absolute playback position | `20:00` = trigger once playback hits 20‑min mark |
 
----
-
-## 🔧 管理配置
-
-### 编辑片段
-1. 在配置面板中找到要编辑的片段
-2. 直接修改时间和选项
-3. 点击片段右侧的 **"保存"** 按钮
-
-### 删除片段
-点击片段右侧的 **"删除"** 按钮即可删除该片段。
-
-### 删除所有配置
-点击配置面板底部的 **"删除跳过配置"** 按钮，清除当前剧集的所有配置。
+💡 **Remaining‑time mode is recommended**, since different source files may have varying total episode durations.
 
 ---
 
-## 💾 数据存储
+## 🔧 Manage Saved Configurations
 
-配置会自动保存，支持两种存储模式：
+### Edit segment
 
-### 🔵 LocalStorage 模式（默认）
-- 配置保存在浏览器本地
-- 不需要登录
-- 清除浏览器数据会丢失配置
+1. Locate target segment in panel
+2. Modify time values and toggles
+3. Hit **Save** on the right‑hand side of the segment
 
-### 🔵 数据库模式（需要登录）
-- 配置保存在服务器数据库
-- 支持多设备同步
-- 永久保存
+### Delete segment
 
-> 存储模式由环境变量 `NEXT_PUBLIC_STORAGE_TYPE` 决定
+Click the **Delete** button next to the target segment.
 
----
+### Clear all settings for current series
 
-## 📝 使用场景示例
-
-### 场景1：跳过动漫OP/ED
-```
-片头: 0:00 - 1:30    (OP主题曲90秒)
-片尾: 剩余 1:30      (还剩1分30秒开始倒计时)
-自动跳过: ✅
-自动下一集: ✅
-```
-
-### 场景2：跳过电视剧片头回顾
-```
-片头: 0:00 - 2:00    (前情回顾120秒)
-自动跳过: ✅
-自动下一集: ✅
-```
-
-### 场景3：手动控制
-```
-片头: 0:00 - 1:30
-自动跳过: ❌         (显示手动跳过按钮)
-自动下一集: ❌       (不自动播放下一集)
-```
-
-### 场景4：多片段精确控制
-```
-片段1: 片头 0:00 - 1:30     (OP)
-片段2: 片尾 20:30 - 22:00   (ED + 下集预告)
-片段3: 片尾 23:50 - 24:00   (片尾字幕)
-```
+Click **Delete Skip Configurations** at panel bottom to wipe all skip entries for this show.
 
 ---
 
-## ❓ 常见问题
+## 💾 Data Persistence
 
-### Q: 配置面板打不开？
-**A:** 检查以下几点：
-1. 确认当前在播放页面
-2. 确认视频源已加载（`currentSource` 和 `currentId` 存在）
-3. 刷新页面重试
+Skip configurations auto‑save, two storage modes available:
 
-### Q: 自动跳过不生效？
-**A:** 检查：
-1. 确认 **"自动跳过"** 开关已开启
-2. 确认时间配置正确
-3. 查看浏览器控制台是否有错误信息
+### 🔵 LocalStorage Mode (Default)
 
-### Q: 配置丢失了？
+‑ Stored locally inside your browser
+‑ Login not required
+‑ Configurations get lost when clearing browser site data
+
+### 🔵 Database Mode (Login Required)
+
+‑ Saved on backend database
+‑ Cross‑device synchronization supported
+‑ Persistent permanent storage
+
+> 
+> Storage mode is controlled by environment variable `NEXT_PUBLIC_STORAGE_TYPE`
+
+---
+
+## 📝 Real‑world Configuration Examples
+
+### Scenario1: Skip Anime OP / ED
+
+```
+Opening: 0:00‑1:30      (90‑second OP theme)
+Ending: Remaining 1:30  (countdown starts with 1.5 min left)
+Auto‑skip: ✅
+Auto next‑episode: ✅
+```
+
+### Scenario2: Skip Recap Opening for TV Series
+
+```
+Opening: 0:00‑2:00      (previous‑episode recap,120s)
+Auto‑skip: ✅
+Auto next‑episode: ✅
+```
+
+### Scenario3: Manual‑control only
+
+```
+Opening: 0:00‑1:30
+Auto‑skip: ❌            (manual skip button appears)
+Auto next‑episode: ❌    (no automatic episode jump)
+```
+
+### Scenario4: Precise multi‑segment setup
+
+```
+Segment1: Opening 0:00‑1:30     (OP)
+Segment2: Ending 20:30‑22:00    (ED + next‑episode preview)
+Segment3: Ending 23:50‑24:00    (closing credits)
+```
+
+---
+
+## ❓ FAQ
+
+### Q: Cannot open configuration panel?
+
+**A:** Check these items:
+
+1. Confirm you are on playback page
+2. Confirm video source is fully loaded (`currentSource` and `currentId` exist)
+3. Refresh browser page and retry
+
+### Q: Auto‑skip does not work?
+
+**A:** Verify:
+
+1. Make sure global **Auto‑skip** toggle is turned ON
+2. Double‑check your time segment values
+3. Open browser dev‑tools console and inspect runtime errors
+
+### Q: My skip settings got lost?
+
 **A:**
-- **LocalStorage 模式**：清除浏览器数据会丢失，建议导出配置备份
-- **数据库模式**：确认已登录，配置会永久保存
+‑ LocalStorage mode: Clearing browser site data erases config; export a backup regularly
+‑ Database mode: Make sure you are logged in; server‑side storage persists your settings
 
-### Q: 不同视频源需要重新配置吗？
-**A:** 是的，每个 `source + id` 组合都是独立的配置。但如果是同一部剧的不同源，时间点应该差不多。
+### Q: Do I need re‑configure for different video sources?
 
-### Q: 可以批量应用到所有集吗？
-**A:** 目前配置是按剧集存储的（一个 `source + id` 对应一部剧的所有集）。同一部剧的所有集共享同一个配置。
+**A:** Yes. Config is isolated per `source + id` pair. Timing values are usually similar across different sources for the same series.
+
+### Q: Can I batch‑apply config for all episodes?
+
+**A:** Settings are saved per series (`source + id`). All episodes belonging to this series reuse the same skip configuration.
 
 ---
 
-## 🎉 享受无干扰的观影体验！
+## 🎉 Enjoy Uninterrupted Viewing!
 
-配置好片头片尾跳过后，您可以：
-- ⏩ 自动跳过重复的OP/ED
-- 🎬 自动连播多集，无需手动操作
-- ⏸️ 需要时手动控制跳过
-- 💾 配置自动保存，一次配置永久使用
+Once opening‑ending skip is properly configured:
+‑ ⏩ Automatically skip repetitive OP & ED
+‑ 🎬 Continuous playback across episodes with zero manual clicks
+‑ ⏸️ Manual skip available whenever needed
+‑ 💾 Auto‑saved settings, configure once for repeated use
 
 Have fun! 🍿

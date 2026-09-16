@@ -1,141 +1,136 @@
 # Telegram Magic Link Authentication
 
-## 概述
+## Overview
 
-VODTV 支持通过 Telegram Bot 实现无密码登录（Magic Link），用户只需输入 Telegram 用户名，即可通过 Bot 发送的链接完成登录。
+VODTV supports password‑less login via Telegram Bot (Magic Link). Users simply enter their Telegram username and complete login through a link delivered by the Bot.
 
-## 功能特性
+## Feature Highlights
 
-- 🔐 **无密码登录** - 通过 Telegram Bot 发送一次性登录链接
-- 🤖 **自动注册** - 首次登录的用户可自动创建账号
-- ⏰ **安全过期** - 登录链接 5 分钟后自动过期
-- 🌐 **多存储支持** - 支持 Kvrocks、Redis、Upstash 存储 token
-- 🔄 **自动 Webhook 更新** - 自动将 webhook 设置到当前访问的域名
+- 🔐 **Password‑less Login** — One‑time login link sent via Telegram Bot
+- 🤖 **Auto‑registration** — Automatically create accounts for first‑time users
+- ⏰ **Secure Expiry** — Login link expires automatically after 5 minutes
+- 🌐 **Multi‑storage Support** — Token storage available for Kvrocks, Redis, Upstash
+- 🔄 **Automatic Webhook Update** — Automatically sets webhook to your current domain
 
-## 配置步骤
+## Configuration Steps
 
-### 1. 创建 Telegram Bot
+### 1. Create your Telegram Bot
 
-1. 在 Telegram 中与 [@BotFather](https://t.me/botfather) 对话
-2. 发送 `/newbot` 命令创建新 Bot
-3. 按提示设置 Bot 名称和用户名
-4. 记录 BotFather 返回的 **Bot Token** 和 **Bot Username**
+1. Open a conversation with [@BotFather](https://t.me/botfather) inside Telegram
+2. Send command `/newbot` to create a new Bot
+3. Follow prompts to set Bot name and Bot username
+4. Save the returned **Bot Token** and **Bot Username** provided by BotFather
 
-### 2. 配置环境变量
+### 2. Configure environment variables
 
-在 `.env.local` 或部署环境中设置存储类型：
+Set your storage backend inside `.env.local` or your deployment environment:
 
-```bash
-# 存储类型：kvrocks、redis 或 upstash
+```
+# Storage type: kvrocks, redis or upstash
 NEXT_PUBLIC_STORAGE_TYPE=kvrocks
-
-# Kvrocks 连接 URL（如果使用 Kvrocks）
+# Kvrocks connection URL (for Kvrocks deployments)
 KVROCKS_URL=redis://moontv-kvrocks:6666
-
-# Redis 连接 URL（如果使用 Redis）
+# Redis connection URL (for Redis deployments)
 # REDIS_URL=redis://localhost:6379
-
-# Upstash 配置（如果使用 Upstash）
+# Upstash configuration (for Upstash deployments)
 # UPSTASH_URL=https://xxx.upstash.io
 # UPSTASH_TOKEN=your_token_here
 ```
 
-### 3. 在管理后台配置
+### 3. Configure inside admin dashboard
 
-1. 登录管理后台 `/admin`
-2. 进入 **Telegram 登录配置** 页面
-3. 填写以下信息：
-   - **Bot Token**: 从 BotFather 获取的 token
-   - **Bot Username**: Bot 的用户名（不含 @）
-   - **启用自动注册**: 推荐开启，允许新用户自动创建账号
-4. 点击 **保存配置**
+1. Log into admin dashboard at `/admin`
+2. Navigate to **Telegram Login Configuration** page
+3. Fill out the fields below:
+   - **Bot Token**: Token retrieved from BotFather
+   - **Bot Username**: Bot username (without leading @ symbol)
+   - **Enable auto‑registration**: Recommended on, permits automatic account creation for new users
+4. Click **Save Configuration**
 
-### 4. 设置 Webhook（可选）
+### 4. Set up Webhook (Optional)
 
-系统会在用户首次点击 Bot 链接时自动设置 webhook 到当前域名。
+The system will automatically configure the webhook for your current domain the first time a user clicks the Bot link.
+To manually trigger webhook setup, run this snippet inside your browser Developer Console:
 
-如需手动设置，在浏览器 Console 执行：
-
-```javascript
+```
 fetch('/api/telegram/set-webhook', {
   method: 'POST'
 }).then(r => r.json()).then(console.log)
 ```
 
-## 工作原理
+## How It Works
 
-### 登录流程
+### Login Flow
 
 ```
-用户 -> 输入 Telegram 用户名
-     -> 系统生成一次性 token（5分钟有效期）
-     -> 系统发送深度链接到用户的 Telegram
-     -> 用户在 Telegram 点击 /start 链接
-     -> Bot 发送登录 URL
-     -> 用户点击 URL 完成登录
+User -> Input Telegram username
+      -> System generates one‑time token (valid for 5 minutes)
+      -> System sends deep‑link to user’s Telegram
+      -> User clicks the /start link inside Telegram
+      -> Bot replies with login URL
+      -> User clicks URL to finish signing‑in
 ```
 
-### Token 生成与存储
+### Token Generation & Storage
 
-```typescript
-// Token 数据结构
+```
+// Token data structure
 interface TelegramTokenData {
-  telegramUsername: string;  // Telegram 用户名
-  expiresAt: number;         // 过期时间戳
-  baseUrl?: string;          // 创建 token 的域名
+  telegramUsername: string;  // Telegram username
+  expiresAt: number;         // Expiration timestamp
+  baseUrl?: string;          // Domain where token was created
 }
-
-// 存储位置：Redis/Kvrocks
+// Storage backend: Redis / Kvrocks
 // Key: cache:telegram_token:{token_hash}
-// TTL: 300 秒（5分钟）
+// TTL: 300 seconds (5 minutes)
 ```
 
-### 自动 Webhook 更新
+### Automatic Webhook Update
 
-系统会在接收到 Telegram 消息时自动检查 webhook URL 是否匹配当前域名，如果不匹配则自动更新：
+Upon receiving incoming Telegram messages, the system validates whether the active webhook URL matches the current domain and updates automatically when mismatched:
 
-```typescript
-// webhook.ts 自动更新逻辑
+```
+// webhook.ts auto‑update logic
 if (currentWebhookUrl !== expectedWebhookUrl) {
   await setWebhook(expectedWebhookUrl);
 }
 ```
 
-## 重要限制
+## Important Limitations
 
-### ⚠️ 一个 Bot 只能绑定一个域名
+### ⚠️ A single Bot can only bind to one domain
 
-Telegram Bot 的 webhook 机制限制：**一个 Bot 只能绑定一个 webhook URL**。
+Telegram Bot webhook restriction: **One Bot may only have one active webhook URL**.
 
-**多部署场景解决方案：**
+**Solutions for multi‑instance deployments:**
 
-1. **方案 A：每个部署使用独立的 Bot**
-   - Vercel 部署 → Bot A
-   - 自建服务器 → Bot B
-   - 优点：互不干扰
-   - 缺点：需要管理多个 Bot
+1. **Option A: Separate Bot for each deployment**
+   - Vercel deployment → Bot A
+   - Self‑hosted server → Bot B
+   - Pros: Deployments operate independently without conflicts
+   - Cons: Multiple Bots require maintenance
+2. **Option B: Activate Telegram login only on one domain**
+   - Enable Telegram login for your primary domain
+   - Disable Telegram login or use alternative auth methods for remaining deployments
+   - Pros: Simple maintenance
+   - Cons: Feature availability restricted
 
-2. **方案 B：只在一个域名启用 Telegram 登录**
-   - 主域名启用 Telegram 登录
-   - 其他部署禁用或使用其他登录方式
-   - 优点：管理简单
-   - 缺点：功能受限
-
-## API 端点
+## API Endpoints
 
 ### POST `/api/telegram/send-magic-link`
 
-生成并发送 Magic Link
+Generate and dispatch the Magic Link
+**Request Body:**
 
-**请求体：**
-```json
+```
 {
   "telegramUsername": "username"
 }
 ```
 
-**响应：**
-```json
+**Response:**
+
+```
 {
   "success": true,
   "deepLink": "https://t.me/yourbot?start=token_hash",
@@ -145,121 +140,116 @@ Telegram Bot 的 webhook 机制限制：**一个 Bot 只能绑定一个 webhook 
 
 ### POST `/api/telegram/webhook`
 
-接收 Telegram Bot 消息（由 Telegram 服务器调用）
+Receive incoming messages from Telegram Bot servers (called externally by Telegram)
 
 ### GET/POST `/api/telegram/set-webhook`
 
-查询或设置 webhook URL
+Retrieve or update webhook URL settings
 
 ### GET `/api/telegram/verify`
 
-验证并消费 token，完成登录
+Validate and consume token to complete login
+**Query Parameters:**
 
-**查询参数：**
-- `token`: 一次性登录 token
+- `token`: One‑time login token
 
-## 故障排查
+## Troubleshooting
 
-### Token 立即过期
+### Token expires immediately
 
-**症状：** 点击 Bot 发送的链接后显示"登录链接已过期或无效"
+**Symptom:** Clicking the Bot‑sent link returns "Login link expired or invalid"
+**Potential causes:**
 
-**可能原因：**
-1. Webhook 指向了其他域名（多部署冲突）
-2. Token 未正确存储到 Redis/Kvrocks
-3. 服务器时间不同步
+1. Webhook points toward a different domain (multi‑deployment conflict)
+2. Token failed to persist into Redis / Kvrocks
+3. Server system‑time is out‑of‑sync
 
-**解决方法：**
-```bash
-# 1. 检查当前 webhook 配置
-curl https://your-domain.com/api/telegram/set-webhook
+**Resolution steps:**
 
-# 2. 手动设置 webhook 到当前域名
-curl -X POST https://your-domain.com/api/telegram/set-webhook
-
-# 3. 检查 Kvrocks/Redis 中的 token
+```
+# 1. Inspect active webhook configuration
+curl shturl.cc/nOJYf0w6TpSCagm2JRJAswNwZwuJ2XwaKxAVEj
+# 2. Manually set webhook for current domain
+curl -X POST shturl.cc/nOJYf0w6TpSCagm2JRJAswNwZwuJ2XwaKxAVEj
+# 3. Inspect stored tokens inside Kvrocks / Redis
 redis-cli -h kvrocks-host -p 6666
 KEYS cache:telegram_token:*
 GET cache:telegram_token:{token_hash}
 TTL cache:telegram_token:{token_hash}
 ```
 
-### Webhook 401 错误
+### Webhook 401 error
 
-**症状：** `getWebhookInfo` 显示 `last_error_message: "401 Unauthorized"`
+**Symptom:** `getWebhookInfo` reports `last_error_message: "401 Unauthorized"`
+**Cause:** Webhook endpoint returns HTTP 401 (typically wrong domain or path)
+**Resolution:**
 
-**原因：** Webhook URL 返回了 401 状态码（通常是域名或路径错误）
+1. Confirm domain is publicly reachable (not blocked behind firewall)
+2. Verify webhook endpoint path: `/api/telegram/webhook`
+3. Check backend middleware is not intercepting webhook requests
 
-**解决方法：**
-1. 确认域名可公开访问（不在防火墙后）
-2. 检查 webhook 路径是否正确：`/api/telegram/webhook`
-3. 检查中间件是否拦截了 webhook 请求
+### Webhook is not updated automatically
 
-### Webhook 未自动更新
+**Symptom:** No login URL is received after clicking Bot link
+**Resolution:**
 
-**症状：** 点击 Bot 链接后没有收到登录 URL
-
-**解决方法：**
-```javascript
-// 在浏览器访问你的域名，然后在 Console 执行
+```
+// Visit your domain in browser and execute within Developer Console
 fetch('/api/telegram/set-webhook', {
   method: 'POST'
 }).then(r => r.json()).then(console.log)
 ```
 
-## 安全考虑
+## Security Considerations
 
-1. **Token 一次性使用** - verify 接口验证后立即删除 token
-2. **短期有效** - Token 仅 5 分钟有效
-3. **随机生成** - 使用 crypto.randomBytes(32) 生成 64 字符 token
-4. **域名绑定** - Token 记录创建时的域名，防止跨域使用
-5. **自动清理** - Redis/Kvrocks TTL 自动清理过期 token
+1. **One‑time‑use Token** — Token is deleted immediately upon successful verification via verify endpoint
+2. **Short‑lived validity** — Token lifetime limited to 5 minutes
+3. **Cryptographically random generation** — 64‑character token generated by crypto.randomBytes(32)
+4. **Domain binding** — Origin domain is persisted with token to prevent cross‑domain reuse
+5. **Automatic cleanup** — Redis/Kvrocks TTL evicts expired tokens automatically
 
-## 开发调试
+## Development & Debugging
 
-### 启用调试日志
+### Enable debug logging
 
-所有 Telegram 相关操作都有详细日志输出：
+Detailed logging is printed for all Telegram‑related workflows:
 
-```bash
-# 查看应用日志
+```
+# View application runtime logs
 docker logs <container-name> --tail 100 --follow | grep -E "\[TelegramToken\]|\[Webhook\]|\[Magic Link\]"
 ```
 
-### 监控 Kvrocks 命令
+### Monitor live Kvrocks commands
 
-```bash
-# 实时查看 Kvrocks 执行的命令
+```
+# Watch real‑time Kvrocks command execution
 docker exec -it moontv-kvrocks redis-cli -p 6666 MONITOR
 ```
 
-### 测试 Token 存储
+### Manual token storage test
 
-```bash
-# 手动测试 token 存储和读取
+```
+# Manually test token write‑read cycle in Kvrocks / Redis
 docker exec -it moontv-kvrocks redis-cli -p 6666
-
-# 设置测试 token
+# Set sample test token
 SETEX cache:test_token 300 '{"telegramUsername":"test","expiresAt":1761999999999}'
-
-# 读取
+# Read token value
 GET cache:test_token
-
-# 检查 TTL
+# Inspect remaining TTL
 TTL cache:test_token
 ```
 
-## 相关代码文件
+## Related Source Files
 
-- `src/lib/telegram-tokens.ts` - Token 管理逻辑
-- `src/app/api/telegram/send-magic-link/route.ts` - 发送 Magic Link
-- `src/app/api/telegram/webhook/route.ts` - Webhook 处理和自动更新
-- `src/app/api/telegram/verify/route.ts` - Token 验证和登录
-- `src/app/api/telegram/set-webhook/route.ts` - Webhook 配置管理
-- `src/components/TelegramAuthConfig.tsx` - 管理后台配置界面
+- `src/lib/telegram-tokens.ts` — Token management logic
+- `src/app/api/telegram/send-magic-link/route.ts` — Magic link sending
+- `src/app/api/telegram/webhook/route.ts` — Webhook handler & auto‑update logic
+- `src/app/api/telegram/verify/route.ts` — Token validation & login workflow
+- `src/app/api/telegram/set-webhook/route.ts` — Webhook configuration management
+- `src/components/TelegramAuthConfig.tsx` — Admin backend configuration UI
 
-## 更新日志
+## Changelog
 
-- **v1.0.0** - 初始实现 Telegram Magic Link 登录
-- **v1.1.0** - 添加 webhook 自动更新功能
-- **v1.2.0** - 添加多部署域名冲突警告
+- **v1.0.0** — Initial Telegram Magic Link login implementation
+- **v1.1.0** — Added automatic webhook update capability
+- **v1.2.0** — Added warning for multi‑deployment domain‑conflict scenarios

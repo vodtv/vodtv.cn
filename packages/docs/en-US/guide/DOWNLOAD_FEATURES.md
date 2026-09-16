@@ -1,201 +1,175 @@
-# 📥 M3U8 视频下载功能
+# 📥 M3U8 Video Download Feature
+## 🎉 Core Features
+### ⚡ 6× Faster Download Speed
+- **Multi‑thread concurrent downloading**: Fetches 6 video segments simultaneously
+- **Intelligent retry**: Automatically retries failed segments up to 3 times
+- **Up to 6‑times speed improvement**
 
-## 🎉 核心特性
+### 💾 Stream‑to‑disk Saving (No Memory Limit)
+- **Unlimited file size**: Bypasses browser memory constraints
+- **Download ultra‑large videos**: Supports 10GB+ ultra‑HD video files
+- **Write‑while‑downloading**: Writes data to disk during download to free RAM
 
-### ⚡ 6倍下载速度
-- **多线程并发下载**：同时下载 6 个视频片段
-- **智能重试**：失败片段自动重试 3 次
-- **下载速度提升 6 倍**
-
-### 💾 边下边存 (无内存限制)
-- **无限文件大小**：不再受浏览器内存限制
-- **下载超大视频**：支持 10GB+ 超高清视频
-- **边下边存**：下载的同时写入磁盘，释放内存
-
-### 🔄 流式 MP4 转码
-- **实时转码**：边下载 → 边转 MP4 → 边存储
-- **节省内存**：不需要一次性加载全部数据
-- **高质量输出**：完美转换为标准 MP4 格式
+### 🔄 Streaming MP4 Transcoding
+- **Real‑time transcoding**: Download → transcode to MP4 → save on‑the‑fly
+- **Memory‑efficient**: No need to load the entire file into memory at once
+- **High‑quality output**: Converts into standard MP4 format perfectly
 
 ---
-
-## 📊 性能对比
-
-| 指标 | 普通下载 | 高性能下载 | 提升 |
-|------|---------|-----------|------|
-| 下载速度 | 10秒 | 1.7秒 | **6倍** |
-| 内存占用（2GB视频） | 2GB | 50MB | **降低 40倍** |
-| 支持文件大小 | ~2GB | 无限制 | **无限** |
-| 浏览器崩溃风险 | 高 | 极低 | **大幅降低** |
+## 📊 Performance Comparison
+| Metric | Regular Download | High‑Performance Download | Improvement |
+|---|---|---|---|
+| Download Time | 10 s | 1.7 s | **6× faster** |
+| Memory Usage (2GB video) | 2GB | 50MB | **40× lower** |
+| Max Supported File Size | ~2GB | Unlimited | **Unlimited** |
+| Browser Crash Risk | High | Very low | **Greatly reduced** |
 
 ---
-
-## 🌐 浏览器支持
-
-| 功能 | Chrome | Firefox | Safari | Edge |
-|------|--------|---------|--------|------|
-| 6线程并发 | ✅ | ✅ | ✅ | ✅ |
-| 边下边存 | ✅ | ✅ | ✅ | ✅ |
-| 直写文件系统 | ✅ | ❌ | ❌ | ✅ |
-| 流式转码 | ✅ | ✅ | ✅ | ✅ |
+## 🌐 Browser Support
+| Feature | Chrome | Firefox | Safari | Edge |
+|---|---|---|---|---|
+| 6‑thread concurrency | ✅ | ✅ | ✅ | ✅ |
+| Stream‑to‑disk saving | ✅ | ✅ | ✅ | ✅ |
+| Direct File‑System Write | ✅ | ❌ | ❌ | ✅ |
+| Streaming Transcoding | ✅ | ✅ | ✅ | ✅ |
 
 ---
+## 💡 Usage Guide
+### 📖 Quick Start
+#### 1. Start a download
+1. Click the **Download** button on the playback page
+2. The system automatically detects and selects the optimal download mode (no manual configuration required)
+3. Download starts; you may monitor progress inside the download panel
 
-## 💡 使用说明
+#### 2. Check download progress
+- The **download task list** panel opens automatically after a download starts
+- Each task displays:
+  - 📊 Real‑time progress bar (downloaded segments / total segments)
+  - 🏷️ Current download mode tag (e.g. "🚀 Direct File‑System Write")
+  - ⚙️ Task status (Downloading / Paused / Completed / Error)
 
-### 📖 快速开始
-
-#### 1. 开始下载
-1. 在播放页面点击 **"下载"** 按钮
-2. 系统自动检测并启用最佳下载模式（无需配置）
-3. 下载开始，可在下载面板查看进度
-
-#### 2. 查看下载进度
-- 下载开始后会自动打开 **下载任务列表** 面板
-- 每个任务显示：
-  - 📊 实时进度条（已下载片段/总片段）
-  - 🏷️ 当前下载模式标签（如 "🚀 文件系统直写"）
-  - ⚙️ 任务状态（下载中/已暂停/已完成/错误）
-
-#### 3. 管理下载任务
-- **暂停**：点击 "暂停" 按钮
-- **恢复**：点击 "开始" 按钮继续下载
-- **删除**：点击 "删除" 按钮移除任务
-- **重试失败片段**：如有片段下载失败，点击 "重试失败片段"
+#### 3. Manage download tasks
+- **Pause**: Click the Pause button
+- **Resume**: Click Start to continue downloading
+- **Delete**: Click Delete to remove the task
+- **Retry failed segments**: If some segments failed, click Retry Failed Segments
 
 ---
+### ⚙️ Download Settings
+#### Open the settings panel
+1. Click the **⚙️ gear icon** at the top‑right corner of the download task list
+2. The settings popup will appear with configurable options below:
 
-### ⚙️ 下载设置
+#### Settings Options Description
+**📊 Download Thread Count** (1‑16)
+- Default: 6 threads
+- Recommended: 4‑8 threads (balance of speed and stability)
+- Note: Too many threads may trigger server‑side rate‑limiting
 
-#### 打开设置面板
-1. 点击下载任务列表右上角的 **⚙️ 齿轮图标**
-2. 设置面板会弹出，可以配置以下选项：
+**🔄 Retry Attempts on Failure** (0‑10)
+- Default: 3 retries
+- Recommended: 3‑5 retries
+- Description: Automatic retry count for failed video segments
 
-#### 设置选项说明
+**💾 Download Mode** (auto‑detects browser capabilities)
+1. **🚀 Direct File‑System Write** (Recommended)
+   - ✅ Supported: Chrome, Edge
+   - ❌ Unsupported: Firefox, Safari
+   - Features: Writes directly to disk, no file‑size limits, best‑in‑class performance
+   - Best‑for: All file sizes
 
-**📊 下载线程数** (1-16)
-- 默认：6 线程
-- 推荐：4-8 线程（平衡速度与稳定性）
-- 注意：线程数过高可能导致服务器限制
+2. **⚡ Service‑Worker Streaming Download**
+   - ✅ Supported: HTTPS or local localhost environment
+   - ❌ Unsupported: Insecure plain HTTP
+   - Features: Stream‑to‑disk saving with no file‑size limits
+   - Best‑for: Extra‑large files (> 2GB)
 
-**🔄 失败重试次数** (0-10)
-- 默认：3 次
-- 推荐：3-5 次
-- 说明：片段下载失败时自动重试的次数
+3. **📦 Regular Mode** (Always available)
+   - ✅ Supported by all browsers
+   - Features: Download into memory, saves file once completed
+   - Best‑for: Small files (< 500MB)
+   - Limitation: Large files may cause out‑of‑memory issues
 
-**💾 下载模式**（自动检测支持情况）
+**💿 Default Output Format**
+- **TS format**: Original transport‑stream format, no transcoding, faster
+- **MP4 format**: Universal compatible format with automatic transcoding
 
-1. **🚀 文件系统直写**（推荐）
-   - ✅ 支持：Chrome、Edge 浏览器
-   - ❌ 不支持：Firefox、Safari
-   - 特点：直接写入磁盘，无大小限制，性能最佳
-   - 适用：所有文件大小
-
-2. **⚡ Service Worker 流式下载**
-   - ✅ 支持：HTTPS 或本地环境（localhost）
-   - ❌ 不支持：HTTP 非安全环境
-   - 特点：边下边存，无大小限制
-   - 适用：超大文件（> 2GB）
-
-3. **📦 普通模式**（总是可用）
-   - ✅ 支持：所有浏览器
-   - 特点：内存下载，下载完成后一次性保存
-   - 适用：小文件（< 500MB）
-   - 限制：大文件可能导致内存不足
-
-**💿 默认保存格式**
-- **TS 格式**：原始格式，无需转码，速度快
-- **MP4 格式**：通用格式，自动转码，兼容性好
-
-#### 设置保存
-- 所有设置会 **自动保存** 到浏览器本地存储
-- 下次使用时会自动恢复上次的设置
+#### Save Settings
+- All preferences are **automatically saved** into browser local storage
+- Your previous configuration will be restored next time you open the page
 
 ---
-
-### 📋 下载模式
-
-系统会 **自动检测** 浏览器支持情况，并选择最佳模式：
-
-| 模式 | 使用场景 | 文件大小限制 | 浏览器要求 |
-|------|---------|------------|----------|
-| 🚀 文件系统直写 | **推荐使用** | ✅ 无限制 | Chrome/Edge |
-| ⚡ Service Worker | 超大视频 | ✅ 无限制 | HTTPS 环境 |
-| 📦 普通模式 | 小视频 | ⚠️ ~2GB | 所有浏览器 |
+### 📋 Download Mode Summary
+The system automatically detects browser support and picks the best available mode:
+| Mode | Usage Scenario | File Size Limit | Browser Requirement |
+|---|---|---|---|
+| 🚀 Direct File‑System Write | **Recommended** | ✅ Unlimited | Chrome / Edge |
+| ⚡ Service‑Worker Streaming | Very large videos | ✅ Unlimited | HTTPS environment |
+| 📦 Regular Mode | Small‑size videos | ⚠️ ~2GB | All browsers |
 
 ---
+### 🎯 Best Practices
+#### For Chrome / Edge users (Recommended)
+1. Use **Direct File‑System Write** mode
+2. Thread count: 6‑8
+3. Works well for videos of any size
 
-### 🎯 最佳实践
+#### For Firefox / Safari users
+1. Small files (< 500MB): Use **Regular Mode**
+2. Large files (> 500MB):
+   - Ensure you are visiting over HTTPS
+   - Enable **Service‑Worker Streaming** mode
+3. Thread count: 4‑6
 
-#### Chrome/Edge 用户（推荐）
-1. 使用 **文件系统直写** 模式
-2. 设置线程数：6-8
-3. 适用于任何大小的视频
-
-#### Firefox/Safari 用户
-1. 小文件（< 500MB）：使用 **普通模式**
-2. 大文件（> 500MB）：
-   - 确保使用 HTTPS
-   - 启用 **Service Worker** 模式
-3. 设置线程数：4-6
-
-#### 网络不稳定时
-1. 降低线程数：3-4
-2. 提高重试次数：5-10
-3. 使用 Service Worker 或文件系统直写（支持断点续传）
+#### Unreliable / Poor network conditions
+1. Lower thread count: 3‑4
+2. Increase retry attempts: 5‑10
+3. Use Service‑Worker or Direct File‑System Write (supports resume‑from‑breakpoint)
 
 ---
+### ❓ Frequently Asked Questions
+**Q: Why is Direct File‑System Write unavailable in my browser?**
+- A: This API is only implemented for Chrome and Edge. Use those browsers for large‑file downloads.
 
-### ❓ 常见问题
+**Q: Service‑Worker mode reports unsupported?**
+- A: It requires HTTPS or localhost. If you are using plain HTTP, fall back to Regular Mode.
 
-**Q: 为什么我的浏览器不支持文件系统直写？**
-- A: 仅 Chrome 和 Edge 浏览器支持此功能，建议使用这两款浏览器下载大文件。
+**Q: Download speed is slow, what can I do?**
+- A: Try raising thread count to 8‑12. Be aware some servers enforce concurrency limits.
 
-**Q: Service Worker 模式显示不支持？**
-- A: 需要在 HTTPS 环境或 localhost 下使用。如果是 HTTP，建议切换到普通模式。
+**Q: My download keeps failing.**
+- A: Click "Retry Failed Segments" on the task card, or delete and restart the download task.
 
-**Q: 下载速度很慢怎么办？**
-- A: 尝试增加线程数（8-12），但注意部分服务器可能会限制高并发请求。
-
-**Q: 下载失败了怎么办？**
-- A: 点击任务卡片上的 "重试失败片段" 按钮，或删除任务后重新下载。
-
-**Q: 下载的视频无法播放？**
-- A: 尝试切换格式：
-  - TS 格式不兼容 → 改用 MP4 格式
-  - MP4 格式有问题 → 改用 TS 格式
+**Q: Downloaded video cannot be played?**
+- A: Switch output format:
+  - Incompatible TS → switch to MP4
+  - Corrupted MP4 → switch back to TS
 
 ---
-
-### 🚀 性能提示
-
-- **Chrome/Edge 用户**：默认已启用文件系统直写，享受最佳性能
-- **大文件下载**：自动使用边下边存技术，无内存压力
-- **多任务下载**：可同时下载多个视频，互不影响
-- **断点续传**：下载中断后可继续，无需重新开始
+### 🚀 Performance Hints
+- **Chrome / Edge users**: Direct File‑System Write is enabled by default for maximum performance
+- **Large‑file downloading**: Stream‑to‑disk is automatically activated to avoid high memory usage
+- **Concurrent tasks**: Multiple video downloads can run independently at the same time
+- **Resume interrupted downloads**: You may continue after interruption without restarting from scratch
 
 ---
+## 🔧 Technical Details
+### Underlying Technologies
+- **Concurrency controller**: 6 worker threads for segment downloading
+- **Service Worker**: Stream‑to‑disk implementation
+- **File System Access API**: Direct filesystem writes (Chrome / Edge only)
+- **mux.js**: On‑the‑fly streaming TS‑to‑MP4 transmuxing
+- **CryptoJS**: Decryption for AES‑encrypted video streams
 
-## 🔧 技术特性
-
-### 核心技术
-- **并发控制**：6个工作线程同时下载
-- **Service Worker**：边下边存技术
-- **File System Access API**：直写文件系统（Chrome/Edge）
-- **mux.js**：TS 转 MP4 流式转码
-- **CryptoJS**：AES 加密视频解密
-
-### 安全保障
-- ✅ 智能重试（3次）
-- ✅ 失败片段跳过
-- ✅ 完整性检查
-- ✅ 断点续传支持
+### Reliability & Safety Features
+- ✅ Intelligent retry (3 attempts)
+- ✅ Skip over faulty segments
+- ✅ File integrity validation
+- ✅ Resume‑from‑breakpoint support
 
 ---
+## 🙏 Acknowledgements
+- **Download implementation**: Based on high‑performance download code from [MoonTV](https://github.com/Stardm0/MoonTV)
+- **UI reference**: Interface design inspired by [MoonTVPlus](https://github.com/mtvpls/MoonTVPlus)
 
-## 🙏 致谢
-
-- **功能实现**：基于 [MoonTV](https://github.com/Stardm0/MoonTV) 的高性能下载技术
-- **UI 设计**：参考 [MoonTVPlus](https://github.com/mtvpls/MoonTVPlus) 的界面设计
-
-特此感谢以上项目的开源贡献！
+Thanks to the above open‑source projects for their contributions!

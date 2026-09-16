@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@12.3.4",
+  "packageManager": "pnpm@12.4.2",
   "description": "vodtv theme and docs | VitePress主题收纳与演示仓库",
   "scripts": {
     "dev": "pnpm -C packages/theme build && vitepress dev",

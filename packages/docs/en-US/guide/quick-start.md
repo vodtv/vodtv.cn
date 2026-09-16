@@ -1,33 +1,29 @@
-## 🚀 快速开始
-
-### Docker 部署（推荐）
-
+## 🚀 Quick Start
+### Docker Deployment (Recommended)
 ```bash
-# 克隆项目
+# Clone repository
 git clone https://github.com/vodtv/vodtv.git
 cd VODTV
-
-# 复制环境变量配置
+# Copy environment variable configuration
 cp .env.example .env
-
-# 编辑 .env 文件，配置必要的环境变量
+# Edit .env file to configure required environment variables
 nano .env
-
-# 启动服务
+# Start services
 docker-compose up -d
+
 ```
 
-访问 `http://localhost:3000` 即可使用。
+Visit `http://localhost:3000` to use the application.
 
-### 本地开发
+### Local Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 启动开发服务器
+# Launch dev‑server
 pnpm dev
 ```
 
-**详细部署指南**：[查看完整部署文档](DEPLOYMENT.md)
+**Full Deployment Guide**: [View complete deployment documentation](DEPLOYMENT.md)
 

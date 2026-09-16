@@ -1,63 +1,92 @@
 ---
 layout: sponsor
 title: Support Us
-description: If this project has been helpful to you, please consider sponsoring us
+description: Thank you for your help. Please consider sponsoring us
 paymentMethods:
   wechat:
     name: WeChat Pay
-    icon: icon-[tabler--brand-wechat]
     color: green
-    qrcode: /wechat-pay.svg
-    description: Scan to pay any amount
+    qrcode: /wxpay.png
+    description: Scan QR code with WeChat to donate any amount
+  alipay:
+    name: Alipay
+    color: green
+    qrcode: /alipay.png
+    description: Scan QR code with Alipay to donate any amount
+  qqpay:
+    name: QQ Pay
+    color: green
+    qrcode: /qqpay.png
+    description: Scan QR code with QQ to donate any amount
 sponsors:
-  - name: "John Doe"
+  - name: "Zhang Li*"
     amount: 50
-    message: "Thanks for the awesome open‑source media project!"
-    date: "2024‑01‑15"
-  - name: "Jane Smith"
+    message: "Thanks for your open-source contributions!"
+    date: "2024-01-15"
+  - name: "Li Lin*"
     amount: 100
-    message: "Love VODTV, keep up the great work!"
-    date: "2024‑01‑14"
-  - name: "Bob Johnson"
+    message: "Great project!"
+    date: "2024-01-14"
+  - name: "Wang**"
     amount: 200
-    message: "Support self‑hosted media solutions!"
-    date: "2024‑01‑13"
+    message: "Support open-source development"
+    date: "2024-01-13"
+  - name: "Ma Qiang*"
+    amount: 20
+    message: "Thanks for your open-source contributions!"
+    date: "2024-01-15"
+  - name: "Zhao Sanlin*"
+    amount: 10
+    message: "Great project!"
+    date: "2024-01-14"
+  - name: "Xiao**"
+    amount: 30
+    message: "Support open-source development"
+    date: "2024-01-13"
 ---
-# Support VODTV
-Thank you for considering supporting our open‑source project! Your support is the driving force for our continuous development and maintenance.
 
-## Why We Need Your Support
-Developing and maintaining open‑source projects requires a lot of time and effort:
-- **Continuous Development** - Adding new features, fixing bugs and compatibility issues
-- **Documentation Maintenance** - Keeping multi‑language documentation accurate and complete
-- **Community Support** - Answering user questions, handling feature requests and feedback
-- **Demo & Test Costs** - Running demo environment, API test resources
+# 🥇 Support VODTV
 
-## Ways to Support
+Thank you for your donations and sponsorship. Wish you a successful career and all the best. 🙏🙏🙏
+
+## ☕ Why We Need Your Support
+
+Developing and maintaining an open-source project takes lots of time and effort:
+- **Ongoing Development** - Add new features and fix bugs
+- **Documentation Maintenance** - Keep docs accurate and up-to-date
+- **Community Support** - Answer user questions and handle feedback
+- **Server Costs** - Host demo sites and CI/CD services
+
+## 📊 Ways to Support
+
 ### Financial Support
-You can sponsor us through WeChat Pay, any amount is a huge encouragement to us.
 
-### Other Ways to Support
-- **Star the Project** — Star the repository on GitHub
-- **Share and Recommend** — Recommend VODTV to friends and tech enthusiasts
-- **Report Issues** — Help us discover bugs and give feedback
-- **Contribute Code** — Submit Pull Requests for features or bug fixes
-- **Improve Documentation** — Fix typos, add examples and translate docs
+You can sponsor us via WeChat Pay, Alipay or QQ Pay. Any amount is a great encouragement to us.
 
-## How Sponsorship is Used
-Your sponsorship will be used for:
-1. **Development Incentives** — Rewarding contributors' time and effort
-2. **Infrastructure** — Demo server, domain and related service costs
-3. **Tools and Services** — Third‑party API quota, development tools
-4. **Community Building** — Improve tutorials and community experience
+### Other Ways to Contribute
+- **Star the project** - Give us a star on GitHub
+- **Share & Recommend** - Tell your friends and colleagues about VODTV
+- **Report Issues** - Help us find and fix problems
+- **Contribute Code** - Submit Pull Requests to improve the project
+- **Improve Docs** - Help refine our documentation
 
-## Special Thanks
-We will specially thank all sponsors within the project. Your name will appear in:
-- Sponsor list in project README
+## ❤️ How Donations Are Used
+
+Your sponsorship will go toward:
+1. **Development Incentives** - Reward contributors for their time and work
+2. **Infrastructure** - Server, domain, CDN and related expenses
+3. **Tools & Services** - Development tools and design software
+4. **Community Building** - Organize events and create tutorials
+
+## 🙏 Special Thanks
+
+We will acknowledge all sponsors within the project. Your name will appear in:
+- Sponsor list in the project README
 - Sponsor showcase on this page
-- Acknowledgments in project release notes
+- Acknowledgements in project release notes
 
-Thank you again for your support! Every bit of support makes the open‑source community better.
+Thank you again for your support! Every contribution makes the open-source community better.
 
 ---
-**Disclaimer**: Sponsorship is voluntary and will not affect your rights to use this open‑source project.
+
+**🔔 Notice**: Sponsorship is voluntary and does not affect your rights to use this open-source project.

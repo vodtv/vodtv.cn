@@ -1,323 +1,271 @@
-# Emby私人影库使用指南
+# Emby Private Media Library User Guide
+VODTV now supports the Emby private‑media‑library feature, you can directly access and play content from your Emby media server.
 
-VODTV现已支持Emby私人影库功能，可以直接访问和播放您的Emby媒体服务器内容。
+## Feature Highlights
+- 🎬 **Multi‑source Management** — Each user is allowed to configure their own Emby server
+- 👤 **Independent Configuration** — Every user has separate Emby settings without mutual interference
+- 🌐 **Public Sources** — Administrators may set public Emby sources, automatically available for all users
+- 📚 **Media Library Browsing** — Browse movies and TV shows categorized by library
+- 🔍 **Smart Sorting** — Sort by name, date added, or premiere date
+- ♾️ **Infinite Scroll** — Automatically load more content on scrolling
+- 🎯 **Direct Playback** — Skip speed testing and start Emby media playback immediately
+- 🔄 **Lazy Loading** — Episode details are loaded on‑demand to improve performance
+- 🎵 **Multi‑audio‑track Support** — Auto‑select browser‑compatible audio tracks; manual audio‑track switching available
+- 🔓 **Password‑Free Login** — Dual authentication modes: API key or username‑password credentials
 
-## 功能特性
+## Configuration Steps
+### 1. Open User Settings
+Click the user menu in the top‑right corner, select **Settings**, and locate the **Emby Private Media Library** configuration panel.
 
-- 🎬 **多源管理** - 每个用户可以配置自己的Emby服务器
-- 👤 **独立配置** - 每个用户拥有独立的Emby配置，互不影响
-- 🌐 **公共源** - 管理员可设置公共Emby源，自动对所有用户开放
-- 📚 **媒体库浏览** - 按库分类浏览电影和剧集
-- 🔍 **智能排序** - 支持按名称、添加日期、首播日期排序
-- ♾️ **无限滚动** - 自动加载更多内容
-- 🎯 **直接播放** - 无需测速，直接播放Emby内容
-- 🔄 **懒加载** - 剧集信息按需加载，提升性能
-- 🎵 **多音轨支持** - 自动选择浏览器兼容的音轨，支持音轨切换
-- 🔓 **免密登录** - 支持API密钥和用户名/密码双重认证模式
+### 2. Add an Emby Source
+Click the **Add Source** button and fill in the fields below:
 
-## 配置步骤
+#### Required Fields
+- **Identifier** — Unique identifier, e.g. `wumei`, `emby1`
+  - Only editable at creation time, cannot be modified afterwards
+  - Used for URL parameters; short alphanumeric names are recommended
+- **Name** — Display name, e.g. `Home Emby`, `My Emby`
+  - Friendly name shown inside the UI
+- **Server URL** — Emby server address
+  - Format: `https://emby.example.com`
+  - Protocol (http / https) must be included
 
-### 1. 进入用户设置
+#### Optional Fields
+- **API Key** — Emby API Key
+  - Generated in your Emby server dashboard
+  - Path: Settings → API Keys
+- **Username / Password** — Emby account credentials
+  - Can be left blank if an API key is provided
+- **Enable this source** — Check to make this source visible for frontend usage
 
-点击右上角用户菜单，选择 **"设置"**，找到 **"Emby私人影库"** 配置面板。
+#### Advanced Options
+- **Remove /emby prefix from playback URL** — Off by default
+  - Strips `/emby` path segment from playback links when enabled
+  - Only enable this if your Emby deployment does NOT use the `/emby` path prefix
+  - **Keep disabled for most instances**
+- **Append MediaSourceId parameter** — Off by default
+  - Calls PlaybackInfo API to fetch MediaSourceId and append it to playback urls
+  - Only required for special non‑standard Emby deployments
+  - **Usually leave disabled**
+- **Transcode to mp4** — Enable as needed
+  - Uses HLS (`master.m3u8`) and forces audio transcoding to AAC
+  - **Recommended to enable** for media containing EAC3, TrueHD and other browser‑unsupported audio formats
+  - Also works for MKV container files
+  - Emby transcodes audio on‑the‑fly during playback
+  - Note: transcoding increases server CPU consumption
+- **Video Playback Proxy** — Off by default
+  - Routes video streams through the VODTV backend once enabled
+  - Applicable scenarios:
+    - Your Emby server has CORS restrictions
+    - You wish to hide your raw Emby server address
+    - Unstable network connections
+  - Note: this raises backend bandwidth and server load
+  - **Try direct playback first; enable proxy only when problems appear**
 
-### 2. 添加Emby源
+### 3. Test Connection
+After filling out settings, click **Test Connection** to validate your configuration.
 
-点击 **"添加源"** 按钮，填写以下信息：
+### 4. Save Configuration
+Press the **Save** button to persist your source settings.
 
-#### 必填字段
+## Public Sources (Administrator‑Only Feature)
+Inside the admin backend panel for **Emby Private Media Library**, administrators may mark an Emby source as a **Public Source**.
+- Public sources automatically appear inside every user’s private‑library list
+- End‑users can use them right away without manual configuration
+- A read‑only public‑source section (purple area) is shown at the top of user‑side settings
+- User‑owned private sources coexist with public sources; private sources take priority if identifiers collide
 
-- **标识符** - 唯一标识符，例如：`wumei`、`emby1`
-  - 只能在创建时设置，创建后不可修改
-  - 用于URL参数，建议使用简短的英文标识
+### How Administrators Configure a Public Source
+1. Navigate to Admin Backend → **Emby Private Media Library** tab
+2. Add new source or edit an existing one
+3. Toggle on **Set as public source** (purple section) at the bottom of the form
+4. Save; this source will now be available for all users automatically
 
-- **名称** - 显示名称，例如：`无名Emby`、`我的Emby`
-  - 用户界面显示的友好名称
+## Usage Instructions
+### Access Private Media Library
+Once you have configured your own source or an admin has deployed public sources, an **Emby** navigation entry (indigo‑blue icon) will show up.
+Route: `/emby`
 
-- **服务器地址** - Emby服务器URL
-  - 格式：`https://emby.example.com`
-  - 必须包含协议（http或https）
+### Select Emby Source
+If multiple Emby servers are configured, a source dropdown selector appears at the top of the page.
 
-#### 可选字段
+### Filter Media Libraries
+Use library filter dropdown to select your target library:
+- **All** — Show media across all libraries
+- **Movie Library** — Show movies only
+- **TV‑Show Library** — Show series only
+- Other custom‑named libraries
 
-- **API密钥** - Emby API Key
-  - 在Emby服务器设置中生成
-  - 路径：设置 → API密钥
+### Sorting Options
+Click the sort button to pick your sorting mode:
+- By Name — Alphabetical ordering
+- By Date Added — Newly‑added items first
+- By Premiere Date — Release‑date ordering
+Ascending / descending toggle is available for every sorting mode.
 
-- **用户名/密码** - Emby账户凭据
-  - 如果提供了API密钥，可以不填
+### Play Media
+Click a video card to open the playback page. Emby sources behave as follows:
+- Skip speed‑checking and start playback directly
+- Auto‑load episode list for TV series
+- Source‑switching function is supported
 
-- **启用此源** - 勾选后该源才会在前台显示
-
-#### 高级选项
-
-- **播放链接移除/emby前缀** - 默认关闭
-  - 启用后将从播放链接中移除 `/emby` 前缀
-  - 仅在Emby服务器不使用 `/emby` 路径时启用
-  - **大多数情况下保持关闭**
-
-- **拼接MediaSourceId参数** - 默认关闭
-  - 启用后将调用 PlaybackInfo API 获取 MediaSourceId 并添加到播放链接
-  - 仅在某些特殊Emby配置要求时启用
-  - **通常不需要启用**
-
-- **转码mp4** - 根据需要启用
-  - 启用后将使用 HLS (`master.m3u8`) 格式，音频强制转码为 AAC
-  - **推荐启用**：如果视频包含 EAC3、TrueHD 等浏览器不支持的音频格式
-  - 也适用于 MKV 等容器格式
-  - Emby会实时转码音频，边转码边播放
-  - 注意：转码会增加服务器CPU负载
-
-- **视频播放代理** - 默认关闭
-  - 启用后视频播放将通过VODTV服务器代理
-  - 适用场景：
-    - Emby服务器有CORS限制
-    - 需要隐藏Emby服务器地址
-    - 网络连接不稳定时
-  - 注意：会增加服务器带宽和负载
-  - **建议先尝试直接播放，有问题再启用**
-
-### 3. 测试连接
-
-配置完成后，点击 **"测试连接"** 按钮验证配置是否正确。
-
-### 4. 保存配置
-
-点击 **"保存"** 按钮保存配置。
-
-## 公共源（管理员功能）
-
-管理员可以在后台 **"Emby私人影库"** 配置面板中，将某个Emby源设为 **"公共源"**。
-
-- 公共源会自动出现在所有用户的私人影库中
-- 用户无需自行配置，开箱即用
-- 用户设置页面会在顶部显示只读的公共源列表（紫色区域）
-- 用户自己的私人源与公共源同时可用，若 key 相同则用户私人源优先
-
-### 管理员设置公共源
-
-1. 进入管理后台 → **Emby私人影库** 标签
-2. 添加或编辑一个源
-3. 在表单底部找到 **"设为公共源"** 开关（紫色区域），开启
-4. 保存后，该源会对所有用户生效，无需用户手动配置
-
-## 使用方法
-
-### 访问私人影库
-
-配置完成后（或管理员设置了公共源），导航栏会出现 **"Emby"** 入口（靛蓝色图标）。
-
-访问路径：`/emby`
-
-### 选择Emby源
-
-如果配置了多个Emby服务器，页面顶部会显示源选择下拉菜单。
-
-### 筛选媒体库
-
-使用媒体库筛选器选择要浏览的库：
-- **全部** - 显示所有媒体
-- **电影库** - 仅显示电影
-- **剧集库** - 仅显示电视剧
-- 其他自定义库
-
-### 排序选项
-
-点击排序按钮选择排序方式：
-- **按名称** - 字母顺序排序
-- **按添加日期** - 最新添加的内容优先
-- **按首播日期** - 按首播/上映日期排序
-
-每种排序方式都支持升序/降序切换。
-
-### 播放内容
-
-点击视频卡片即可跳转到播放页面。Emby源会：
-- 跳过速度测试，直接播放
-- 自动加载剧集列表
-- 支持换源功能
-
-## 多源配置示例
-
-### 示例1：家庭Emby服务器
+## Multi‑source Configuration Examples
+### Example 1: Home‑Local Emby Server
+Identifier: home
+Name: Home Emby
+Server URL: [https://emby.home.local:8096](https://emby.home.local:8096)
+API Key: your-api-key-here
+Enabled: ✓
 
 ```
-标识符: home
-名称: 家庭Emby
-服务器地址: https://emby.home.local:8096
-API密钥: your-api-key-here
-启用: ✓
+
+### Example 2: Public Emby Server
 ```
 
-### 示例2：公共Emby服务器
+Identifier: public
+Name: Public Emby
+Server URL: [https://public-emby.example.com](https://public-emby.example.com)
+Username: myusername
+Password: mypassword
+Enabled: ✓
+Set as public source: ✓ (configured in admin backend)
 
 ```
-标识符: public
-名称: 公共Emby
-服务器地址: https://public-emby.example.com
-用户名: myusername
-密码: mypassword
-启用: ✓
-设为公共源: ✓（管理员在后台设置）
+
+## Technical Notes
+### URL Format
+When playing Emby media, playback URL format:
 ```
 
-## 技术说明
+/play?source=emby_[identifier]&id=[mediaID]
 
-### URL格式
-
-播放Emby内容时，URL格式为：
 ```
-/play?source=emby_[标识符]&id=[媒体ID]
+Example:
 ```
 
-例如：
-```
 /play?source=emby_wumei&id=12345
+
 ```
 
-### API端点
+### API Endpoints
+Backend API endpoints used for Emby integration:
+- `GET /api/emby/sources` — Get all user‑enabled Emby sources (merged private + public)
+- `GET /api/emby/public‑sources` — Retrieve administrator‑defined public source list
+- `GET /api/emby/views` — Fetch library views
+- `GET /api/emby/list` — Fetch media list (pagination, filtering, sorting supported)
+- `GET /api/emby/detail` — Get media metadata plus episode list
+- `GET /api/emby/play/[token]/[filename]` — Video stream proxy endpoint
 
-Emby功能使用以下API端点：
+### Cache Behaviour
+- Media listing cache TTL: 6 hours
+- In‑memory cache; cleared after service restart
+- Manual cache‑clear available in admin backend
 
-- `GET /api/emby/sources` - 获取用户所有启用的Emby源（私人源 + 公共源合并）
-- `GET /api/emby/public-sources` - 获取管理员设置的公共源列表
-- `GET /api/emby/views` - 获取媒体库视图
-- `GET /api/emby/list` - 获取媒体列表（支持分页、排序、筛选）
-- `GET /api/emby/detail` - 获取媒体详情和剧集列表
-- `GET /api/emby/play/[token]/[filename]` - 视频流代理
+## FAQ
+### Q: Why can I not see the Emby navigation entry?
+A: Please verify:
+1. You have added a user Emby source, or an administrator has set up public sources
+2. At least one source is marked Enabled
+3. Server URL is filled correctly
 
-### 缓存机制
+### Q: Connection test keeps failing
+A: Check these points:
+1. Server URL is valid with http/https protocol
+2. API key or username‑password credentials are correct
+3. Your Emby server is reachable over network
+4. Firewall rules allow outbound connections
 
-- 媒体列表缓存：6小时
-- 使用内存缓存，重启后清空
-- 可在管理后台手动清除缓存
+### Q: How many Emby sources may I configure?
+A: There is no hard upper limit; it is recommended to keep ≤5 sources for clean UI.
 
-## 常见问题
+### Q: Will Emby sources run speed‑testing?
+A: No. Emby sources skip speed‑testing and start playback directly for faster startup.
 
-### Q: 为什么看不到Emby入口？
+### Q: Which Emby Server versions are supported?
+A: Emby Server 4.x and newer. Using the latest stable release is recommended.
 
-A: 请检查：
-1. 是否已在用户设置中配置Emby源，或管理员是否设置了公共源
-2. 至少有一个源处于"已启用"状态
-3. 服务器地址是否正确填写
+### Q: Can I connect Jellyfin?
+A: Emby integration only at this moment. Jellyfin API is similar but compatibility issues may occur.
 
-### Q: 连接测试失败怎么办？
+### Q: If public‑source and private‑source share the same identifier key?
+A: User‑owned private source takes precedence; your local configuration overrides the public one.
 
-A: 请检查：
-1. 服务器地址是否正确（包含协议）
-2. API密钥或用户名密码是否正确
-3. Emby服务器是否可访问
-4. 防火墙/网络设置是否允许访问
+## Security Recommendations
+1. **Use HTTPS** — It is strongly advised to enable HTTPS for your Emby server
+2. **Rotate API Keys periodically**
+3. Each user’s Emby settings are independently persisted and isolated
+4. Credentials for public sources are stored server‑side only, never exposed to browser clients
+5. If your Emby instance lives inside LAN, access via VPN is suggested
 
-### Q: 可以配置多少个Emby源？
+## Troubleshooting
+### Media list fails to load
+1. Inspect browser developer console for error logs
+2. Confirm Emby server is running normally
+3. Clear cache and reload the page
 
-A: 理论上没有限制，但建议不超过5个以保持界面简洁。
+### Playback failures
+1. Video keeps buffering and will not start
+  - Check media container format. For MKV files turn on **Transcode to mp4** in advanced source settings
+  - Save settings and restart playback
+2. EAC3 / TrueHD audio cannot play
+  - These audio codecs are unsupported natively by browsers
+  - Enable "Transcode to mp4", HLS will transcode audio stream into AAC
+3. Unsupported video format
+  - Browser native support: MP4(H.264+AAC), WebM
+  - Transcoding required: MKV, AVI, FLV, EAC3 / TrueHD audio
+  - Fix: turn on Transcode to mp4
+4. CORS‑related playback errors
+  - Activate the **Video Playback Proxy** option; video will stream via VODTV backend proxy
+5. Double‑check Emby server transcoding settings
+6. Confirm media files physically exist on disk
+7. Verify network stability
 
-### Q: Emby源会参与速度测试吗？
+### Episode list remains empty
+1. Confirm episodes are scanned and visible from inside your Emby web UI
+2. Verify library scan status in Emby
+3. Try playing that series directly in Emby web client for validation
 
-A: 不会。Emby源会跳过速度测试，直接播放，以提供更快的启动速度。
+## Changelog
+### v6.2.0 (2026‑03‑01)
+- 🔍 **Enhanced Search**: Local full‑text index, fuzzy matching, traditional‑simplified Chinese search
+- 📱 **Mobile UX Improvements**: Refined mobile layout, display total count for categories
+- 🔄 **Manual Refresh Button**: Invalidate cached Emby responses manually
+- 🎨 **UI Refinement**: Empty‑state hints, improved navigation visibility
+- ⚡ **Performance**: Rewrote UserEmbyConfig uncontrolled input component for faster form rendering
+- 🔐 **Auth Improvements**: Fully‑supported dual authentication (API key + username/password)
+- 💾 **Config Caching**: Automatically clear cache after user updates their Emby settings
+- 🎵 **Playback Fix**: Append PlaySessionId to HLS transcoding urls, resolves segment loading failures
+- 📂 **Search Scope**: Restrict search results to the currently‑selected media library
+- 🖼️ **Image Caching**: Module‑level image cache to eliminate flicker during fast scrolling
 
-### Q: 支持哪些Emby版本？
+### v6.1.5 (2026‑02‑26)
+- 🌐 New public‑source feature: admins can publish shared Emby sources for all users
+- 🔀 Smart source merging: user private sources overlay public ones with higher priority
+- 📍 Route changed: private library path updated from `/private‑library` to `/emby`
+- 🎵 Transcode improvement: HLS master.m3u8 output; force‑AAC audio transcoding to resolve EAC3 / TrueHD incompatibility
+- 🔧 Configuration bugfix: all user‑scoped APIs now load per‑user config correctly instead of global settings
 
-A: 支持Emby Server 4.x及以上版本。建议使用最新稳定版。
+### v6.1.4 (2026‑02‑25)
+- 🔄 Major change: Emby configuration moved out of admin panel into user‑side settings
+- 👤 Every user can maintain their own separate Emby server configuration
+- 🔐 User configurations are isolated
+- 📱 Emby settings panel is now located inside the user menu
 
-### Q: 可以使用Jellyfin吗？
+### v6.1.3 (2026‑02‑24)
+- ✨ Initial release for Emby private‑library integration
+- 🎯 Multi‑source management
+- 📚 Library filtering & sorting
+- ♾️ Infinite scroll pagination
+- 🔄 Integrated into the built‑in playback page
+- ⚙️ Advanced configuration options
+  - mp4 transcoding toggle
+  - video playback proxy
+  - MediaSourceId parameter toggle
+  - Emby path prefix removal toggle
 
-A: 目前仅支持Emby。Jellyfin虽然API类似，但可能存在兼容性问题。
-
-### Q: 公共源和私人源同时有相同的key怎么办？
-
-A: 用户私人源优先。如果用户配置了与公共源相同标识符的源，将使用用户自己的配置。
-
-## 安全建议
-
-1. **使用HTTPS** - 建议Emby服务器启用HTTPS
-2. **API密钥管理** - 定期更换API密钥
-3. **独立配置** - 每个用户的Emby配置独立存储，互不影响
-4. **公共源凭证** - 公共源的API密钥等凭证只存储在服务端，不会暴露给用户
-5. **网络隔离** - 如果Emby服务器在内网，建议使用VPN访问
-
-## 故障排除
-
-### 无法加载媒体列表
-
-1. 检查浏览器控制台是否有错误信息
-2. 验证Emby服务器是否正常运行
-3. 尝试清除缓存后重新加载
-
-### 播放失败
-
-1. **视频一直转圈不播放**
-   - 检查视频格式：如果是MKV等格式，需要启用"转码mp4"选项
-   - 在用户设置中编辑Emby源，打开"高级选项"中的"转码mp4"
-   - 保存后重新播放
-
-2. **EAC3/TrueHD音频无法播放**
-   - 浏览器不支持这些音频格式
-   - 启用"转码mp4"选项，系统会使用HLS转码音频为AAC
-
-3. **视频格式不支持**
-   - 浏览器原生支持：MP4 (H.264 + AAC)、WebM
-   - 需要转码：MKV、AVI、FLV、EAC3/TrueHD音频等
-   - 解决方案：启用"转码mp4"选项
-
-4. **CORS错误**
-   - 启用"视频播放代理"选项
-   - 视频将通过VODTV服务器代理播放
-
-5. 检查Emby服务器的转码设置
-6. 验证媒体文件是否存在
-7. 检查网络连接是否稳定
-
-### 剧集列表为空
-
-1. 确认该剧集在Emby中有可用集数
-2. 检查Emby库的扫描状态
-3. 尝试在Emby Web界面中播放验证
-
-## 更新日志
-
-### v6.2.0 (2026-03-01)
-- 🔍 **搜索增强**：实现本地全文索引，支持模糊匹配和繁简体搜索
-- 📱 **移动端优化**：改进移动端UX体验，显示分类总数
-- 🔄 **手动刷新**：添加手动刷新按钮，可使所有Emby查询失效
-- 🎨 **UI改进**：添加空状态UI提示，优化导航可见性
-- ⚡ **性能优化**：重写UserEmbyConfig为非受控输入，优化表单性能
-- 🔐 **认证增强**：完善API密钥和用户名/密码双重认证支持
-- 💾 **配置管理**：用户更新配置时自动清除缓存，立即应用更改
-- 🎵 **播放优化**：HLS转码URL添加PlaySessionId，解决片段加载错误
-- 📂 **搜索过滤**：搜索结果范围限定到选定的库文件夹
-- 🖼️ **图片缓存**：实现模块级图片缓存系统，消除快速滚动闪烁
-
-### v6.1.5 (2026-02-26)
-- 🌐 **新增公共源功能**：管理员可将Emby源设为公共，所有用户自动可用
-- 🔀 **智能源合并**：用户私人源与公共源自动合并，私人源优先
-- 📍 **路径优化**：私人影库页面路径从 `/private-library` 改为 `/emby`
-- 🎵 **转码优化**：转码模式改用HLS（`master.m3u8`），强制音频转AAC，解决EAC3/TrueHD兼容问题
-- 🔧 **配置修复**：所有用户相关API统一使用用户专属配置，不再误用全局配置
-
-### v6.1.4 (2026-02-25)
-- 🔄 **重大变更**: Emby配置从管理后台迁移到用户设置
-- 👤 每个用户现在可以配置自己的Emby服务器
-- 🔐 用户配置独立存储，互不影响
-- 📱 在用户菜单的设置面板中配置Emby
-
-### v6.1.3 (2026-02-24)
-- ✨ 首次发布Emby私人影库功能
-- 🎯 支持多源管理
-- 📚 支持媒体库筛选和排序
-- ♾️ 实现无限滚动加载
-- 🔄 集成到播放页面
-- ⚙️ 添加高级选项配置
-  - 转码mp4支持
-  - 视频播放代理
-  - MediaSourceId参数
-  - Emby前缀控制
-
-## 致谢
-
-本功能的实现参考了 [MoonTVPlus](https://github.com/mtvpls/MoonTVPlus) 项目的Emby集成方案，感谢原作者的开源贡献。
+## Acknowledgements
+This Emby integration refers to the Emby implementation from [MoonTVPlus](https://github.com/mtvpls/MoonTVPlus). Thanks for the open‑source contribution from the original author.
 
 ---
-
-如有问题或建议，请在GitHub提交Issue。
+If you encounter bugs or have suggestions, please open an Issue on GitHub.
+```

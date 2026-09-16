@@ -1,51 +1,47 @@
-## 🔐 安全与隐私提醒
+## 🔐 Security & Privacy Reminders
 
-### ⚠️ 重要安全建议
+### ⚠️ Important Security Recommendations
 
-1. **设置强密码**：使用复杂的 `PASSWORD` 环境变量
-2. **关闭公网注册**：在管理后台关闭用户注册功能
-3. **仅供个人使用**：请勿公开分享或传播您的实例链接
-4. **遵守当地法律**：确保使用行为符合当地法律法规
-5. **SSRF 防护**：公网部署时保持 SSRF 防护启用（默认），私有部署（NAS/内网）可按需禁用
+1. **Set a strong password**: Use a complex `PASSWORD` environment variable
+2. **Disable public registration**: Turn‑off user registration in the admin dashboard
+3. **For personal use only**: Do not publicly share or distribute your instance URL
+4. **Comply with local laws**: Ensure your usage complies with applicable local laws and regulations
+5. **SSRF protection**: Keep SSRF protection enabled for public deployments (default setting). You may disable it on private NAS / intranet deployments as‑needed.
 
-### 🛡️ SSRF 防护说明
+### 🛡️ SSRF Protection Explanation
 
-本项目默认启用 SSRF（Server-Side Request Forgery）防护，阻止代理访问内网资源：
+This project enables SSRF (Server‑Side Request Forgery) protection by default to block proxy access to internal‑network resources.
 
-**阻止的地址范围：**
-- 内网 IP：`10.x.x.x`、`192.168.x.x`、`172.16-31.x.x`
-- 本地地址：`127.0.0.1`、`localhost`
-- 链路本地：`169.254.x.x`
-- 云平台元数据：`metadata.google.internal`
+**Blocked address ranges:**
+‑ Private LAN IPs: `10.x.x.x`, `192.168.x.x`, `172.16‑31.x.x`
+‑ Local addresses: `127.0.0.1`, `localhost`
+‑ Link‑local addresses: `169.254.x.x`
+‑ Cloud metadata endpoints: `metadata.google.internal`
 
-**何时需要禁用 SSRF 防护：**
+**When you need to disable SSRF protection:**
+If you deploy on a **NAS, home server or intranet environment**, and your video sources / images / CMS APIs reside on private‑network addresses, set the environment variable:
 
-如果您在 **NAS、家庭服务器或内网环境** 部署，且视频源/图片/CMS 接口使用内网地址，需要设置：
-
-```bash
+```
 DISABLE_SSRF_PROTECTION=true
 ```
 
-**⚠️ 安全警告：**
-- 禁用 SSRF 防护会允许代理访问内网资源
-- **仅适用于私有部署环境**（NAS、家庭网络、企业内网）
-- **公网部署强烈建议保持启用**，否则可能被利用访问内网服务
-- 如果不确定，请保持默认（启用防护）
+**⚠️ Security Warning:**
+‑ Disabling SSRF protection permits the proxy to reach internal‑network resources.
+‑ **Only for private deployments** (NAS, home LAN, corporate intranet).
+‑ **Strongly keep it enabled for public deployments**, otherwise attackers may abuse the proxy to reach internal services.
+‑ If unsure, stick with the default (protection turned on).
 
-**典型使用场景：**
-- ✅ 公网 VPS/云服务器 → 保持启用（默认）
-- ✅ Vercel/Netlify 等平台 → 保持启用（默认）
-- ⚠️ NAS（群晖/威联通）Docker 部署 → 视频源是内网地址时需禁用
-- ⚠️ 家庭服务器 → 访问局域网资源时需禁用
+**Typical deployment scenarios:**
+‑ ✅ Public VPS / cloud server → keep SSRF protection enabled (default)
+‑ ✅ Vercel / Netlify and similar platforms → keep SSRF protection enabled (default)
+‑ ⚠️ NAS (Synology/QNAP) Docker deployment → disable only if your video sources are located on your LAN
+‑ ⚠️ Home server → disable only when accessing local‑area network resources
 
-### 📋 免责声明
+### 📋 Disclaimer
 
-- 本项目仅供学习和个人使用
-- 请勿用于商业用途或公开服务
-- 所有内容来自第三方网站，本站不存储任何视频资源
-- 公开分享导致的法律问题，用户需自行承担责任
-- 项目开发者不对用户使用行为承担任何法律责任
-- **本项目不在中国大陆地区提供服务**，在该地区使用所产生的法律风险及责任属于用户个人行为，与本项目无关
-
----
-
+‑ This project is for learning and personal‑use purposes only.
+‑ Do not use it commercially or run it as a public service.
+‑ All content originates from third‑party websites; no video assets are stored on this service.
+‑ You are fully legally responsible for any issues caused by public sharing of your instance.
+‑ Project developers accept no legal liability for how end‑users operate this software.
+‑ **This project is not intended for service within mainland China.** Any legal risks arising from usage inside that region fall solely on the end‑user and are unrelated to the project authors.

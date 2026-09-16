@@ -1,247 +1,236 @@
+# MoonTV Deployment Configuration Documentation
 ## ⚙️ Configuration File
-
-After deployment, the application is an empty‑shell app. You need to fill configurations in **Admin Dashboard > Configuration File**.
+After deployment, the app starts as an empty shell. Fill in the configuration inside **Admin Dashboard > Configuration File**.
 
 ### 📝 Configuration File Format
-
 ```json
 {
   "cache_time": 7200,
   "api_site": {
     "example_source": {
-      "api": "http://example.com/api.php/provide/vod",
-      "name": "Demo Resource Site",
-      "detail": "http://example.com"
+      "api": "[http://example.com/api.php/provide/vod](http://example.com/api.php/provide/vod)",
+      "name": "Example Source Site",
+      "detail": "[http://example.com](http://example.com)"
     }
   },
   "custom_category": [
     {
-      "name": "Chinese Movies",
+      "name": "Chinese‑language Movies",
       "type": "movie",
-      "query": "Chinese"
+      "query": "Chinese‑language"
     },
     {
       "name": "US TV Series",
       "type": "tv",
-      "query": "US drama"
+      "query": "US TV Series"
     }
   ]
 }
 ```
 
 ### 📖 Field Description
-
-- **cache_time**：API cache time in seconds, recommended: 3600‑7200
-- **api_site**：Media resource site configuration
-  - `key`：Unique identifier (lowercase letters / numbers)
-  - `api`：VOD JSON API address of resource site (Apple CMS V10 format supported)
-  - `name`：Display name shown on UI
-  - `detail`：(Optional) Root webpage URL, used to crawl episode details
-- **custom_category**：Custom categories (based on Douban search)
-  - `name`：Category display name
-  - `type`：`movie` for film or `tv` for TV series
-  - `query`：Douban search keyword
+- **cache_time**: API response cache duration in seconds. Recommended range: 3600‑7200
+- **api_site**: Video resource site configuration
+  - `key`: Unique identifier (lowercase letters / digits)
+  - `api`: Vod JSON API endpoint for resource source (supports Apple CMS V10 format)
+  - `name`: Display name shown in UI
+  - `detail`: (Optional) Root webpage URL used to scrape episode details
+- **custom_category**: Custom categories based on Douban search
+  - `name`: Category display name
+  - `type`: `movie` for films or `tv` for TV series
+  - `query`: Search keyword for Douban
 
 ### 🎯 Recommended Custom Categories
+**Movie categories**: Hot, Latest, Classics, Douban High‑Score, Hidden Gems, Chinese‑language, Western, South Korean, Japanese, Action, Comedy, Romance, Sci‑Fi, Mystery, Horror, Healing
+**TV‑Series categories**: Hot, US Shows, UK Shows, Korean Dramas, Japanese Dramas, Mainland China Dramas, Hong Kong Dramas, Japanese Anime, Variety Shows, Documentaries
 
-**Movie Categories**：Popular, Latest, Classic, Top‑rated on Douban, Hidden Gems, Chinese, European & American, Korean, Japanese, Action, Comedy, Romance, Sci‑Fi, Mystery, Horror, Healing
-
-**TV Series Categories**：Popular, US Series, UK Series, Korean Series, Japanese Series, Mainland Chinese Series, Hong Kong Series, Japanese Anime, Variety Shows, Documentaries
+You may also input specific keywords e.g. "Harry Potter", which directly performs a Douban search.
 
 ---
-
 ## 🌐 Environment Variables
-
 ### Required Variables
+| Variable | Description | Example Value |
+|---|---|---|
+| `USERNAME` | Admin username | `admin` |
+| `PASSWORD` | Admin password | `your_secure_password` |
+| `NEXT_PUBLIC_STORAGE_TYPE` | Storage backend type | `kvrocks` / `redis` / `upstash` |
 
-| Variable                 | Description    | Example Value         |
-| ------------------------ | -------------- | --------------------- |
-| `USERNAME`               | Webmaster account| `admin`               |
-| `PASSWORD`               | 站长密码       | `your_secure_password`|
-| `NEXT_PUBLIC_STORAGE_TYPE` | 存储类型     | `kvrocks` / `redis` / `upstash` |
+### Storage‑Related Configuration
+| Variable | Description | Example Value |
+|---|---|---|
+| `KVROCKS_URL` | Kvrocks connection URL | `redis://moontv-kvrocks:6666` |
+| `REDIS_URL` | Redis connection URL | `redis://moontv-redis:6379` |
+| `UPSTASH_URL` | Upstash endpoint | `[https://xxx.upstash.io](https://xxx.upstash.io)` |
+| `UPSTASH_TOKEN` | Upstash access token | `AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==` |
 
-### 存储配置
-
-| Variable            | Description        |Example Value               |
-| ----------------- | -------------------- | ------------------------------- |
-| `KVROCKS_URL`     | Kvrocks 连接 URL      | `redis://moontv-kvrocks:6666`   |
-| `REDIS_URL`       | Redis 连接 URL        | `redis://moontv-redis:6379`     |
-| `UPSTASH_URL`     | Upstash 端点          | `https://xxx.upstash.io`        |
-| `UPSTASH_TOKEN`   | Upstash Token         | `AxxxxxxxxxxxxxxxxxxxxxxxxxxxQ==`|
-
-> 💡 **Redis 兼容服务**：`REDIS_URL` 支持所有 Redis 协议兼容的服务，包括：
-> - 自建 Redis / KVRocks
-> - [Redis Cloud](https://redis.io/cloud/) - 官方云服务，免费 30MB
-> - [Aiven Valkey](https://aiven.io/valkey) - 免费 1GB，Redis 7.2 兼容
-> - [Northflank](https://northflank.com/dbaas/managed-redis) - 免费 256MB
+> 💡 **Redis‑compatible services**: `REDIS_URL` works with any Redis‑protocol‑compatible service:
+> - Self‑hosted Redis / Kvrocks
+> - [Redis Cloud](https://redis.io/cloud/) — Official cloud service, free tier 30 MB
+> - [Aiven Valkey](https://aiven.io/valkey) — Free tier 1 GB, Redis 7.2 compatible
+> - [Northflank](https://northflank.com/dbaas/managed-redis) — Free tier 256 MB
 >
-> ⚠️ **Vercel 部署请使用 Upstash**：Vercel Serverless 函数是无状态的，每次请求可能冷启动新实例。TCP 长连接的 Redis 服务（Redis Cloud、Aiven、Northflank 等）在此环境下会遇到连接池失效、冷启动延迟高、连接数耗尽等问题。Upstash 基于 HTTP REST API，天然适配 Serverless 环境，是 Vercel 部署的唯一推荐存储方案。
+> ⚠️ **For Vercel deployment use Upstash only**:
+> Vercel Serverless functions are stateless and cold‑start new instances on incoming requests.
+> TCP‑based Redis services (Redis Cloud, Aiven, Northflank etc.) suffer from broken connection pools, high cold‑start latency and exhausted connection limits.
+> Upstash uses HTTP REST API, natively built for serverless environments and is the only recommended storage option for Vercel.
 
-### 可选配置
+### Optional Configuration
+| Variable | Description | Default Value | Available Options |
+|---|---|---|---|
+| `SITE_BASE` | Website base URL | Empty | `[https://example.com](https://example.com)` |
+| `NEXT_PUBLIC_SITE_NAME` | Website display name | `MoonTV` | Arbitrary string |
+| `ANNOUNCEMENT` | Site announcement | Default announcement | Arbitrary string |
+| `NEXT_PUBLIC_SEARCH_MAX_PAGE` | Max search result pages | `5` | `1‑50` |
+| `NEXT_PUBLIC_DOUBAN_PROXY_TYPE` | Douban metadata proxy type | `direct` | `direct` / `cors-proxy-zwei` / `cmliussss-cdn-tencent` / `cmliussss-cdn-ali` / `custom` |
+| `NEXT_PUBLIC_DOUBAN_PROXY` | Custom Douban metadata proxy | Empty | URL prefix |
+| `NEXT_PUBLIC_DOUBAN_IMAGE_PROXY_TYPE` | Douban image proxy type | `direct` | `direct` / `server` / `img3` / `cmliussss-cdn-tencent` / `cmliussss-cdn-ali` / `custom` |
+| `NEXT_PUBLIC_DOUBAN_IMAGE_PROXY` | Custom Douban image proxy | Empty | URL prefix |
+| `NEXT_PUBLIC_DISABLE_YELLOW_FILTER` | Disable adult‑content filter | `false` | `true` / `false` |
+| `NEXT_PUBLIC_FLUID_SEARCH` | Enable streaming search output | `true` | `true` / `false` |
+| `DISABLE_HERO_TRAILER` | Disable homepage hero banner trailer | `false` | `true` / `false` |
+| `DISABLE_SSRF_PROTECTION` | Disable SSRF protection | `false` | `true` / `false` |
 
-| 变量                                | 说明                 | 默认值      | 可选值                    |
-| ----------------------------------- | -------------------- | ----------- | ------------------------- |
-| `SITE_BASE`                         | 站点 URL             | 空          | `https://example.com`     |
-| `NEXT_PUBLIC_SITE_NAME`             | 站点名称             | `MoonTV`    | 任意字符串                |
-| `ANNOUNCEMENT`                      | 站点公告             | 默认公告     | 任意字符串                |
-| `NEXT_PUBLIC_SEARCH_MAX_PAGE`       | 搜索最大页数         | `5`         | `1-50`                    |
-| `NEXT_PUBLIC_DOUBAN_PROXY_TYPE`     | 豆瓣数据代理类型     | `direct`    | `direct` / `cors-proxy-zwei` / `cmliussss-cdn-tencent` / `cmliussss-cdn-ali` / `custom` |
-| `NEXT_PUBLIC_DOUBAN_PROXY`          | 自定义豆瓣代理       | 空          | URL prefix                |
-| `NEXT_PUBLIC_DOUBAN_IMAGE_PROXY_TYPE`| 豆瓣图片代理类型    | `direct`    | `direct` / `server` / `img3` / `cmliussss-cdn-tencent` / `cmliussss-cdn-ali` / `custom` |
-| `NEXT_PUBLIC_DOUBAN_IMAGE_PROXY`    | 自定义图片代理       | 空          | URL prefix                |
-| `NEXT_PUBLIC_DISABLE_YELLOW_FILTER` | 关闭色情内容过滤     | `false`     | `true` / `false`          |
-| `NEXT_PUBLIC_FLUID_SEARCH`          | 流式搜索输出         | `true`      | `true` / `false`          |
-| `DISABLE_HERO_TRAILER`              | 禁用首页预告片       | `false`     | `true` / `false`          |
-| `DISABLE_SSRF_PROTECTION`           | 禁用 SSRF 防护       | `false`     | `true` / `false`          |
+> 💡 **DISABLE_HERO_TRAILER**:
+> Hero‑banner trailers consume bandwidth, trailer URLs include timestamps and expire periodically.
+> - **Vercel**: Automatically disabled, no extra variable needed.
+> - **Docker/VPS (persistent volume available)**: Leave enabled; trailers cache locally under `VIDEO_CACHE_DIR`, expired URLs refresh automatically.
+> - **ClawCloud, HF Space, EdgeOne Pages & other platforms without persistent storage**: Set `DISABLE_HERO_TRAILER=true`. Without local cache, expired trailers will be re‑downloaded on every page refresh.
+>
+> ⚠️ **DISABLE_SSRF_PROTECTION**:
+> SSRF (Server‑Side Request Forgery) protection is enabled by default and blocks outgoing requests targeting private LAN addresses.
+> - **Public deployment (VPS / Cloud Server / Vercel)**: Keep default (`false`), prevents exploitation to access internal network services.
+> - **Private deployment (NAS / Home Server / LAN‑only)**: If your video sources or CMS APIs live inside private LAN (`192.168.x.x`, `10.x.x.x`), set `DISABLE_SSRF_PROTECTION=true`.
+> - **Security Warning**: Disabling SSRF protection allows outbound requests to your internal network; use only for private‑LAN deployments. Refer to [security document](SECURITY.md#‑ssrf‑防护说明).
 
-> 💡 **DISABLE_HERO_TRAILER**：首页 HeroBanner 预告片会消耗较多流量，且预告片 URL 带时间戳会定时过期。
-> - **Vercel**：自动禁用（无需设置）
-> - **Docker/VPS（可挂载持久化卷）**：无需禁用，视频会缓存到本地（`VIDEO_CACHE_DIR`），URL 过期后自动刷新并重新缓存
-> - **ClawCloud、HF Space、EdgeOne Pages 等无持久化平台**：建议设置 `DISABLE_HERO_TRAILER=true`，因为无法缓存视频，URL 过期后每次刷新都要重新下载
+### Douban Proxy Explanation
+**DOUBAN_PROXY_TYPE options**:
+- `direct`: Server sends requests directly to Douban (may be blocked)
+- `cors‑proxy‑zwei`: Proxy service provided by [Zwei](https://github.com/bestzwei)
+- `cmliussss‑cdn‑tencent`: Tencent Cloud CDN proxy by [CMLiussss](https://github.com/cmliu)
+- `cmliussss‑cdn‑ali`: Alibaba Cloud CDN proxy by [CMLiussss](https://github.com/cmliu)
+- `custom`: Self‑supplied proxy, you must also define `NEXT_PUBLIC_DOUBAN_PROXY`
 
-> ⚠️ **DISABLE_SSRF_PROTECTION**：SSRF（服务器端请求伪造）防护默认启用，阻止代理访问内网资源。
-> - **公网部署（VPS/云服务器/Vercel）**：保持默认（不设置或 `false`），防止被利用访问内网服务
-> - **私有部署（NAS/家庭服务器/内网环境）**：如果视频源、图片或 CMS 接口使用内网地址（如 `192.168.x.x`、`10.x.x.x`），需设置 `DISABLE_SSRF_PROTECTION=true`
-> - **安全警告**：禁用 SSRF 防护会允许访问内网资源，仅适用于私有部署环境。详见 [安全文档](../security/SECURITY.md#-ssrf-防护说明)
-
-### 豆瓣代理说明
-
-**DOUBAN_PROXY_TYPE 选项**：
-- `direct`：服务器直接请求豆瓣（可能被墙）
-- `cors-proxy-zwei`：通过 [Zwei](https://github.com/bestzwei) 提供的 CORS 代理
-- `cmliussss-cdn-tencent`：[CMLiussss](https://github.com/cmliu) 提供的腾讯云 CDN
-- `cmliussss-cdn-ali`：[CMLiussss](https://github.com/cmliu) 提供的阿里云 CDN
-- `custom`：自定义代理（需设置 `DOUBAN_PROXY`）
-
-**DOUBAN_IMAGE_PROXY_TYPE 选项**：
-- `direct`：浏览器直接请求豆瓣图片域名
-- `server`：服务器代理请求
-- `img3`：豆瓣官方阿里云 CDN
-- `cmliussss-cdn-tencent`：CMLiussss 腾讯云 CDN
-- `cmliussss-cdn-ali`：CMLiussss 阿里云 CDN
-- `custom`：自定义代理（需设置 `DOUBAN_IMAGE_PROXY`）
-
----
-
-## 🎛️ 功能配置
-
-所有功能均可在**管理后台**进行配置，无需修改代码或重启服务。
-
-### 管理后台入口
-
-访问 `http://your-domain:3000/admin` 并使用站长账号登录。
-
-### 管理面板功能模块
-
-管理后台提供以下功能模块（部分功能仅站长可见）：
-
-#### 📁 配置文件（仅站长）
-- **配置订阅**：
-  - 订阅 URL 设置
-  - 自动拉取远程配置
-  - 支持 Base58 编码的 JSON 格式
-- **配置文件编辑**：
-  - JSON 格式配置编辑器
-  - 在线保存配置
-
-#### ⚙️ 站点配置
-- **基础设置**：
-  - 站点名称
-  - 站点公告
-- **豆瓣数据代理**：
-  - 直连/Cors Proxy/豆瓣 CDN/自定义代理
-  - 自定义代理 URL
-- **豆瓣图片代理**：
-  - 直连/服务器代理/官方 CDN/自定义代理
-  - 自定义图片代理 URL
-- **搜索接口设置**：
-  - 搜索最大页数（1-50）
-  - 接口缓存时间（秒）
-  - 流式搜索开关
-- **内容过滤**：
-  - 黄色内容过滤开关
-- **TMDB 演员搜索**：
-  - TMDB API Key
-  - 语言设置（中文/英语/日语/韩语）
-  - 功能启用开关
-
-#### 👥 用户配置
-- **用户注册设置**（仅站长）：
-  - 用户注册开关
-  - 非活跃用户自动清理
-  - 保留天数设置
-- **用户组管理**：
-  - 添加/编辑/删除用户组
-  - 可用视频源权限配置
-- **用户列表**：
-  - 批量设置用户组
-  - 添加/编辑用户
-  - 修改密码
-  - 封禁/解封用户
-  - 设置管理员权限
-  - 删除用户
-
-#### 🎬 视频源配置
-- **视频源管理**：
-  - 添加视频源（名称、API 地址）
-  - 批量启用/禁用/删除
-  - 视频源导入/导出（支持批量管理配置，便于备份和迁移）
-  - 视频源有效性检测
-  - 一键选择无效源（现代化按钮UI设计）
-  - 拖拽排序
-  - 编辑/删除单个视频源
-- **源浏览器和测试模块**：
-  - 源站内容浏览和搜索
-  - 源站测试和健康检查
-  - 移动端响应式布局
-  - 侧抽屉测试结果展示
-
-#### 📺 直播源配置
-- **直播源管理**：
-  - 添加直播源（名称、m3u/m3u8 地址）
-  - 刷新直播源数据
-  - 拖拽排序
-  - 编辑/删除直播源
-
-#### 🏷️ 分类配置
-- **自定义分类**：
-  - 添加/编辑自定义分类
-  - 拖拽排序
-  - 基于豆瓣搜索的分类
-
-#### 🔍 网盘搜索配置
-- **基础设置**：
-  - 网盘搜索功能开关
-  - PanSou 服务地址
-  - 请求超时时间
-- **支持网盘类型**：
-  - 百度网盘、阿里云盘、夸克、天翼云盘
-  - UC 网盘、移动云盘、115 网盘、PikPak
-  - 迅雷网盘、123 网盘
-  - 磁力链接、电驴链接
-
-#### 🤖 AI 推荐配置
-- OpenAI API 配置
-- 模型选择和参数设置
-- 推荐提示词管理
-
-#### 🎥 YouTube 配置
-- YouTube Data API v3 密钥
-- 搜索和缓存配置
-- 功能启用开关
-
-#### 🔐 TVBox 安全配置
-- IP 白名单管理
-- Token 认证配置
-- TVBox API 设置
-
-#### 🗄️ 缓存管理（仅站长）
-- 各类缓存查看和清理
-- YouTube、网盘、豆瓣、弹幕缓存统计
-
-#### 📦 数据迁移（仅站长）
-- 导入/导出整站数据
-- 数据库迁移工具
+**DOUBAN_IMAGE_PROXY_TYPE options**:
+- `direct`: Browser fetches Douban images directly
+- `server`: Images are proxied through backend server
+- `img3`: Official Douban Alibaba CDN
+- `cmliussss‑cdn‑tencent`: Tencent Cloud CDN proxy by CMLiussss
+- `cmliussss‑cdn‑ali`: Alibaba Cloud CDN proxy by CMLiussss
+- `custom`: Self‑supplied image proxy, you must also define `NEXT_PUBLIC_DOUBAN_IMAGE_PROXY`
 
 ---
+## 🎛️ Feature Configuration
+Almost all settings can be changed from the **Admin Dashboard**. No source‑code edits or service restarts are required.
 
+### Admin Dashboard Entry
+Visit `http://your-domain:3000/admin` and log in with your admin credentials.
+
+### Admin Dashboard Modules
+Some modules are restricted to super‑admin accounts only.
+#### 📁 Configuration File (Admin‑Only)
+- **Remote config subscription**:
+  - Subscription URL configuration
+  - Auto‑pull remote configuration
+  - Supports Base58‑encoded JSON payload
+- **Inline config editor**:
+  - Built‑in JSON editor
+  - Save configuration online
+
+#### ⚙️ Site Settings
+- **Basic Settings**:
+  - Site name
+  - Site announcement
+- **Douban Metadata Proxy**:
+  - Direct / CORS‑Proxy / CDN / Custom proxy selection
+  - Custom proxy URL input
+- **Douban Image Proxy**:
+  - Direct / Server‑side proxy / Official CDN / Custom proxy selection
+  - Custom image proxy URL input
+- **Search Settings**:
+  - Max search result pages (1‑50)
+  - API cache time (seconds)
+  - Toggle streaming search
+- **Content Filtering**:
+  - Toggle adult‑content filter
+- **TMDB Actor Search**:
+  - TMDB API Key input
+  - Language selection (CN / EN / JP / KR)
+  - Feature enable/disable switch
+
+#### 👥 User Management
+- **Registration Settings (Admin‑Only)**:
+  - Toggle public user registration
+  - Auto‑clean inactive users
+  - Retention day configuration
+- **User Group Management**:
+  - Add / Edit / Delete user groups
+  - Assign accessible video‑source permissions per group
+- **User List**:
+  - Bulk assign user groups
+  - Manual create / modify users
+  - Reset passwords
+  - Ban / unban accounts
+  - Grant administrator privileges
+  - Delete users
+
+#### 🎬 Video Source Management
+- **Video Source List**:
+  - Add new video sources (name + API endpoint)
+  - Bulk enable/disable/delete
+  - Import & export source list for backup or migration
+  - Source health validation check
+  - One‑click select invalid sources
+  - Drag‑and‑drop reordering
+  - Edit or delete individual entries
+- **Source Tester & Browser**:
+  - Browse & test content of configured API sources
+  - Source health inspection
+  - Mobile‑responsive layout
+  - Side drawer to display test output
+
+#### 📺 Live Stream Source Management
+- **Live source management**:
+  - Add live streams (name + m3u/m3u8 URL)
+  - Refresh live‑source metadata
+  - Drag‑and‑drop sorting
+  - Edit / delete live entries
+
+#### 🏷️ Category Settings
+- **Custom Category**:
+  - Add / modify custom categories
+  - Drag‑and‑drop sort
+  - Category backed by Douban search query
+
+#### 🔍 Cloud‑Disk Search Settings
+- **Basic Configuration**:
+  - Master toggle for cloud‑disk search feature
+  - PanSou backend service URL
+  - Request timeout value
+- **Supported cloud drives**:
+  - Baidu Netdisk, Aliyundrive, Quark Cloud, Tianyi Cloud
+  - UC Cloud, China Mobile Cloud, 115 Cloud, PikPak
+  - Xunlei Cloud, 123 Cloud
+  - Magnet links, eD2k links
+
+#### 🤖 AI Recommendation Settings
+- OpenAI API configuration
+- Model selection & parameter tuning
+- Manage custom AI‑prompt templates
+
+#### 🎥 YouTube Integration
+- YouTube Data API v3 key
+- Search and cache configuration
+- Feature toggle switch
+
+#### 🔐 TVBox Security Settings
+- IP whitelist management
+- Token authentication configuration
+- TVBox API endpoint options
+
+#### 🗄️ Cache Management (Admin‑Only)
+- Inspect cache statistics for different subsystems
+- Clear caches for YouTube, cloud‑disk, Douban, danmaku
+
+#### 📦 Data Migration (Admin‑Only)
+- Full‑site import / export backup
+- Database migration helper tool

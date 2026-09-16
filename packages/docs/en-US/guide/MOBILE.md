@@ -1,67 +1,56 @@
-## 📱 移动端 APP 使用
+## 📱 Mobile APP Usage
+### Selene‑Official Mobile Client
+[Selene](https://github.com/MoonTechLab/Selene) is the official mobile application developed by the original MoonTV author. Built with Flutter and optimized specifically for mobile phones.
 
-### Selene - 官方移动客户端
+#### Supported Platforms
+- **Android**: 5.0+ (API 21), ARM64 architecture only
+- **iOS**: 12.0+
 
-[Selene](https://github.com/MoonTechLab/Selene) 是由 MoonTV 原作者开发的官方移动端应用，基于 Flutter 构建，专为手机端优化。
+#### Key Features
+- 🎨 Modern Material Design 3 UI
+- 🌗 Dark / Light theme support
+- 🔍 Multi‑source aggregated search (SSE real‑time search supported)
+- ▶️ High‑performance FVP video player
+- 📊 Smart playback progress tracking
+- ❤️ Personal favorites management
+- 🎬 Supports movies, TV series, anime, variety shows and more
 
-#### 支持平台
-- **Android**：5.0+ (API 21)，仅支持 ARM64 架构
-- **iOS**：12.0+
+#### Usage Instructions
+1. Download the latest release from [Selene Releases](https://github.com/MoonTechLab/Selene/releases)
+   - Android: download the `.apk` file
+   - iOS: download the `.ipa` file (self‑signing required)
+2. Install the application on your mobile device
+3. Launch the app, enter your server domain in settings: `https://your‑domain.com`
+4. Log in with your admin or regular user account
+5. All playback history and favorites will automatically synchronize with the web client
 
-#### 主要特性
-- 🎨 Modern Material Design 3 界面
-- 🌗 深色/浅色主题支持
-- 🔍 多源聚合搜索（支持 SSE 实时搜索）
-- ▶️ 高性能 FVP 视频播放器
-- 📊 智能播放记录追踪
-- ❤️ 个人收藏管理
-- 🎬 支持电影、电视剧、动漫、综艺等内容
-
-#### 使用方法
-
-1. 从 [Selene Releases](https://github.com/MoonTechLab/Selene/releases) 下载最新版本
-   - Android：下载 `.apk` 文件
-   - iOS：下载 `.ipa` 文件（需自签）
-2. 安装应用到手机
-3. 打开应用，在设置中填入您的服务器域名：`https://your-domain.com`
-4. 使用站长账号或普通用户账号登录
-5. 所有播放记录和收藏将与网页端自动同步
-
-#### 注意事项
-- ⚠️ Selene 专为手机端优化，**不兼容平板、电视、模拟器**等设备
-- ⚠️ 如需在 Android TV 或平板上使用，请使用下方的 OrionTV
+#### Notes
+- ⚠️ Selene is optimized for mobile phones only. **Not compatible with tablets, TVs or emulators**.
+- ⚠️ For Android TV or tablet usage, please use OrionTV below.
 
 ---
+## 📺 Android TV / Tablet Usage
+### Selene‑TV‑Official Android TV Client
+[Selene‑TV](https://github.com/MoonTechLab/Selene‑TV) is the official Android TV client from the original MoonTV developer, deeply optimized for remote‑control devices. Current latest version **v1.3.0**.
 
-## 📺 AndroidTV / 平板使用
+#### Supported Platforms
+- Android TV / Smart TV
+- Android tablet (remote‑control mode)
 
-### Selene-TV - 官方 Android TV 客户端
+#### Key Features
+- 🎮 Full remote‑control navigation, TV‑first user experience
+- ⏭️ Intro / outro detection with one‑click skip
+- ⚡ 6‑level playback speed from 0.5× to 2.0×
+- 📐 Aspect‑ratio switching (Fit / Zoom / Fill)
+- 🔄 In‑app automatic update checking, no manual package lookup required
 
-[Selene-TV](https://github.com/MoonTechLab/Selene-TV) 是由 MoonTV 原作者开发的官方 Android TV 客户端，针对遥控器设备深度优化。最新版本 **v1.3.0**。
+#### Download & Installation
+Get the newest APK from [Selene‑TV Releases](https://github.com/MoonTechLab/Selene‑TV/releases):
+- `SeleneTV‑vX.X.X‑arm64‑v8a.apk` — 64‑bit devices (recommended)
+- `SeleneTV‑vX.X.X‑armeabi‑v7a.apk` — 32‑bit devices
 
-#### 支持平台
-- Android TV / 智能电视
-- Android 平板（遥控器模式）
-
-#### 主要特性
-- 🎮 遥控器全键盘导航，TV 体验优先
-- ⏭️ 片头 / 片尾识别与一键跳过
-- ⚡ 0.5× ~ 2.0× 六档倍速播放
-- 📐 画面比例切换（适应 / 缩放 / 填充）
-- 🔄 应用内自动检查更新，无需手动找包
-
-#### 下载安装
-
-从 [Selene-TV Releases](https://github.com/MoonTechLab/Selene-TV/releases) 下载最新 APK：
-- `SeleneTV-vX.X.X-arm64-v8a.apk` — 64 位设备（推荐）
-- `SeleneTV-vX.X.X-armeabi-v7a.apk` — 32 位设备
-
-#### 配置步骤
-
-1. 在设备上安装 APK
-2. 打开应用，在设置中填入服务器地址：`https://your-domain.com`
-3. 使用站长账号或普通用户账号登录
-4. 播放记录将与网页端、Selene 自动同步
-
----
-
+#### Configuration Steps
+1. Install the APK on your device
+2. Open the application, input your server address inside settings: `https://your‑domain.com`
+3. Log in using your admin or regular user account
+4. Playback history synchronizes automatically between web client and Selene mobile app

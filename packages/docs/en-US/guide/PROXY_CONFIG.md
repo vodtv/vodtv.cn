@@ -1,413 +1,415 @@
-# 🚀 Cloudflare Worker 代理加速配置指南
+# 🚀 Cloudflare Worker Proxy Acceleration Configuration Guide
 
-VODTV 提供多个独立的 Cloudflare Worker 代理配置，分别用于 TVBox 订阅、网页播放（含 m3u8/视频流）、Bangumi 数据/图片、TMDB 数据/图片的加速。
+VODTV provides multiple independent Cloudflare Worker proxy configurations for TVBox subscriptions, web playback (including m3u8/video streams), Bangumi data/images, and TMDB data/images acceleration.
 
-## 📋 目录
+## 📋 Table of Contents
 
-- [功能概述](#-功能概述)
-- [配置方法](#️-配置方法)
-- [工作原理](#-工作原理)
-- [自定义部署](#-自定义部署)
-- [常见问题](#-常见问题)
-
----
-
-## 🎯 功能概述
-
-### 多个独立的代理配置
-
-VODTV 提供多个**完全独立**的代理开关，互不影响：
-
-| 配置类型         | 位置                | 影响范围                                | 用途                                                      |
-| ---------------- | ------------------- | --------------------------------------- | --------------------------------------------------------- |
-| **TVBox 代理**   | TVBox 安全配置      | 仅 TVBox 配置接口                       | 为 TVBox 应用提供加速                                     |
-| **视频源代理**   | 视频源配置          | 网页播放元数据 + m3u8/视频播放流        | 为 VODTV 网页播放提供加速（Emby 源跳过，需自定义鉴权头） |
-| **Bangumi 代理** | 用户设置/管理员面板 | Bangumi 数据与封面图片                  | 复用视频源代理地址，作为 CMLiussss 反代之外的备选         |
-| **TMDB 代理**    | 复用视频源代理开关  | TMDB API 与图片（poster/backdrop/logo） | 启用视频源代理时自动生效，未启用则直连                    |
-
-**为什么要分开？**
-
-- 🎯 **灵活控制**：可以只为 TVBox 启用代理，网页播放不使用
-- 🔧 **独立调试**：出问题时可以分别排查
-- 📊 **流量管理**：分别控制不同场景的流量
+- [Feature Overview](#-feature-overview)
+- [Configuration Steps](#%EF%B8%8F-configuration-steps)
+- [Working Principle](#-working-principle)
+- [Self-hosted Deployment](#-self-hosted-deployment)
+- [FAQ](#-faq)
 
 ---
 
-## ⚙️ 配置方法
+## 🎯 Feature Overview
 
-### 1. TVBox 代理配置
+### Multiple Independent Proxy Configurations
 
-**适用场景**：加速 TVBox 应用的视频源访问
+VODTV has several fully independent proxy toggles that do not interfere with each other:
 
-**配置步骤**：
+表格
 
-1. 登录 VODTV 管理后台
-2. 进入 **TVBox 安全配置** 页面
-3. 找到 **Cloudflare Worker 代理（TVBox专用）** 区域
-4. 开启代理开关
-5. 配置 Worker 地址（默认：`https://corsapi.smone.workers.dev`）
-6. 点击 **保存配置**
+| Config Type | Location | Scope of Impact | Purpose |
+| --- | --- | --- | --- |
+| **TVBox Proxy** | TVBox Security Config | TVBox config API only | Acceleration for TVBox app |
+| **Video Source Proxy** | Video Source Config | Web playback metadata + m3u8/video streams | Accelerate VODTV web playback (Emby sources skipped, requires custom auth headers) |
+| **Bangumi Proxy** | User Settings / Admin Panel | Bangumi data & cover images | Reuse video source proxy address as an alternative to CMLiussss reverse proxy |
+| **TMDB Proxy** | Reuse video source proxy toggle | TMDB API & images (poster/backdrop/logo) | Automatically enabled when video source proxy is turned on; direct connection otherwise |
 
-**效果**：
+**Why separate them?**
 
-- TVBox 订阅链接 (`/api/tvbox`) 中的所有源自动使用代理
-- 示例：`https://lovedan.net/api.php/provide/vod`
-  → `https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod`
-
----
-
-### 2. 视频源代理配置
-
-**适用场景**：加速 VODTV 网页播放的视频源访问（元数据 + 播放流）
-
-**配置步骤**：
-
-1. 登录 VODTV 管理后台
-2. 进入 **视频源配置** 页面
-3. 找到页面顶部的 **Cloudflare Worker 代理加速** 区域
-4. 开启代理开关
-5. 配置 Worker 地址（默认：`https://corsapi.smone.workers.dev`）
-6. 点击 **保存代理配置**
-
-**效果**：
-
-- 采集源元数据：所有通过 `/api/proxy/cms` 的请求自动使用 Worker 代理，提升搜索、详情等功能的访问速度
-- 播放流加速：普通源和短剧源的 m3u8/视频播放流同样会走 Worker 代理（m3u8 走 `/m3u8` 端点并自动重写 `.ts` 子链接，其他格式走通用 `/?url=` 端点）
-- **Emby 源会自动跳过**：因为需要携带自定义 `X-Emby-Authorization` 请求头，Worker 无法转发，且 Emby 通常为自建服务器，直连一般更快
-- 播放流失败时自动降级为原始地址直连重试一次，不会因为 Worker 故障导致播放中断
+- 🎯 **Flexible Control**: Enable proxy only for TVBox while leaving web playback untouched
+- 🔧 **Independent Troubleshooting**: Debug each component separately when issues arise
+- 📊 **Traffic Management**: Control traffic for different use cases individually
 
 ---
 
-### 3. Bangumi 代理配置
+## ⚙️ Configuration Steps
 
-**适用场景**：加速 Bangumi 动漫数据和封面图片的访问（`api.bgm.tv` / `lain.bgm.tv` 在部分地区可能被墙）
+### 1. TVBox Proxy Configuration
 
-**配置步骤**：
+**Use Case**: Accelerate video source access for the TVBox app
 
-1. 登录 VODTV，进入 **用户设置** 或管理员的 **系统设置** 面板
-2. 找到 **Bangumi 数据源** / **Bangumi 图片代理** 配置项
-3. 选择代理方式：
-   - `server`：服务器直连
-   - `cmliussss`：CMLiussss 反代/CDN（国内优先推荐）
-   - `worker`：复用视频源代理配置的 Cloudflare Worker 地址（需先在视频源配置中启用并保存代理地址）
-4. 保存配置
+**Steps**:
 
-**效果**：
+1. Log in to the VODTV admin dashboard
+2. Navigate to **TVBox Security Config**
+3. Locate the **Cloudflare Worker Proxy (TVBox Only)** section
+4. Toggle the proxy switch ON
+5. Fill in the Worker endpoint (default: `https://corsapi.smone.workers.dev`)
+6. Save configuration
 
-- Bangumi 番剧信息、日历、封面图等请求按所选方式转发
-- `worker` 选项作为 CMLiussss 之外的备选，命中 Cloudflare 边缘缓存后响应更快
+**Behavior**:
 
----
-
-### 4. TMDB 代理配置
-
-**适用场景**：加速 TMDB 剧集详情、评分、poster/backdrop/logo 图片的访问
-
-**配置步骤**：
-
-TMDB 代理**复用视频源代理开关**，不需要单独配置：
-
-1. 按照上方 **视频源代理配置** 步骤开启并保存 Worker 地址
-2. 开启后，TMDB API 调用和图片地址会自动统一走 Worker 转发
-3. 未开启视频源代理时，TMDB 请求保持直连，不受影响
+- All sources inside the TVBox subscription endpoint (`/api/tvbox`) are automatically proxied
+- Example: `https://lovedan.net/api.php/provide/vod`
+→ `https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod`
 
 ---
 
-## 🔧 工作原理
+### 2. Video Source Proxy Configuration
 
-### 智能代理处理流程
+**Use Case**: Accelerate video source access for VODTV web playback (metadata + playback streams)
+
+**Steps**:
+
+1. Log in to the VODTV admin dashboard
+2. Navigate to **Video Source Config**
+3. Find the **Cloudflare Worker Proxy Acceleration** section at the top
+4. Toggle the proxy switch ON
+5. Fill in the Worker endpoint (default: `https://corsapi.smone.workers.dev`)
+6. Save proxy configuration
+
+**Behavior**:
+
+- Metadata collection: All requests via `/api/proxy/cms` go through Worker proxy to speed up search and detail pages
+- Playback stream acceleration: m3u8/video streams for regular sources and short drama sources are proxied. m3u8 uses `/m3u8` endpoint with automatic `.ts` sublink rewriting; other formats use the generic `/?url=` endpoint
+- **Emby sources are automatically skipped**: Custom `X-Emby-Authorization` auth headers cannot be forwarded by Worker, and self-hosted Emby servers usually perform better with direct connection
+- Automatic fallback: If proxy fails, playback falls back to original direct URL once. Worker outages will not break playback entirely
+
+---
+
+### 3. Bangumi Proxy Configuration
+
+**Use Case**: Accelerate Bangumi anime metadata and cover images (`api.bgm.tv` / `lain.bgm.tv` may be blocked in some regions)
+
+**Steps**:
+
+1. Log into VODTV, open **User Settings** or admin **System Settings** panel
+2. Find **Bangumi Data Source** / **Bangumi Image Proxy** option
+3. Select proxy mode:
+   - `server`: Direct connection from server
+   - `cmliussss`: CMLiussss reverse proxy / CDN (recommended for mainland users)
+   - `worker`: Reuse the video source proxy address configured above (video source proxy must be enabled and saved first)
+4. Save configuration
+
+**Behavior**:
+
+- Bangumi anime info, calendar, cover images are forwarded according to selected mode
+- The `worker` option acts as an alternative to CMLiussss, faster when hitting Cloudflare edge cache
+
+---
+
+### 4. TMDB Proxy Configuration
+
+**Use Case**: Accelerate TMDB series details, ratings, poster/backdrop/logo images
+
+**Steps**:
+TMDB proxy **reuses the video source proxy toggle**, no separate configuration required:
+
+1. Enable and save the Worker address following the **Video Source Proxy Configuration** steps above
+2. Once enabled, TMDB API calls and image URLs will automatically route through the Worker
+3. If video source proxy is disabled, TMDB requests remain direct, unaffected
+
+---
+
+## 🔧 Working Principle
+
+### Intelligent Proxy Flow
 
 ```
-原始源地址
+Original Source URL
   ↓
-检测是否已有代理（?url= 参数）
+Check for existing proxy (?url= parameter)
   ↓
-如果有 → 提取真实地址
+If exists → extract real target URL
   ↓
-生成唯一路径 /p/{sourceId}
+Generate unique path /p/{sourceId}
   ↓
-构建 Worker 代理 URL
+Construct Worker proxy URL
   ↓
-转发所有 API 参数（ac, ids, pg 等）
+Forward all API parameters (ac, ids, pg, etc.)
   ↓
-Worker 请求真实源站
+Worker requests the origin server
   ↓
-返回数据
+Return response
 ```
 
-### 示例转换
+### Conversion Examples
 
-**场景 1：普通源**
-
-```
-原始：https://lovedan.net/api.php/provide/vod
-代理：https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod
-```
-
-**场景 2：已有旧代理的源**
+**Scenario 1: Normal Source**
 
 ```
-原始：https://old-proxy.com/?url=https://lovedan.net/api.php/provide/vod
-提取：https://lovedan.net/api.php/provide/vod
-新代理：https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod
+Original: https://lovedan.net/api.php/provide/vod
+Proxied: https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod
 ```
 
-**场景 3：带参数的 API 调用**
+**Scenario 2: Source already wrapped by old proxy**
 
 ```
-TVBox 调用：/p/lovedan?url=https://lovedan.net/api.php/provide/vod&ac=list&pg=1
-Worker 转发：https://lovedan.net/api.php/provide/vod?ac=list&pg=1
+Original: https://old-proxy.com/?url=https://lovedan.net/api.php/provide/vod
+Extracted: https://lovedan.net/api.php/provide/vod
+New proxy: https://corsapi.smone.workers.dev/p/lovedan?url=https://lovedan.net/api.php/provide/vod
 ```
 
-### VOD 播放流三级 fallback
-
-播放流（m3u8/分片）走的是独立于上面 CMS 元数据代理的另一条链路，失败时按顺序降级，不会因单点故障中断播放：
+**Scenario 3: API call with query parameters**
 
 ```
-① 直连源站
-  ↓ 失败
-② Worker 代理直连（/m3u8、/?url= 端点）
-  ↓ 失败
-③ 第一方 HLS 代理（VODTV 服务器本地代理）
+TVBox Request: /p/lovedan?url=https://lovedan.net/api.php/provide/vod&ac=list&pg=1
+Worker Forward: https://lovedan.net/api.php/provide/vod?ac=list&pg=1
 ```
 
-- hls.js 的致命 `NETWORK_ERROR` 和 ArtPlayer 的 `error` 事件都接入了这个降级链
-- Emby 源因鉴权头限制不参与该链路，始终直连
+### VOD Playback Stream 3-level Fallback
 
-### 核心特性
+Playback streams (m3u8/segments) run on a separate chain from CMS metadata proxy. Requests automatically degrade sequentially on failure to avoid playback interruption:
 
-- ✅ **自动去重**：检测并替换源中已有的旧代理
-- ✅ **唯一路径**：每个源生成独立的 `/p/{sourceId}` 路径，避免冲突
-- ✅ **参数转发**：完整转发 TVBox 和网页的所有 API 参数
-- ✅ **降级机制**：CMS 元数据代理失败时自动使用本地代理；播放流则走上述三级 fallback
-- ✅ **缓存优化**：5 分钟响应缓存，减少重复请求
+```
+① Direct connect to origin
+  ↓ On failure
+② Worker proxy (/m3u8, /?url= endpoints)
+  ↓ On failure
+③ Native VODTV HLS proxy (local server proxy)
+```
+
+- `NETWORK_ERROR` from hls.js and `error` events from ArtPlayer trigger this fallback chain
+- Emby sources are excluded from this chain and always connect directly due to auth header requirements
+
+### Core Features
+
+- ✅ **Auto Proxy Unwrap**: Detect and replace legacy proxy wrappers
+- ✅ **Unique Path Routing**: Isolate each source with `/p/{sourceId}` to avoid conflicts
+- ✅ **Parameter Forwarding**: Preserve all API parameters for TVBox and web requests
+- ✅ **Fallback Mechanism**: CMS metadata falls back to local proxy on Worker failure; playback streams use the 3-level fallback above
+- ✅ **Cache Optimization**: 5-minute response cache to reduce repeated requests
 
 ---
 
-## 🚀 自定义部署
+## 🚀 Self-hosted Deployment
 
-如果想部署自己的 Cloudflare Worker 服务：
+Deploy your own Cloudflare Worker service:
 
-### 1. 准备工作
+### 1. Prerequisites
 
-- Cloudflare 账号
-- GitHub 账号（用于 fork 项目）
+- Cloudflare account
+- GitHub account (to fork the repository)
 
-### 2. 部署步骤
+### 2. Deployment Steps
 
-**选项 A：使用默认配置（推荐）**
+**Option A: Default Configuration (Recommended)**
+Repository: [CORSAPI](https://github.com/SzeMeng76/CORSAPI)
 
-项目地址：[CORSAPI](https://github.com/SzeMeng76/CORSAPI)
+1. Fork the repository to your GitHub account
+2. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com)
+3. Go to **Workers & Pages**
+4. Click **Create Application** → **Create Worker**
+5. Paste `_worker.js` code
+6. Click **Deploy**
+7. Copy your Worker URL (e.g. `https://your-worker.workers.dev`)
 
-1. Fork 项目到你的 GitHub
-2. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
-3. 进入 **Workers & Pages**
-4. 点击 **Create Application** → **Create Worker**
-5. 粘贴 `_worker.js` 代码
-6. 点击 **Deploy**
-7. 复制你的 Worker 地址（如 `https://your-worker.workers.dev`）
+**Option B: Bind Custom Domain (Optional)**
 
-**选项 B：绑定自定义域名（可选）**
+1. In Worker settings, open **Triggers**
+2. Click **Add Custom Domain**
+3. Enter your domain (e.g. `proxy.example.com`)
+4. Wait for DNS validation
 
-1. 在 Worker 设置中点击 **Triggers**
-2. 点击 **Add Custom Domain**
-3. 输入你的域名（如 `proxy.example.com`）
-4. 等待 DNS 验证完成
+### 3. Configure in VODTV
 
-### 3. 配置到 VODTV
-
-1. 进入对应的配置页面（TVBox 或视频源）
-2. 开启代理开关
-3. 将 Worker 地址填入 **Cloudflare Worker 地址** 输入框
-4. 保存配置
+1. Navigate to corresponding config page (TVBox or Video Source)
+2. Enable proxy toggle
+3. Paste your Worker URL into **Cloudflare Worker Address** input
+4. Save configuration
 
 ---
 
-## ❓ 常见问题
+## ❓ FAQ
 
-### Q1: 多个代理配置有什么区别？
+### Q1: What is the difference between proxy configurations?
 
 **A:**
 
-- **TVBox 代理**：只影响 TVBox 订阅接口，修改 TVBox 配置文件中的源地址
-- **视频源代理**：影响网页播放的采集源元数据（搜索/详情）+ m3u8/视频播放流；Emby 源自动跳过
-- **Bangumi 代理**：用户可在设置中选择 server/cmliussss/worker 三种方式，影响番剧数据与封面图片
-- **TMDB 代理**：复用视频源代理开关，启用后自动加速 TMDB API 与图片
-- 各配置完全独立，互不影响
+- **TVBox Proxy**: Only affects TVBox subscription endpoint, rewrites source URLs inside TVBox config
+- **Video Source Proxy**: Affects web metadata (search/detail) + m3u8/video playback streams; Emby sources skipped automatically
+- **Bangumi Proxy**: User-selectable `server` / `cmliussss` / `worker` modes, controls Bangumi metadata and cover images
+- **TMDB Proxy**: Shares video source proxy toggle; enabled automatically when video source proxy is on
+- All configurations are independent and do not interfere with each other
 
-### Q2: 必须全部启用吗？
+### Q2: Do I need to enable all proxies?
 
-**A:** 不是！可以根据需求选择：
+**A:** No, enable only what you need:
 
-- 只用 TVBox → 只启用 TVBox 代理
-- 只用网页播放 → 只启用视频源代理
-- Bangumi 被墙 → 在用户设置中选择 `worker` 或 `cmliussss`
-- TMDB 慢 → 启用视频源代理后 TMDB 自动加速
-- 灵活组合，按需启用
+- TVBox only → enable TVBox proxy
+- Web playback only → enable video source proxy
+- Bangumi access blocked → choose `worker` or `cmliussss` in user settings
+- Slow TMDB loading → enable video source proxy to activate TMDB acceleration
+- Mix and match freely
 
-### Q3: 为什么我的源已经有代理了？
+### Q3: Why are some sources already wrapped with proxy?
 
-**A:** VODTV 会自动检测并替换旧代理：
+**A:** VODTV automatically detects legacy proxy wrappers:
 
-- 系统检测源地址中的 `?url=` 参数
-- 自动提取真实 API 地址
-- 替换为你配置的新代理
-- 这样可以统一管理所有源的代理
+- Detects `?url=` parameter in source URL
+- Extracts the real underlying API address
+- Replaces it with your configured new proxy
+- Centralizes proxy management for all sources
 
-### Q4: Worker 代理失败会怎样？
+### Q4: What happens when Worker proxy fails?
 
-**A:** 有自动降级机制：
+**A:** Automatic fallback handling:
 
-- **CMS 元数据代理**：失败时自动使用 VODTV 服务器本地代理
-- **播放流代理**：走三级 fallback（直连 → Worker → 本地代理），不会因单点故障中断播放
-- **TVBox 代理**：TVBox 直接访问真实源站
-- **Bangumi/TMDB**：按配置选项处理，worker 失败时保持直连或使用其他备选方式
-- 不会影响正常使用
+- **CMS Metadata**: Falls back to VODTV local proxy
+- **Playback Stream**: 3-level fallback chain (direct → Worker → local proxy), prevents playback failure
+- **TVBox Proxy**: TVBox will use original source URL directly
+- **Bangumi/TMDB**: Follow selected mode; falls back to direct connection or alternative proxy
+- Service remains usable
 
-### Q5: 默认代理地址 `corsapi.smone.workers.dev` 可以一直用吗？
+### Q5: Can I keep using the default proxy `corsapi.smone.workers.dev` forever?
 
-**A:** 可以，但建议自己部署：
+**A:** It works, but self-hosting is recommended:
 
-- 默认地址是公共服务，可能有流量限制
-- 自己部署可以完全控制，更稳定
-- Cloudflare Worker 免费版每天 10 万次请求，个人使用足够
+- The default instance is public and subject to traffic limits
+- Self-hosted Worker gives full control and better stability
+- Cloudflare Worker free tier includes 100,000 requests per day, sufficient for personal use
 
-### Q6: 代理会影响速度吗？
+### Q6: Will proxy affect speed?
 
-**A:** 正常情况下会**加快**速度：
+**A:** Usually improves speed:
 
-- Cloudflare 有全球 CDN 节点
-- 自动选择最近的节点访问源站
-- 但如果源站本身就很快，可能不明显
+- Cloudflare global CDN routes requests to nearest edge node
+- Speed gain may not be obvious if origin source is already fast
 
-### Q7: 如何测试代理是否生效？
+### Q7: How to verify proxy is working?
 
-**TVBox 代理**：
+**TVBox Proxy**
 
-1. 启用代理后保存配置
-2. 访问 TVBox 诊断端点：`/api/tvbox/diagnose?token=YOUR_TOKEN`
-3. 查看返回的源地址是否包含代理 URL
+1. Enable and save config
+2. Visit TVBox diagnostic endpoint: `/api/tvbox/diagnose?token=YOUR_TOKEN`
+3. Check if returned source URLs contain proxy host
 
-**视频源代理（CMS 元数据）**：
+**Video Source Proxy (CMS Metadata)**
 
-1. 启用代理后保存配置
-2. 打开浏览器开发者工具（F12）→ Network 标签
-3. 搜索内容或打开详情页
-4. 查看 `/api/proxy/cms` 请求是否经过 Worker（URL 中包含 `/p/{sourceId}`）
+1. Enable and save config
+2. Open browser DevTools (F12) → Network tab
+3. Perform search or open detail page
+4. Check `/api/proxy/cms` requests for `/p/{sourceId}` path
 
-**视频源代理（播放流）**：
+**Video Source Proxy (Playback Stream)**
 
-1. 启用代理后保存配置
-2. 打开浏览器开发者工具（F12）→ Network 标签
-3. 播放视频
-4. 查看 m3u8 请求是否走 `/m3u8` 端点、.ts 分片请求是否被重写；其他格式查看是否走 `/?url=` 端点
-5. Emby 源应该看到直连请求（不经过 Worker）
+1. Enable and save config
+2. Open browser DevTools (F12) → Network tab
+3. Start video playback
+4. Inspect m3u8 requests for `/m3u8` endpoint and rewritten `.ts` segments; other formats use `/?url=`
+5. Emby sources should show direct requests without proxy
 
-**Bangumi/TMDB 代理**：
+**Bangumi/TMDB Proxy**
 
-1. 打开浏览器开发者工具（F12）→ Network 标签
-2. 访问番剧日历或剧集详情页
-3. 查看 `/api/proxy/bangumi` 或 `/api/tmdb/*` 请求的响应头，判断是否经过 Worker 转发
+1. Open browser DevTools (F12) → Network tab
+2. Open anime calendar or media detail page
+3. Check response headers of `/api/proxy/bangumi` or `/api/tmdb/*` requests to confirm proxy routing
 
-### Q8: Worker 超时时间是多少？
+### Q8: What is the Worker timeout limit?
 
 **A:**
 
-- 默认超时：20 秒
-- 如需修改，需要在 Worker 代码中调整 `setTimeout()` 参数
+- Default timeout: 20 seconds
+- Modify `setTimeout()` in Worker code to change this value
 
-### Q9: 支持哪些 CMS API 格式？
+### Q9: Which CMS API formats are supported?
 
-**A:** 支持所有主流 MacCMS API：
+**A:** Supports all mainstream MacCMS APIs:
 
-- `?ac=list` - 获取列表
-- `?ac=detail` - 获取详情
-- `?ac=class` - 获取分类
-- `?ac=videolist` - 获取视频列表
-- 所有参数自动转发
+- `?ac=list` - List resources
+- `?ac=detail` - Get item details
+- `?ac=class` - Get categories
+- `?ac=videolist` - Video list
+- All query parameters are forwarded automatically
 
-### Q10: 代理配置保存后需要重启服务吗？
+### Q10: Do I need to restart the service after saving proxy config?
 
-**A:** 不需要！
+**A:** No restart required!
 
-- 配置保存后立即生效
-- 配置缓存会自动清除
-- 下一次请求就会使用新配置
-
----
-
-## 📊 配置对比表
-
-| 特性         | TVBox 代理             | 视频源代理                                                            | Bangumi 代理                                      | TMDB 代理              |
-| ------------ | ---------------------- | --------------------------------------------------------------------- | ------------------------------------------------- | ---------------------- |
-| **配置位置** | TVBox 安全配置         | 视频源配置                                                            | 用户设置/管理员面板                               | 复用视频源代理开关     |
-| **影响接口** | `/api/tvbox`           | `/api/proxy/cms` + m3u8/视频流                                        | `/api/proxy/bangumi` + 图片                       | `/api/tmdb/*` + 图片   |
-| **使用场景** | TVBox 应用订阅         | VODTV 网页播放（元数据+播放流）                                      | Bangumi 番剧信息与封面                            | TMDB 剧集详情与图片    |
-| **代理方式** | 修改配置文件中的源地址 | 拦截 CMS 请求并代理；m3u8 走 `/m3u8` 端点，其他格式走 `/?url=`        | 选择 `worker` 时走通用 `/?url=` 端点              | 统一走 `/?url=` 端点   |
-| **失败降级** | 返回原始源地址         | CMS 元数据失败→本地代理；播放流失败→直连→Worker→本地代理三级 fallback | 可选 server/cmliussss/worker 三种方式，无自动降级 | Worker 失败保持直连    |
-| **参数转发** | ✅ 支持                | ✅ 支持                                                               | ✅ 支持                                           | ✅ 支持                |
-| **自动去重** | ✅ 支持                | ✅ 支持                                                               | N/A                                               | N/A                    |
-| **唯一路径** | ✅ `/p/{sourceId}`     | ✅ `/p/{sourceId}`                                                    | N/A                                               | N/A                    |
-| **特殊说明** | -                      | Emby 源自动跳过代理                                                   | 作为 CMLiussss 之外的备选                         | 自动跟随视频源代理开关 |
+- Changes take effect immediately after save
+- Config cache clears automatically
+- New requests use updated settings
 
 ---
 
-## 🔒 安全说明
+## 📊 Configuration Comparison Table
 
-### 白名单机制
+表格
 
-视频源代理使用白名单保护：
-
-- 只允许代理符合 CMS API 模式的 URL
-- 防止被滥用为通用代理
-- 支持的模式：`?ac=`, `/api/vod`, `/provide/vod` 等
-
-### 隐私保护
-
-- 代理请求不记录日志（Worker 层面）
-- 不缓存敏感信息
-- 支持自定义部署，完全掌控数据
+| Feature | TVBox Proxy | Video Source Proxy | Bangumi Proxy | TMDB Proxy |
+| --- | --- | --- | --- | --- |
+| **Config Location** | TVBox Security Config | Video Source Config | User Settings / Admin Panel | Reuse video source proxy toggle |
+| **Affected Endpoints** | `/api/tvbox` | `/api/proxy/cms` + m3u8/video streams | `/api/proxy/bangumi` + images | `/api/tmdb/*` + images |
+| **Use Case** | TVBox subscription feed | VODTV web playback (metadata + streams) | Bangumi anime info & covers | TMDB metadata & artwork |
+| **Proxy Method** | Rewrite source URLs in subscription | Intercept CMS requests; m3u8 via `/m3u8`, others via `/?url=` | `worker` mode uses generic `/?url=` | Generic `/?url=` |
+| **Failure Fallback** | Return original source URL | CMS: local proxy fallback; Playback: 3-level fallback | Switchable `server/cmliussss/worker`, no auto fallback | Direct connection on Worker failure |
+| **Parameter Forwarding** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Auto Unwrap Old Proxy** | ✅ Yes | ✅ Yes | N/A | N/A |
+| **Unique Path** | ✅ `/p/{sourceId}` | ✅ `/p/{sourceId}` | N/A | N/A |
+| **Notes** | - | Emby sources bypass proxy | Alternative to CMLiussss | Follows video source proxy toggle |
 
 ---
 
-## 📝 更新日志
+## 🔒 Security Notes
+
+### Whitelist Mechanism
+
+Video source proxy is protected by whitelist:
+
+- Only allows proxying URLs matching CMS API patterns
+- Prevents abuse as an open general proxy
+- Supported patterns: `?ac=`, `/api/vod`, `/provide/vod`, etc.
+
+### Privacy
+
+- No request logs stored at Worker level
+- Sensitive data is not cached
+- Self-host deployment available for full data control
+
+---
+
+## 📝 Changelog
 
 ### v1.1 - 2026-08-23
 
-- ✨ **视频源代理扩展**：现在同时加速 m3u8/视频播放流（m3u8 走 `/m3u8` 端点并自动重写 `.ts` 子链接，其他格式走通用 `/?url=` 端点）
-- ✨ **三级 fallback**：播放流失败时自动降级为 直连 → Worker 直连 → 第一方代理，避免单点故障中断播放
-- ✨ **Emby 源智能跳过**：因需携带自定义 `X-Emby-Authorization` 鉴权头，Emby 源自动跳过 Worker 代理，直连更快
-- ✨ **Bangumi 代理选项**：新增 Cloudflare Worker (CORSAPI) 作为 Bangumi 数据/图片代理选项，作为 CMLiussss 反代之外的备选
-- ✨ **TMDB 代理加速**：TMDB API 与图片（poster/backdrop/logo）复用视频源代理开关，启用后自动走 Worker 转发
-- 📝 更新配置文档，补充播放流加速、Bangumi/TMDB 代理配置说明
+- ✨ **Video Source Proxy Enhancement**: Now accelerates m3u8/video playback streams. m3u8 uses `/m3u8` endpoint with automatic `.ts` sublink rewriting; other formats use `/?url=`
+- ✨ **3-level Playback Fallback**: Playback automatically falls back through direct → Worker → local proxy to avoid single point of failure
+- ✨ **Smart Emby Skip**: Emby sources bypass Worker due to `X-Emby-Authorization` header requirements
+- ✨ **Bangumi Proxy Option**: Add CORSAPI Cloudflare Worker as an alternative proxy option alongside CMLiussss
+- ✨ **TMDB Acceleration**: TMDB API and artwork reuse video source proxy toggle
+- 📝 Updated documentation for playback stream, Bangumi and TMDB proxy
 
 ### v1.0 - 2025-01-04
 
-- ✨ 新增 TVBox 代理配置
-- ✨ 新增视频源代理配置
-- ✨ 支持自动检测和替换旧代理
-- ✨ 支持为每个源生成唯一路径
-- ✨ 支持完整参数转发
-- ✨ 支持降级机制
-- 📝 编写完整配置文档
+- ✨ Added TVBox Proxy
+- ✨ Added Video Source Proxy
+- ✨ Auto detect and replace legacy proxy wrappers
+- ✨ Unique per-source routing path
+- ✨ Full query parameter forwarding
+- ✨ Fallback mechanism
+- 📝 Initial documentation
 
 ---
 
-## 🤝 贡献
+## 🤝 Contribute
 
-欢迎提交 Issue 和 Pull Request 改进此功能！
-
-项目地址：
+Issues and pull requests are welcome to improve this feature!
+Repositories:
 
 - [VODTV](https://github.com/SzeMeng76/VODTV)
 - [CORSAPI](https://github.com/SzeMeng76/CORSAPI)
 
 ---
 
-## 📄 许可证
+## 📄 License
 
-本功能遵循项目主许可证，仅供学习和个人使用。
+This feature follows the main project license, for learning and personal use only.
 
 ---
 
-⭐ **如果这个功能对你有帮助，请给个 Star 支持一下！**
+⭐ **If this guide helps you, please leave a Star!**
+
+This English document is ready for direct copy-paste. Want to refine the wording further or split it into separate README files? You can also use work task mode to handle document formatting and release materials.

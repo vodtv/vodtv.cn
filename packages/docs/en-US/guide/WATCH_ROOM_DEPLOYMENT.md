@@ -1,415 +1,427 @@
-# 观影室功能部署指南
+# Watch‑Room Feature Deployment Guide
 
-观影室功能允许多个用户同步观看视频、实时聊天和语音通话。本指南将帮助你部署外部观影室服务器。
+## 🚀 Feature Overview
 
-## 功能特性
+The watch‑room feature enables synchronized video playback, real‑time text chat, and voice calls for multiple users. This guide walks you through deploying the external watch‑room server.
 
-✅ **多人同步观影**
-- 播放/暂停/跳转实时同步
-- 房主控制播放进度，成员自动跟随
-- 切换视频/剧集时自动提示成员
+## Feature Highlights
 
-✅ **屏幕共享观影**
-- WebRTC 实时屏幕共享传输
-- 支持三种画质预设（流畅 720p/15fps、高清 1080p/30fps、超清 1440p/30fps）
-- 实时状态监控（共享时长、观看人数、连接状态）
-- 自动成员连接处理，新成员加入自动接收画面
-- 全屏沉浸式界面，支持明暗主题切换
+✅ **Multi‑user synchronized playback**
+‑ Play/pause/seek events are synchronised in real‑time
+‑ The host controls playback progress; members follow automatically
+‑ Automatic notification to members when switching videos or episodes
 
-✅ **实时聊天系统**
-- 文字消息即时发送
-- 表情符号支持
-- 未读消息提示
+✅ **Screen‑sharing watch session**
+‑ WebRTC real‑time screen‑sharing transmission
+‑ Three quality presets available (Smooth 720p/15fps, HD 1080p/30fps, Ultra‑HD 1440p/30fps)
+‑ Real‑time status monitoring: sharing duration, viewer count, connection state
+‑ Automatic member connection handling; newly‑joined participants receive the stream immediately
+‑ Full‑screen immersive UI with light‑dark theme switching
 
-✅ **WebRTC 语音通话**
-- P2P 点对点语音连接
-- 回声消除和噪音抑制
-- 独立的麦克风/扬声器控制
+✅ **Real‑time chat system**
+‑ Instant text message delivery
+‑ Emoji support
+‑ Unread‑message indicators
 
-✅ **房间管理**
-- 公开/私密房间
-- 密码保护
-- 房主/成员权限管理
-- 房间列表实时更新
-- 支持视频同步和屏幕共享两种房间类型
+✅ **WebRTC voice call**
+‑ P2P peer‑to‑peer voice connection
+‑ Echo cancellation and noise suppression
+‑ Independent microphone‑speaker controls
 
-✅ **连接状态监控**
-- 实时连接状态显示
-- 服务器统计信息
-- 心跳检测机制
+✅ **Room management**
+‑ Public / private rooms
+‑ Password‑protected access
+‑ Host‑member permission management
+‑ Real‑time updating of the room list
+‑ Supports two room types: video sync mode and screen‑share mode
+
+✅ **Connection‑state monitoring**
+‑ Live connection‑status display
+‑ Server‑side statistics
+‑ Heartbeat detection mechanism
 
 ---
 
-## 新增功能特性
+## Newly‑Added Feature Changelog
 
-本节记录了最近新增和优化的观影室功能。
+This section documents recently added and optimised watch‑room capabilities.
 
-### 🎥 屏幕共享观影室（v6.4.0）
+### 🎥 Screen‑Sharing Watch Room (v6.4.0)
 
-**功能概述**
-- 房主可以共享浏览器标签页或整个屏幕给房间成员观看
-- 基于 WebRTC 技术实现低延迟实时传输
-- 支持多种画质预设，适应不同网络环境
-- 全屏沉浸式界面设计，支持明暗主题
+**Feature summary**
+‑ The host may share a browser tab or the entire screen to other participants inside the room
+‑ Low‑latency real‑time transmission built upon WebRTC
+‑ Multiple quality presets for variable‑network‑condition adaptation
+‑ Full‑screen immersive UI supporting light and dark themes
 
-**画质预设**
-- **流畅模式**：720p / 15fps - 适合网络较差环境
-- **高清模式**：1080p / 30fps - 平衡画质和性能
-- **超清模式**：1440p / 30fps - 最佳画质体验
+**Quality presets**
+‑ **Smooth**: 720p / 15fps — for poor‑network environments
+‑ **HD**: 1080p / 30fps — balanced quality‑vs‑performance
+‑ **Ultra‑HD**: 1440p / 30fps — maximum visual fidelity
 
-**实时状态监控**
-- 共享时长计时器
-- 观看人数实时显示
-- 连接状态指示（已连接/未连接）
-- 实际采集参数显示（分辨率、帧率）
+**Real‑time status monitoring**
+‑ Elapsed‑sharing‑duration timer
+‑ Live viewer‑counter
+‑ Connection‑status indicator (Connected / Disconnected)
+‑ Actual capture parameters display (resolution, frame‑rate)
 
-**自动成员管理**
-- 新成员加入时自动建立 WebRTC 连接
-- 成员离开时自动清理连接资源
-- 支持多人同时观看（理论无上限）
+**Automatic member handling**
+‑ Automatically establishes WebRTC connections when new users join
+‑ Cleans‑up connection resources automatically on member leave
+‑ Supports theoretically unlimited concurrent viewers
 
-**使用场景**
-- 共享视频网站内容（YouTube、Netflix 等）
-- 演示教程和操作步骤
-- 远程协作和会议
-- 游戏直播和实况
+**Usage scenarios**
+‑ Sharing streaming‑website content (YouTube, Netflix, etc.)
+‑ Tutorial and workflow demonstrations
+‑ Remote collaboration & meetings
+‑ Game live‑streaming and gameplay watching
 
-**技术实现**
-- 使用 `getDisplayMedia` API 捕获屏幕
-- WebRTC PeerConnection 建立 P2P 连接
-- Socket.IO 信令服务器协调连接建立
-- 自动 ICE 候选交换和 SDP 协商
+**Technical implementation**
+‑ Screen capture via the `getDisplayMedia` API
+‑ WebRTC PeerConnection for P2P link establishment
+‑ Socket.IO signalling server to coordinate connection workflow
+‑ Automated ICE candidate exchange and SDP negotiation
 
-**浏览器要求**
-- 房主：需要支持 `getDisplayMedia` 的现代浏览器（Chrome、Edge、Firefox）
-- 成员：需要支持 WebRTC 的浏览器
-- 必须在 HTTPS 或 localhost 环境下使用
+**Browser prerequisites**
+‑ Host browser: modern browser supporting `getDisplayMedia` (Chrome, Edge, Firefox)
+‑ Member browser: browser with WebRTC support
+‑ Must run under HTTPS or `localhost`
 
-### 🎯 智能播放同步
+### 🎯 Intelligent Playback Synchronisation
 
-**同剧集切换优化**
-- 房主切换同一部剧的不同集数时，成员无需刷新页面即可自动跟随
-- 使用 `setCurrentEpisodeIndex` 直接切换集数，保持 WebSocket 连接
-- 自动跳转到房主的播放时间点（1秒延迟确保集数加载完成）
-- 保持房间状态，避免重复加入房间
+**Same‑show episode switching optimisation**
+‑ When the host switches episodes within the same series, members follow automatically without page refresh
+‑ `setCurrentEpisodeIndex` is invoked to switch episodes directly, preserving the WebSocket connection
+‑ Jump to host playback timestamp after a 1‑second delay to allow episode loading
+‑ Preserves room session state; avoids rejoining the room
 
-**跨剧集智能跳转**
-- 房主切换到不同影片时，使用客户端路由（`router.push`）
-- 避免 `window.location.href` 导致的页面刷新和 WebSocket 断连
-- 自动携带播放时间、集数等参数，实现无缝切换
-- 成员收到弹窗提示，可选择"跟随房主"或"自由观看"
+**Cross‑show intelligent navigation**
+‑ If host switches to an entirely different video, perform client‑side routing with `router.push`
+‑ Avoid `window.location.href` which triggers page reload and WebSocket disconnection
+‑ Append playback‑time and episode parameters for seamless navigation
+‑ Members receive a pop‑up prompt, choose either "Follow Host" or "Watch Independently"
 
-**技术实现**
-```typescript
-// 同一部剧：直接切换集数
+**Implementation snippet**
+
+```
+// Switch episode within the same show
 if (isSameShow) {
   setCurrentEpisodeIndex(state.episode);
   setTimeout(() => artPlayer.currentTime = state.currentTime, 1000);
 }
-// 不同剧：客户端路由跳转
+// Navigate to different media item via client‑side routing
 else {
   router.push(`/play?${params.toString()}`);
 }
 ```
 
-### 📺 正在观看显示
+### 📺 Now‑Watching Display
 
-**房间信息面板增强**
-- 创建/加入房间后可查看当前正在观看的影片
-- 使用迷你视频卡片展示：
-  - 海报缩略图（64x96px）
-  - 影片标题
-  - 年份信息
-  - 集数信息（TV剧）
-  - 播放图标覆层
-- 点击视频卡片可直接跳转到播放页面并同步进度
-- 自动携带房主的当前播放时间，实现时间同步
+**Enhanced room information panel**
+‑ After creating / joining a room, you may view the currently‑watching media entry
+‑ Compact mini video card UI:
 
-**房间列表增强**
-- 房间列表中展示各房间正在观看的内容
-- 完整的图片处理和占位符支持
-- 图片加载失败时显示默认占位符（SVG）
-- 点击视频卡片跳转到播放页面（不携带时间参数，因为用户尚未加入房间）
+- Poster thumbnail (64×96 px)
+- Media title
+- Release‑year metadata
+- Episode metadata for TV series
+- Overlaid playback icon
+‑ Click the mini‑card to jump directly to the playback page and sync progress
+‑ Automatically carry the host’s current playback timestamp for synchronisation
 
-**MiniVideoCard 组件**
-- 专门为观影室设计的紧凑型视频卡片
-- 响应式设计，支持深色模式
-- 悬停效果提升用户体验
-- 使用 Next.js Image 组件优化图片加载
-- `referrerPolicy="no-referrer"` 解决跨域图片问题
+**Enhanced room list**
+‑ Each room entry in room‑list renders what media is currently being watched
+‑ Full image‑fallback and placeholder handling
+‑ SVG placeholder graphic shown when poster fails to load
+‑ Clicking card navigates to playback page *without* timestamp parameter (user not joined yet)
 
-### 🎬 集数显示优化
+**MiniVideoCard Component**
+‑ Purpose‑built compact card for watch‑room UI
+‑ Responsive styling with dark‑mode support
+‑ Hover‑state interaction effects
+‑ Optimised image loading using Next.js Image
+‑ `referrerPolicy="no‑referrer"` to resolve cross‑origin poster‑loading issues
 
-**智能判断逻辑**
-- 根据 `totalEpisodes` 字段自动判断是否显示集数信息
-- **电影**（totalEpisodes = 1）：不显示"第1集"
-- **电视剧**（totalEpisodes > 1）：显示"第X集"
-- 避免电影显示不必要的集数信息，提升用户体验
+### 🎬 Episode‑Display Optimisation
 
-**实现细节**
-- 在整个状态链中传递 `totalEpisodes` 字段：
-  - `PlayState` 接口
-  - `OwnerPlayState` 接口
-  - 所有 Socket.IO 事件广播
-  - `MiniVideoCard` 组件
-- 从影片详情中自动提取：`detail?.episodes?.length`
+**Intelligent conditional‑rendering logic**
+‑ Uses field `totalEpisodes` to decide whether episode label should render
+‑ **Movie (`totalEpisodes = 1`)**: omit redundant "Episode 1" label
+‑ **TV Series (`totalEpisodes > 1`)**: render "Episode X"
+‑ Eliminates confusing redundant episode labels for movies
 
-**显示逻辑**
-```typescript
+**Implementation notes**
+‑ Propagate `totalEpisodes` through the whole state pipeline:
+
+- `PlayState` interface
+- `OwnerPlayState` interface
+ ‑ All Socket.IO broadcast events
+ ‑ `MiniVideoCard` component
+‑ Extract value automatically from media detail: `detail?.episodes?.length`
+
+**Rendering logic snippet**
+
+```
 {totalEpisodes && totalEpisodes > 1 && episode !== undefined && (
-  <span>第 {episode + 1} 集</span>
+  <span>Episode {episode + 1}</span>
 )}
 ```
 
-### 👤 用户名识别改进
+### 👤 Username‑Resolution Improvements
 
-**问题背景**
-- Cookie 在浏览器中异步加载，首次加载时可能未准备好
-- 导致用户加入房间时显示为"游客"而非真实用户名
-- 用户需要手动刷新页面才能显示正确用户名
+**Background problem**
+‑ Browser cookies load asynchronously; on initial page load auth cookie may not yet be ready
+‑ Result: newly‑joined user appears as "Guest" instead of real username
+‑ Previously manual page refresh required to correct displayed username
 
-**解决方案：持续轮询检测**
-- 使用 `setInterval` 持续检查 Cookie 是否加载完成
-- 最多检查 20 次，每次间隔 500ms（总计 10 秒）
-- 成功获取用户名后立即停止检查
-- 达到最大次数后停止，避免无限循环
+**Solution: polling‑based username detection**
+‑ `setInterval` periodically polls browser cookies for completed auth‑data loading
+‑ Maximum of 20 polling attempts at 500 ms interval (total timeout: 10 seconds)
+‑ Terminate polling immediately once valid username retrieved
+‑ Halt polling after hitting maximum retry count to avoid infinite loops
 
-**实现代码**
-```typescript
+**Code snippet**
+
+```
 const checkUsername = () => {
   const authInfo = getAuthInfoFromBrowserCookie();
-  const username = authInfo?.username || '游客';
+  const username = authInfo?.username || 'Guest';
 
-  if (username !== '游客') {
+  if (username !== 'Guest') {
     setCurrentUserName(username);
     setUserNameLoaded(true);
     if (intervalId) clearInterval(intervalId);
   } else if (checkCount >= maxChecks) {
-    setCurrentUserName('游客');
+    setCurrentUserName('Guest');
     setUserNameLoaded(true);
     if (intervalId) clearInterval(intervalId);
   }
 };
 ```
 
-**用户体验提升**
-- 首次加载即可正确显示用户名（无需刷新）
-- 成员列表中显示真实用户名
-- 聊天消息显示正确的发送者名称
+**UX improvement**
+‑ Real username resolves on first load without manual refresh
+‑ Member‑list renders correct participant names
+‑ Chat messages show correct sender identity
 
-### 🔄 房主本地状态同步
+### 🔄 Host Local‑State Synchronisation
 
-**问题背景**
-- WebSocket 服务器不会将事件回传给发送者（sender）
-- 房主发送播放状态更新后，自己的房间信息面板不会更新
-- 导致房主看不到自己正在播放的视频，但成员可以看到
+**Background problem**
+‑ Socket.IO server does not echo emitted events back to the sending client (sender loop‑back disabled)
+‑ After host emits playback‑state update, host‑side room‑info panel would not refresh locally
+‑ Symptom: host cannot see currently‑playing media inside panel, but remote members receive updates correctly
 
-**解决方案**
-- 房主发送 Socket.IO 事件时，同时更新本地状态
-- 在 `updatePlayState`、`changeVideo`、`clearState` 等方法中添加本地更新
+**Resolution**
+‑ When host calls Socket.IO emit, also manually update local React‑state
+‑ Add local‑state updates inside `updatePlayState`, `changeVideo`, `clearState` helpers
 
-**实现代码**
-```typescript
+**Implementation snippet**
+
+```
 const updatePlayState = useCallback((state: PlayState) => {
   if (socket && connected) {
     socket.emit('play:update', state);
-    // ✅ 本地更新，因为服务器不会回传给发送者
+    // ✅ Local manual update, server does not echo‑back to sender
     setCurrentRoom((prev) => prev ? { ...prev, currentState: state } : null);
   }
 }, [socket, connected]);
 ```
 
-**保持一致性**
-- 房主和成员看到相同的房间状态
-- 房间信息面板实时显示正在播放的内容
-- 所有用户都能通过房间信息快速跳转到当前影片
+**Consistency outcome**
+‑ Host and members view identical room‑state inside UI panels
+‑ Room‑info panel reflects currently‑playing media instantly for host
+‑ All participants can navigate directly to active media entry from room panel
 
-### 🐛 关键 Bug 修复
+### 🐛 Critical Bug Fixes
 
-**状态更新缺失（Critical）**
-- **问题**：`useWatchRoom.ts` 中的事件监听器只记录日志，从未更新状态
-- **影响**：房间信息面板、房间列表等所有依赖 `currentRoom.currentState` 的功能全部失效
-- **修复**：在所有事件监听器中添加 `setCurrentRoom` 调用
-```typescript
+**Missing state updates (Critical)**
+‑ **Problem**: event listeners inside `useWatchRoom.ts` only wrote debug logs and never invoked state‑setter
+‑ **Impact**: room‑info panel, room‑list and all UI consuming `currentRoom.currentState` stopped functioning
+‑ **Fix**: invoke `setCurrentRoom` within each socket‑event listener
+
+```
 socket.on('play:update', (state: PlayState) => {
   console.log('[WatchRoom] Play state updated:', state);
   setCurrentRoom((prev) => prev ? { ...prev, currentState: state } : null);
 });
 ```
 
-**房间列表时间同步逻辑错误**
-- **问题**：用户未加入房间时，点击房间列表的视频卡片也会携带时间参数同步播放进度
-- **影响**：逻辑不合理，用户应该从头开始观看，而非跳转到房主的时间点
-- **修复**：房间列表导航时不携带 `t`（时间）和 `prefer` 参数，仅房间信息面板内的跳转才携带
+**Room‑list timestamp‑sync logic error**
+‑ **Problem**: clicking mini‑card inside public room‑list would append playback‑time parameter even before user joins room
+‑ **Impact**: unexpected auto‑seek to remote host timestamp when user has not entered the room
+‑ **Fix**: omit `t` (timestamp) and `prefer` navigation params for room‑list clicks; only inject timestamp for navigation originating from inside the active‑room panel
 
-**类型字段名称错误**
-- **问题**：使用了旧的字段名 `vod_name`、`vod_year` 而非 `SearchResult` 接口的 `title`、`year`
-- **影响**：TypeScript 编译失败
-- **修复**：统一使用正确的字段名称
+**Incorrect type‑field naming**
+‑ **Problem**: legacy property names `vod_name`, `vod_year` used instead of `SearchResult` interface fields `title`, `year`
+‑ **Impact**: TypeScript compilation failures
+‑ **Fix**: unify property naming across codebase
 
-### 📝 代码改进
+### 📝 Code‑base Changes
 
-**新增文件**
-- `src/components/watch-room/MiniVideoCard.tsx` - 迷你视频卡片组件
+**New files created**
+‑ `src/components/watch-room/MiniVideoCard.tsx` — compact media‑card component
 
-**修改文件**
-- `src/types/watch-room.types.ts` - 添加 `totalEpisodes` 字段
-- `src/hooks/useWatchRoom.ts` - 修复事件监听器状态更新，添加房主本地更新
-- `src/app/play/hooks/useWatchRoomSync.ts` - 实现智能导航逻辑，添加 `totalEpisodes` 传递
-- `src/components/WatchRoomProvider.tsx` - 实现用户名持续检测机制
-- `src/components/watch-room/ChatFloatingWindow.tsx` - 使用 MiniVideoCard，添加 `totalEpisodes`
-- `src/app/watch-room/page.tsx` - 使用 MiniVideoCard，修复房间列表逻辑
-- `src/app/play/page.tsx` - 修复字段名称，添加 `setCurrentEpisodeIndex` 参数
+**Modified source files**
+‑ `src/types/watch-room.types.ts` — add `totalEpisodes` property
+‑ `src/hooks/useWatchRoom.ts` — fix socket‑listener state updates; implement host local‑state patch
+‑ `src/app/play/hooks/useWatchRoomSync.ts` — intelligent client‑side navigation logic; propagate `totalEpisodes`
+‑ `src/components/WatchRoomProvider.tsx` — implement username polling‑detection
+‑ `src/components/watch-room/ChatFloatingWindow.tsx` — consume MiniVideoCard, pass `totalEpisodes`
+‑ `src/app/watch-room/page.tsx` — consume MiniVideoCard, correct room‑list navigation behaviour
+‑ `src/app/play/page.tsx` — correct property naming; feed `setCurrentEpisodeIndex` parameters
 
-**关键技术决策**
-- 使用 `router.push` 而非 `window.location.href` 保持 WebSocket 连接
-- 使用 `setInterval` 而非 `setTimeout` 实现持续检测
-- 在发送端添加本地状态更新以解决服务器不回传问题
-- 根据 `totalEpisodes` 条件渲染集数信息
-
----
-
-## 架构说明
-
-观影室功能由两部分组成：
-
-1. **LunaTV 前端**：已集成到本项目中，无需额外部署
-2. **观影室服务器**：需要单独部署的 Socket.IO 服务器
-
-**为什么要分离？**
-
-- Vercel 等 Serverless 平台不支持 WebSocket 长连接
-- 独立部署更灵活，可选择最佳的服务器平台
-- 可选功能，不影响主应用部署
+**Key technical decisions**
+‑ Prefer `router.push` over `window.location.href` to keep WebSocket session alive
+‑ Polling via `setInterval` instead of single‑shot `setTimeout` for username detection
+‑ Manually mirror emitted state locally for host because server does not loop‑back events
+‑ Conditionally render episode label checking value of `totalEpisodes`
 
 ---
 
-## 服务器源码
+## Architecture Overview
 
-观影室服务器开源项目：[watch-room-server](https://github.com/tgs9915/watch-room-server)
+The watch‑room system is split into two distinct components:
 
-**多平台 Docker 镜像**：`ghcr.io/szemeng76/watch-room-server:latest`
-（支持 linux/amd64 和 linux/arm64 架构，可在 x86 和 ARM 设备上原生运行）
+1. **LunaTV Front‑end**: already integrated inside this project; no separate deployment required
+2. **Watch‑room Server**: standalone Socket.IO backend service you need to deploy externally
+
+**Reason for separation:**
+‑ Serverless platforms such as Vercel do not support persistent WebSocket long‑lived connections
+‑ Independent deployment grants flexibility to select hosting infrastructure
+‑ Optional feature; main application remains functional even without watch‑room backend
 
 ---
 
-## 部署选项
+## Server Source Repository
 
-### 选项 1：Fly.io 免费部署（推荐）
+Open‑source repository for watch‑room backend: [watch‑room‑server](https://github.com/tgs9915/watch%5D(https://github.com/tgs9915/watch)%E2%80%91room%E2%80%91server)
 
-Fly.io 提供免费额度，适合小规模使用。
+**Multi‑arch Docker image**: `ghcr.io/szemeng76/watch‑room‑server:latest`
+(Supports `linux/amd64` & `linux/arm64`; runs natively both on x86 and ARM hardware)
 
-#### 准备工作
+---
 
-1. 注册 [Fly.io 账号](https://fly.io/app/sign-up)
-2. 安装 Fly CLI：
-   ```bash
-   # macOS/Linux
-   curl -L https://fly.io/install.sh | sh
+## Deployment Options
 
-   # Windows (PowerShell)
-   iwr https://fly.io/install.ps1 -useb | iex
-   ```
+### Option 1: Fly.io Deployment (Recommended, free tier available)
 
-3. 登录 Fly.io：
-   ```bash
-   flyctl auth login
-   ```
+Fly.io provides a free quota suitable for small‑scale usage.
 
-#### 部署步骤
+#### Prerequisites
 
-1. 克隆观影室服务器代码：
-   ```bash
-   git clone https://github.com/tgs9915/watch-room-server.git
-   cd watch-room-server
-   ```
+1. Register an account: [https://fly.io/app/sign](https://fly.io/app/sign)‑up
+2. Install Fly CLI:
 
-2. 创建 `fly.toml` 配置文件：
-   ```toml
-   app = "your-watch-room-server"  # 修改为你的应用名称（全局唯一）
+```
+# macOS/Linux
+curl -L [https://fly.io/install.sh](https://fly.io/install.sh) | sh
 
-   [build]
-   dockerfile = "Dockerfile"
+# Windows (PowerShell)
+iwr [https://fly.io/install.ps1](https://fly.io/install.ps1) -useb | iex
+```
 
-   [env]
-   PORT = "8080"
-   AUTH_KEY = "your-secure-random-key-here"  # 修改为强密码
+3. Authenticate CLI:
 
-   [[services]]
-   internal_port = 8080
-   protocol = "tcp"
+```
+flyctl auth login
+```
 
-   [[services.ports]]
-   handlers = ["http"]
-   port = 80
+#### Deployment Workflow
 
-   [[services.ports]]
-   handlers = ["tls", "http"]
-   port = 443
-   ```
+1. Clone repository locally:
 
-3. 部署到 Fly.io：
-   ```bash
-   flyctl launch --no-deploy  # 创建应用
-   flyctl deploy              # 部署应用
-   ```
+```
+git clone [https://github.com/tgs9915/watch-room-server.git](https://github.com/tgs9915/watch-room-server.git)
+cd watch-room-server
+```
 
-4. 获取应用 URL：
-   ```bash
-   flyctl info
-   ```
+2. Create your `fly.toml` configuration:
 
-   你的服务器地址将类似于：`https://your-watch-room-server.fly.dev`
+```
+app = "your-watch-room-server"  # Change this to your globally‑unique app‑name
 
-#### Fly.io 管理命令
+[build]
+dockerfile = "Dockerfile"
 
-```bash
-# 查看日志
+[env]
+PORT = "8080"
+AUTH_KEY = "your-secure-random-key-here"  # Replace with strong secret
+
+[[services]]
+internal_port = 8080
+protocol = "tcp"
+
+[[services.ports]]
+handlers = ["http"]
+port = 80
+
+[[services.ports]]
+handlers = ["tls", "http"]
+port = 443
+```
+
+3. Deploy to Fly.io:
+
+```
+flyctl launch --no-deploy
+flyctl deploy
+```
+
+4. Retrieve your application URL:
+
+```
+flyctl info
+```
+
+Your final endpoint will resemble: `https://your‑watch‑room‑server.fly.dev`
+
+#### Useful Fly.io management commands
+
+```
+# View runtime logs
 flyctl logs
 
-# 查看应用状态
+# Inspect application status
 flyctl status
 
-# 重启应用
+# Restart service
 flyctl restart
 
-# 销毁应用
+# Fully destroy deployed app
 flyctl destroy your-watch-room-server
 ```
 
 ---
 
-### 选项 2：Railway 部署
+### Option 2: Railway Deployment
 
-Railway 提供简单的部署体验，有一定免费额度。
+Railway offers streamlined one‑click deployment with a limited free tier.
 
-#### 部署步骤
+#### Deployment Steps
 
-1. 访问 [Railway](https://railway.app/) 并登录
-2. 点击 "New Project" → "Deploy from GitHub repo"
-3. 授权访问你 fork 的 `watch-room-server` 仓库
-4. 选择仓库后，Railway 会自动检测并开始部署
-5. 在 "Variables" 标签页添加环境变量：
-   - `AUTH_KEY`: 设置为强密码（必需）
-   - `PORT`: 8080（可选，默认 8080）
-6. 部署完成后，在 "Settings" → "Networking" 中生成公开域名
-7. 复制域名地址（例如：`https://your-app.railway.app`）
+1. Log‑in to [Railway](https://railway.app/%5D(https://railway.app/))
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Authorise access to your forked `watch‑room‑server` repository
+4. Railway auto‑detects project and initiates build
+5. Navigate to "Variables" tab and inject environment variables:
+‑ `AUTH_KEY`: strong random secret (**mandatory**)
+‑ `PORT`: 8080 (optional, defaults to 8080)
+6. After deployment completes, go to "Settings" → "Networking" to generate public domain
+7. Copy your public endpoint e.g. `https://your‑app.railway.app`
 
 ---
 
-### 选项 3：Docker 部署
+### Option 3: Docker Deployment (Self‑hosted VPS)
 
-适合自有服务器或 VPS。
+Best for your own dedicated virtual‑private‑server infrastructure.
 
-#### 使用预构建镜像（推荐）
+#### Use pre‑built multi‑arch image (recommended)
 
-使用多平台镜像，无需编译：
-
-```bash
-# 拉取镜像
+```
+# Pull container image
 docker pull ghcr.io/szemeng76/watch-room-server:latest
 
-# 运行容器
+# Start container
 docker run -d \
   --name watch-room-server \
   --restart unless-stopped \
@@ -418,13 +430,13 @@ docker run -d \
   -e PORT=8080 \
   ghcr.io/szemeng76/watch-room-server:latest
 
-# 查看日志
+# Attach and inspect logs
 docker logs -f watch-room-server
 ```
 
-或使用 Docker Compose，创建 `docker-compose.yml`：
+Alternative via `docker‑compose.yml`:
 
-```yaml
+```
 version: '3.8'
 
 services:
@@ -439,295 +451,295 @@ services:
       - PORT=8080
 ```
 
-然后运行：
+Run compose stack:
 
-```bash
+```
 docker-compose up -d
 docker-compose logs -f
 ```
 
-#### 从源码构建（可选）
+#### Build image from source (optional customisation)
 
-如果需要自定义修改：
+1. Clone repository
 
-1. 克隆服务器代码：
-   ```bash
-   git clone https://github.com/tgs9915/watch-room-server.git
-   cd watch-room-server
-   ```
+```
+git clone [https://github.com/tgs9915/watch-room-server.git](https://github.com/tgs9915/watch-room-server.git)
+cd watch-room-server
+```
 
-2. 创建 `.env` 文件：
-   ```dotenv
-   AUTH_KEY=your-secure-random-key-here
-   PORT=8080
-   ```
+2. Create `.env` file
 
-3. 使用 Docker Compose 部署：
-   ```bash
-   docker-compose up -d
-   ```
+```
+AUTH_KEY=your-secure-random-key-here
+PORT=8080
+```
 
-4. 查看运行状态：
-   ```bash
-   docker-compose ps
-   docker-compose logs -f
-   ```
+3. Bring‑up compose stack
 
-5. 配置反向代理（可选，推荐）：
+```
+docker-compose up -d
+```
 
-   **Nginx 配置示例：**
-   ```nginx
-   server {
-       listen 443 ssl http2;
-       server_name watch-room.yourdomain.com;
+4. Inspect runtime status
 
-       ssl_certificate /path/to/cert.pem;
-       ssl_certificate_key /path/to/key.pem;
+```
+docker-compose ps
+docker-compose logs -f
+```
 
-       location / {
-           proxy_pass http://localhost:8080;
-           proxy_http_version 1.1;
-           proxy_set_header Upgrade $http_upgrade;
-           proxy_set_header Connection "upgrade";
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
-       }
-   }
-   ```
+5. Optional Nginx reverse‑proxy config (recommended for public HTTPS):
 
----
+```
+server {
+    listen 443 ssl http2;
+    server_name watch-room.yourdomain.com;
 
-### 选项 4：直接在 VPS 上运行
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
 
-适合有 Node.js 环境的 VPS。
-
-#### 部署步骤
-
-1. 确保服务器已安装 Node.js 18+：
-   ```bash
-   node --version
-   ```
-
-2. 克隆代码并安装依赖：
-   ```bash
-   git clone https://github.com/tgs9915/watch-room-server.git
-   cd watch-room-server
-   npm install
-   ```
-
-3. 创建 `.env` 文件：
-   ```dotenv
-   AUTH_KEY=your-secure-random-key-here
-   PORT=8080
-   ```
-
-4. 构建并运行：
-   ```bash
-   npm run build
-   npm start
-   ```
-
-5. 使用 PM2 守护进程（推荐）：
-   ```bash
-   # 安装 PM2
-   npm install -g pm2
-
-   # 启动服务
-   pm2 start npm --name "watch-room-server" -- start
-
-   # 设置开机自启
-   pm2 startup
-   pm2 save
-
-   # 查看日志
-   pm2 logs watch-room-server
-
-   # 重启服务
-   pm2 restart watch-room-server
-   ```
+    location / {
+        proxy_pass [http://localhost:8080](http://localhost:8080);
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X‑Real‑IP $remote_addr;
+        proxy_set_header X‑Forwarded‑For $proxy_add_x_forwarded_for;
+        proxy_set_header X‑Forwarded‑Proto $scheme;
+    }
+}
+```
 
 ---
 
-## LunaTV 配置
+### Option 4: Run Directly on VPS with Node.js
 
-部署完观影室服务器后，需要在 LunaTV 管理后台配置：
+For VPS environments with existing Node.js runtime.
 
-1. 登录 LunaTV 管理后台（需要 owner 或 admin 权限）
-2. 进入"观影室配置"标签页
-3. 填写配置信息：
-   - **启用观影室功能**：勾选此选项
-   - **服务器地址**：填写你部署的服务器 URL（例如：`https://your-watch-room-server.fly.dev`）
-   - **认证密钥**：填写与服务器 `AUTH_KEY` 相同的密钥
-4. 点击"测试连接"验证配置
-5. 点击"保存配置"
-6. 查看"服务器统计信息"确认连接成功
+#### Deployment workflow
 
-### 配置说明
+1. Confirm installed Node.js ≥18
 
-- **服务器地址**：必须是完整的 URL，包含协议（http:// 或 https://）
-- **认证密钥**：用于验证 LunaTV 客户端身份，防止未授权访问
-  - 必须与服务器的 `AUTH_KEY` 环境变量一致
-  - 建议使用 32 位以上的随机字符串
-  - 可使用在线工具生成：[Random.org](https://www.random.org/strings/)
+```
+node --version
+```
 
-### ⚠️ 多站点共享警告
+2. Clone repo & install dependencies
 
-**重要提示**：如果多个 LunaTV 站点使用同一个观影室服务器：
+```
+git clone [https://github.com/tgs9915/watch-room-server.git](https://github.com/tgs9915/watch-room-server.git)
+cd watch-room-server
+npm install
+```
 
-- ✅ 所有站点将共享同一个房间池
-- ✅ 站点A创建的房间，站点B的用户也能看到和加入
-- ⚠️ 可能导致用户困惑和体验问题
-- 💡 **建议**：每个站点使用独立的观影室服务器
-- 💡 如需跨站点观影，可有意共用服务器，但需在房间名称中注明站点
+3. Prepare `.env`
 
----
+```
+AUTH_KEY=your-secure-random-key-here
+PORT=8080
+```
 
-## 功能测试
+4. Build artifacts & launch application
 
-配置完成后，测试观影室全部功能：
+```
+npm run build
+npm start
+```
 
-### 1. 房间管理测试
+5. Use PM2 for daemon process management (recommended)
 
-1. 在 LunaTV 导航栏找到"观影室"入口
-2. 查看连接状态指示器（应显示"已连接"）
-3. 创建一个测试房间：
-   - 填写房间名称
-   - 可选：设置房间密码
-   - 选择公开/私密
-4. 检查房间创建成功，显示房间号和成员列表
-5. 使用另一个浏览器/设备加入该房间
+```
+# Install pm2 globally
+npm install -g pm2
 
-### 2. 聊天功能测试
+# Start background service
+pm2 start npm --name "watch-room-server" -- start
 
-1. 在房间内点击聊天按钮（绿色气泡图标）
-2. 发送文字消息，验证实时传送
-3. 测试表情符号发送
-4. 关闭聊天窗口，查看未读消息提示
+# Configure system startup persistence
+pm2 startup
+pm2 save
 
-### 3. 同步播放测试
+# View logs
+pm2 logs watch-room-server
 
-1. 两个用户都进入播放页面（播放任意视频）
-2. **房主操作**：
-   - 点击播放 → 成员应自动播放
-   - 点击暂停 → 成员应自动暂停
-   - 拖动进度条 → 成员应跳转到相同时间
-   - 切换集数 → 成员收到弹窗提示
-3. **成员验证**：
-   - 播放器自动响应房主操作
-   - 打开浏览器控制台查看同步日志
-
-### 4. 语音通话测试
-
-1. 在聊天窗口中点击麦克风按钮
-2. 浏览器请求麦克风权限，点击允许
-3. 另一用户也打开麦克风
-4. 验证双方能听到对方声音
-5. 测试扬声器静音/开启功能
-
-### 5. 房间管理测试
-
-1. 点击房间信息按钮（蓝色 i 图标）
-2. 查看房间详情和成员列表
-3. 测试"退出房间"/"解散房间"功能
-4. 验证房主解散后所有成员被踢出
+# Restart backend
+pm2 restart watch-room-server
+```
 
 ---
 
-## 常见问题
+## LunaTV Application‑side Configuration
 
-### 1. 连接失败怎么办？
+Once your external watch‑room backend is deployed, apply configuration within LunaTV admin dashboard:
 
-**检查清单：**
+1. Login to LunaTV admin panel (owner/admin privileges required)
+2. Navigate to tab labelled "Watch‑Room Configuration"
+3. Fill‑in configuration parameters:
+‑ ✅ Enable watch‑room feature (checkbox)
+‑ **Server URL**: full backend endpoint e.g. `https://your‑watch‑room‑server.fly.dev`
+‑ **Authentication Key**: secret string exactly matching backend environment variable `AUTH_KEY`
+4. Click "Test Connection" to validate connectivity
+5. Save configuration
+6. Inspect server‑stats panel to confirm successful handshake
 
-- 服务器是否正常运行？（访问 `https://your-server-url/health` 应返回 `{"status":"ok"}`）
-- LunaTV 配置的服务器地址是否正确？
-- LunaTV 配置的 AUTH_KEY 是否与服务器一致？
-- 服务器防火墙是否开放了相应端口？
-- 浏览器控制台是否有 CORS 错误？
+### Configuration Notes
 
-### 2. AUTH_KEY 是什么？
+‑ Server URL **must** include protocol scheme (`http://` / `https://`)
+‑ Authentication key authenticates LunaTV frontend against backend; prevents unauthorised access
+‑ Use a secure random string of at least 32 characters
+‑ You may generate secure random strings with online tooling such as [Random.org](https://www.random.org/strings/%5D(https://www.random.org/strings/))
 
-AUTH_KEY 是观影室服务器的认证密钥，用于验证客户端身份。这是**必需**的配置项，服务器没有此环境变量将无法启动。
+### ⚠️ Multi‑site Shared‑server Warning
 
-**如何设置：**
+**Important note if multiple LunaTV instances reuse identical watch‑room backend:**
+‑ ✅ All sites will share one unified pool of active rooms
+‑ ✅ Rooms created from Site‑A are discoverable and joinable for users from Site‑B
+‑ ⚠️ This behaviour may cause confusing cross‑site user‑experience
+‑ 💡 Recommendation: provision an independent watch‑room backend for every LunaTV deployment
+‑ 💡 If cross‑site shared watching is your intended goal, document origin site explicitly within room names
 
-- Fly.io：在 `fly.toml` 的 `[env]` 部分设置
-- Railway：在项目的 Variables 标签页添加
-- Docker：在 `.env` 文件中设置
-- VPS：在 `.env` 文件中设置
+---
 
-### 3. 如何生成安全的 AUTH_KEY？
+## Functional Validation & Testing
 
-推荐方式：
+After saving configuration validate all watch‑room capabilities.
 
-```bash
-# Linux/macOS
+### 1. Room Management Test
+
+1. Open LunaTV navigation sidebar and enter Watch‑Room page
+2. Verify connection status indicator displays "Connected"
+3. Create a test‑room:
+‑ Input room display name
+‑ Optional: assign room password
+‑ Toggle public / private visibility
+4. Confirm room creation succeeds, inspect room‑id & participant‑list
+5. Join same test‑room from a separate browser‑session or second device
+
+### 2. Chat Functionality Test
+
+1. Open chat floating panel (green speech‑bubble icon)
+2. Send plain‑text message and verify real‑time delivery
+3. Test emoji sending
+4. Close chat panel, validate unread‑message notification badge appears
+
+### 3. Synchronised Playback Test
+
+1. Navigate both browser sessions into same media playback page
+2. Host performs playback controls:
+‑ Play → remote members automatically start playback
+‑ Pause → remote members automatically pause
+‑ Seek progress slider → remote members jump to identical timestamp
+‑ Switch episodes → members receive pop‑up notification prompt
+3. Member‑side verification:
+‑ Player reacts automatically to host‑issued events
+‑ Inspect browser dev‑tools console for sync debug logs prefixed `[PlaySync]`
+
+### 4. Voice‑Call Functionality Test
+
+1. Inside chat panel click microphone button
+2. Grant browser microphone permission on prompt
+3. Second participant also enables microphone
+4. Verify bidirectional voice audio works correctly
+5. Mute/unmute speaker controls validation
+
+### 5. Final Room‑Management Validation
+
+1. Open room‑information panel (blue info‑icon)
+2. Inspect room metadata & live participant roster
+3. Test "Leave Room" / "Dissolve Room" host operation
+4. Confirm all connected participants get kicked after host dissolves room
+
+---
+
+## Frequently Asked Questions
+
+### Q1: Troubleshooting connection failures
+
+**Check‑list for diagnostics:**
+‑ Is backend service healthy? Access endpoint `https://your‑server‑url/health` should reply `{"status":"ok"}`
+‑ Is server URL configured correctly in LunaTV admin?
+‑ Does LunaTV‑configured `AUTH_KEY` exactly match backend environment variable?
+‑ Are firewall rules opening target port on hosting server?
+‑ Inspect browser console for CORS‑related error traces
+
+### Q2: What exactly is AUTH_KEY?
+
+`AUTH_KEY` is shared secret for authenticating frontend clients against watch‑room backend. It is a mandatory environment variable; backend refuses startup without it.
+
+**How‑to assign:**
+‑ Fly.io: define variable within `fly.toml` env section
+‑ Railway: add variable inside project Variables dashboard
+‑ Docker: inject via `.env` file or container runtime‑e flag
+‑ Bare‑metal VPS: define within `.env` file
+
+### Q3: Generate secure random AUTH_KEY
+
+```
+# Linux/macOS openssl
 openssl rand -base64 32
 
-# Node.js
+# Node.js one‑liner
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 # Python
 python3 -c "import secrets; print(secrets.token_urlsafe(32))"
 ```
 
-### 4. Fly.io 免费额度够用吗？
+### Q4: Is Fly.io free quota sufficient?
 
-Fly.io 免费额度包括：
-- 3 个共享 CPU VM（256MB RAM）
-- 3GB 持久化存储
-- 160GB 出站流量/月
+Fly.io free tier resource allocation:
+‑ 3 shared‑CPU VMs (256 MB RAM each)
+‑ 3 GB persistent block storage
+‑ 160 GB monthly outbound network transfer
 
-对于小规模使用（< 10 人同时在线）完全足够。
+Fully adequate for small‑scale deployment (<10 concurrent online participants).
 
-### 5. 播放同步不工作怎么办？
+### Q5: Playback synchronisation is not working
 
-**调试步骤：**
+Debugging workflow:
 
-1. 打开浏览器控制台（F12）
-2. 查找 `[PlaySync]` 日志
-3. 确认房主端看到：`Setting up player event listeners`
-4. 确认成员端看到：`Received play:play/pause/seek event`
-5. 如果没有日志：
-   - 检查是否在播放页面
-   - 检查播放器是否已加载（`playerReady=true`）
-   - 刷新页面重试
+1. Open browser developer console (F12)
+2. Filter logs searching for `[PlaySync]`
+3. Confirm host outputs log: `Setting up player event listeners`
+4. Confirm member receives event trace: `Received play:play/pause/seek event`
+5. Missing logs checklist:
+‑ Confirm you are currently on media playback route
+‑ Confirm player finished initialisation (`playerReady=true`)
+‑ Hard‑refresh browser session and retry
 
-### 6. 语音通话听不到声音？
+### Q6: Cannot hear remote party inside voice call
 
-**可能原因：**
+Potential root causes:
+‑ Browser microphone permission was denied; review browser site‑permission settings
+‑ Local speaker output muted inside watch‑room UI
+‑ NAT‑traversal / STUN‑server connectivity issue from network environment
+‑ Browser lacks WebRTC support; switch to Chrome / Edge / Firefox
 
-- 麦克风权限未授予 → 在浏览器设置中允许
-- 扬声器被静音 → 点击扬声器按钮开启
-- 网络 NAT 穿透失败 → STUN 服务器可能被墙，考虑使用 VPN
-- 浏览器不支持 WebRTC → 使用 Chrome/Edge/Firefox
+### Q7: Are active rooms persisted after server restart?
 
-### 7. 房间数据会丢失吗？
+**No, all room state is stored in backend memory:**
+‑ Restart watch‑room backend → all existing rooms are destroyed
+‑ Redeploying only LunaTV frontend on Vercel leaves watch‑room backend state untouched
+‑ Redeploy watch‑room server → all active sessions get cleared
 
-**是的**，房间数据存储在服务器内存中：
+This is intentional design; watch‑rooms are ephemeral temporary collaboration sessions.
 
-- 服务器重启 = 所有房间清空
-- Vercel 重新部署 LunaTV = 不影响服务器（数据保留）
-- 观影室服务器重新部署 = 所有房间清空
+### Q8: How to perform backend service updates
 
-这是设计行为，观影室是临时会话功能。
+**Fly.io:**
 
-### 8. 如何更新服务器？
-
-**Fly.io：**
-```bash
+```
 cd watch-room-server
 git pull
 flyctl deploy
 ```
 
-**Railway：**
-- 推送代码到 GitHub，Railway 会自动重新部署
+**Railway:**
+‑ Push updated source‑code to GitHub repository; Railway triggers automatic rebuild & redeploy
 
-**Docker：**
-```bash
+**Docker Compose:**
+
+```
 cd watch-room-server
 git pull
 docker-compose down
@@ -735,8 +747,9 @@ docker-compose build
 docker-compose up -d
 ```
 
-**VPS (PM2)：**
-```bash
+**VPS PM2:**
+
+```
 cd watch-room-server
 git pull
 npm install
@@ -744,120 +757,117 @@ npm run build
 pm2 restart watch-room-server
 ```
 
-### 9. 服务器日志在哪里？
+### Q9: Where can I view backend runtime logs?
 
-- **Fly.io**: `flyctl logs`
-- **Railway**: 项目 Dashboard → Deployments → 点击部署 → Logs
-- **Docker**: `docker-compose logs -f`
-- **PM2**: `pm2 logs watch-room-server`
+‑ **Fly.io**: `flyctl logs`
+‑ **Railway**: Dashboard → Deployments → target deployment entry → Logs
+‑ **Docker Compose**: `docker-compose logs -f`
+‑ **PM2**: `pm2 logs watch-room-server`
 
-### 10. 可以在播放页面外使用观影室吗？
+### Q10: Can chat‑voice features run outside playback page?
 
-当前实现中，播放同步功能需要在播放页面使用。但聊天和语音功能理论上可以在任何页面使用（通过悬浮窗）。
-
----
-
-## 安全建议
-
-1. **使用 HTTPS**：确保服务器使用 HTTPS（Fly.io 和 Railway 默认提供）
-2. **强密码 AUTH_KEY**：使用 32 位以上随机字符串
-3. **定期更新**：关注 watch-room-server 仓库的更新
-4. **监控资源**：定期检查服务器资源使用情况
-5. **备份配置**：妥善保存 AUTH_KEY 等配置信息
-6. **独立部署**：每个 LunaTV 站点使用独立的服务器（避免房间混淆）
+Current implementation: playback synchronisation is only functional on playback page. Chat & voice floating‑window UI technically may render on other routes.
 
 ---
 
-## 技术架构
+## Security Recommendations
 
-### 前端实现
+1. **Enforce HTTPS**: backend endpoint should run under TLS (Fly.io & Railway supply HTTPS by default)
+2. **Strong secret AUTH_KEY**: use cryptographically random 32+ character secrets
+3. **Regular upstream updates**: monitor `watch‑room‑server` repository releases
+4. **Resource monitoring**: periodically inspect backend CPU/memory consumption
+5. **Backup secrets**: safely archive your `AUTH_KEY` secret
+6. **Independent backend per‑instance**: deploy dedicated watch‑room server for each separate LunaTV site to avoid cross‑site room leakage
 
-- **框架**：React + Next.js 16.1.0
-- **Socket.IO 客户端**：实时通信
-- **ArtPlayer 集成**：播放器事件监听
-- **WebRTC**：P2P 语音连接
-- **状态管理**：React Context API
+---
 
-### 后端实现
+## Technical Architecture
 
-- **Socket.IO 服务器**：WebSocket 长连接
-- **内存存储**：房间和成员数据
-- **JWT 认证**：AUTH_KEY 验证
-- **心跳检测**：自动清理失效连接
+### Front‑end Stack
 
-### 同步机制
+‑ Framework: React + Next.js 16.1.0
+‑ Socket.IO‑Client for real‑time bidirectional communication
+‑ Integration with ArtPlayer HTML5 video player for playback events
+‑ WebRTC P2P voice signalling
+‑ React Context API for state management
+
+### Back‑end Stack
+
+‑ Socket.IO backend handling WebSocket persistent connections
+‑ In‑memory runtime storage for active rooms & participant sessions
+‑ JWT‑style authentication via shared `AUTH_KEY` secret
+‑ Heartbeat‑based stale‑connection cleanup
+
+### Play‑Synchronisation Data‑Flow
 
 ```
-房主操作 → ArtPlayer事件 → Socket.IO发送 → 服务器广播 → 成员接收 → 控制播放器
+Host UI Action → ArtPlayer player events → Socket.IO emit → Server broadcast → Remote members receive → Command local player instance
 ```
 
-**防止循环广播：**
-- `isHandlingRemoteCommandRef` 标志位
-- 远程命令触发的事件不再广播
+**Loop‑broad‑back prevention:**
+‑ Ref flag `isHandlingRemoteCommandRef` guards against echo‑loop; events triggered remotely are not re‑broadcast back to server
 
-**定期同步：**
-- 每5秒广播一次播放状态
-- 确保长时间播放不会失去同步
-
----
-
-## 卸载说明
-
-### 移除 LunaTV 观影室功能
-
-在管理后台取消勾选"启用观影室功能"即可。用户菜单中的观影室入口会自动隐藏。
-
-### 销毁服务器
-
-- **Fly.io**: `flyctl destroy your-app-name`
-- **Railway**: 在项目设置中点击 "Delete Project"
-- **Docker**: `docker-compose down -v`
-- **PM2**: `pm2 delete watch-room-server`
+**Periodic resync mechanism:**
+‑ Full playback‑state broadcast sent every 5 seconds
+‑ Mitigates gradual playback‑drift for long‑running viewing sessions
 
 ---
 
-## 致谢与引用
+## Uninstall & Decommissioning
 
-LunaTV 的观影室功能基于以下开源项目开发：
+### Disable watch‑room on LunaTV frontend
 
-### 核心依赖
+Untick "Enable watch‑room feature" within admin configuration panel. Navigation menu entry will disappear automatically for users.
 
-- **[watch-room-server](https://github.com/tgs9915/watch-room-server)** - 外部 Socket.IO 观影室服务器
-  - 提供房间管理、实时通信、WebRTC 信令等基础设施
-  - 作者：[@tgs9915](https://github.com/tgs9915)
-  - 许可证：MIT
+### Destroy deployed backend server
 
-### 参考实现
-
-- **[MoonTVPlus](https://github.com/mtvpls/MoonTVPlus)** - 同步播放功能参考
-  - 我们的播放同步实现参考了 MoonTVPlus 的 `usePlaySync` hook 设计
-  - 感谢 MoonTVPlus 团队提供的优秀实现思路
-  - 作者：[@mtvpls](https://github.com/mtvpls)
-
-### 技术栈
-
-- **Socket.IO** - WebSocket 实时通信库
-- **WebRTC** - P2P 实时音视频通信
-- **ArtPlayer** - HTML5 视频播放器
-- **React** - 前端框架
-
-感谢所有开源贡献者的付出！🙏
+‑ Fly.io: `flyctl destroy your‑app‑name`
+‑ Railway: navigate project settings → Delete Project
+‑ Docker Compose: `docker‑compose down -v`
+‑ PM2 managed VPS: `pm2 delete watch‑room‑server`
 
 ---
 
-## 许可证
+## Acknowledgements
 
-- LunaTV 观影室前端代码遵循 LunaTV 项目许可证
-- 观影室服务器遵循 [watch-room-server](https://github.com/tgs9915/watch-room-server) 的 MIT 许可证
+LunaTV watch‑room feature builds upon these open‑source projects:
+
+### Core Back‑end Dependency
+
+‑ **[watch‑room‑server](https://github.com/tgs9915/watch%5D(https://github.com/tgs9915/watch)%E2%80%91room%E2%80%91server)** — external Socket.IO watch‑room backend
+‑ Author: [@tgs9915](https://github.com/tgs9915%5D(https://github.com/tgs9915))
+‑ License: MIT
+
+### Reference Implementation
+
+‑ **[MoonTVPlus](https://github.com/mtvpls/MoonTVPlus%5D(https://github.com/mtvpls/MoonTVPlus))** — synchronised playback hook reference
+‑ Play‑sync hook design ideas inspired by MoonTVPlus `usePlaySync`
+‑ Author: [@mtvpls](https://github.com/mtvpls%5D(https://github.com/mtvpls))
+
+### Underlying Technology Stack
+
+‑ Socket.IO — WebSocket real‑time communication
+‑ WebRTC — peer‑to‑peer real‑time voice/video
+‑ ArtPlayer — HTML5 media player
+‑ React — frontend UI library
+
+Gratitude to all open‑source contributors 🙏
 
 ---
 
-## 技术支持
+## Licensing
 
-- **观影室服务器问题**：在 [watch-room-server](https://github.com/tgs9915/watch-room-server/issues) 提交 Issue
-- **LunaTV 集成问题**：在 LunaTV 项目仓库提交 Issue
-- **功能建议**：欢迎提交 Feature Request
+‑ LunaTV watch‑room frontend source governed under main LunaTV project license
+‑ Watch‑room backend server repository: MIT license, see [watch‑room‑server](https://github.com/tgs9915/watch%5D(https://github.com/tgs9915/watch)%E2%80%91room%E2%80%91server)
 
 ---
 
-**享受与朋友一起观影的乐趣！** 🎬🍿
+## Technical Support
+
+‑ Backend‑specific bugs & feature‑requests: open GitHub Issue on [watch‑room‑server](https://github.com/tgs9915/watch%5D(https://github.com/tgs9915/watch)%E2%80%91room%E2%80%91server)
+‑ LunaTV frontend integration‑related issues: submit Issue within LunaTV repository
+‑ Feature suggestions welcome via GitHub Feature‑Request
+
+---
+
+**Enjoy watching videos together with your friends!** 🎬🍿

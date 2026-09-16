@@ -1,429 +1,366 @@
-# OpenID Connect (OIDC) 认证配置指南
+# OpenID Connect (OIDC) Authentication Configuration Guide
 
-本文档详细介绍如何在 VODTV 中配置 OIDC 单点登录（SSO），支持 Google、Microsoft、GitHub、Facebook、微信、Apple、LinuxDo 等主流身份提供商。
+This document describes in detail how to configure OIDC Single Sign‑On (SSO) inside VODTV. It supports mainstream identity providers including Google, Microsoft, GitHub, Facebook, WeChat, Apple, LinuxDo and more.
 
-## 📋 目录
+## 📋 Table of Contents
 
-- [什么是 OIDC](#什么是-oidc)
-- [配置前准备](#配置前准备)
-- [Google OAuth 2.0 配置](#google-oauth-20-配置)
-- [Microsoft Entra ID 配置](#microsoft-entra-id-配置)
-- [GitHub OAuth 配置](#github-oauth-配置)
-- [Facebook OAuth 配置](#facebook-oauth-配置)
-- [微信开放平台配置](#微信开放平台配置)
-- [Apple Sign In 配置](#apple-sign-in-配置)
-- [LinuxDo 配置](#linuxdo-配置)
-- [VODTV 管理后台配置](#VODTV-管理后台配置)
-- [常见问题](#常见问题)
-
----
-
-## 什么是 OIDC
-
-OpenID Connect (OIDC) 是基于 OAuth 2.0 协议的身份认证层，允许用户使用第三方账号（如 Google、Microsoft、GitHub）登录你的应用，无需单独注册账号。
-
-### 优势
-
-- ✅ **用户体验优化**：用户可用熟悉的账号一键登录
-- ✅ **安全性提升**：由专业的身份提供商管理密码安全
-- ✅ **减少管理成本**：无需维护用户密码数据库
-- ✅ **支持多平台**：同一账号可在多个设备登录
+- [What is OIDC](#what-is-oidc)
+- [Pre‑configuration Checklist](#pre‑configuration-checklist)
+- [Google OAuth 2.0 Setup](#google-oauth-20-setup)
+- [Microsoft Entra ID Setup](#microsoft-entra-id-setup)
+- [GitHub OAuth Setup](#github-oauth-setup)
+- [Facebook OAuth Setup](#facebook-oauth-setup)
+- [WeChat Open Platform Setup](#wechat-open-platform-setup)
+- [Apple Sign In Setup](#apple-sign-in-setup)
+- [LinuxDo Setup](#linuxdo-setup)
+- [VODTV Admin Panel Configuration](#vodtv-admin-panel-configuration)
+- [Frequently Asked Questions](#frequently-asked-questions)
 
 ---
 
-## 配置前准备
+## What is OIDC
 
-### 1. 确认回调 URL
+OpenID Connect (OIDC) is an identity‑layer protocol built on top of OAuth 2.0. It enables users to log into your application using existing third‑party accounts without creating a separate local account.
 
-所有 OIDC 提供商都需要配置回调 URL（Redirect URI / Callback URL）。
-
-**VODTV 的标准回调 URL 格式**：
-```
-https://your-domain.com/api/auth/oidc/callback
-```
-
-示例：
-- 生产环境：`https://VODTV.example.com/api/auth/oidc/callback`
-- 本地开发：`http://localhost:3000/api/auth/oidc/callback`
-
-### 2. 所需信息清单
-
-配置任何 OIDC 提供商时，你需要准备以下信息：
-
-- ✅ **Issuer URL**：OIDC 提供商的基础 URL
-- ✅ **Client ID**：应用的唯一标识符
-- ✅ **Client Secret**：应用的密钥（**务必保密**）
-- ✅ **Authorization Endpoint**：授权端点 URL
-- ✅ **Token Endpoint**：令牌端点 URL
-- ✅ **UserInfo Endpoint**：用户信息端点 URL
+### Benefits
+- ✅ **Better User Experience**: One‑click login with familiar external accounts
+- ✅ **Improved Security**: Password management handled by dedicated identity providers
+- ✅ **Reduced Maintenance Overhead**: No need to host your own user password database
+- ✅ **Cross‑device Support**: Single account works across multiple client devices
 
 ---
 
-## Google OAuth 2.0 配置
+## Pre‑configuration Checklist
 
-### 步骤 1：创建 Google Cloud 项目
+### 1. Confirm Redirect URI
 
-1. 访问 [Google Cloud Console](https://console.cloud.google.com/)
-2. 点击顶部项目选择器 → **新建项目**
-3. 输入项目名称（如 "VODTV"）→ **创建**
+All OIDC providers require you to supply a Redirect URI (Callback URL).
 
-### 步骤 2：启用 API
-
-1. 在左侧菜单选择 **API 和服务** → **库**
-2. 搜索并启用 **Google+ API**（用于获取用户信息）
-
-### 步骤 3：创建 OAuth 2.0 凭据
-
-1. 进入 **API 和服务** → **凭据**
-2. 点击 **创建凭据** → **OAuth 客户端 ID**
-3. 如果首次配置，需要先配置 **OAuth 同意屏幕**：
-   - 用户类型选择：**外部**（允许任何 Google 账号登录）
-   - 应用名称：`VODTV`
-   - 支持电子邮件：你的邮箱
-   - 授权域：你的域名（如 `example.com`）
-   - 开发者联系信息：你的邮箱
-   - 保存并继续
-
-4. 返回凭据页面，再次点击 **创建凭据** → **OAuth 客户端 ID**
-5. 应用类型选择：**Web 应用**
-6. 名称：`VODTV Web Client`
-7. **已获授权的 JavaScript 来源**（可选）：
-   ```
-   https://your-domain.com
-   ```
-8. **已获授权的重定向 URI**（**必填**）：
-   ```
-   https://your-domain.com/api/auth/oidc/callback
-   ```
-9. 点击 **创建**
-
-### 步骤 4：获取凭据
-
-创建成功后，会弹出窗口显示：
-- **客户端 ID**：`xxxxxx.apps.googleusercontent.com`
-- **客户端密钥**：`GOCSPX-xxxxxxxxxx`
-
-⚠️ **重要提示（2025 年更新）**：
-- 从 2025 年 6 月起，新创建的客户端密钥只在创建时可见
-- 务必立即复制并妥善保存客户端密钥
-- 如果遗失，需要重新生成新的密钥
-
-### Google OIDC 端点信息
-
-Google 支持自动发现，你只需要配置 **Issuer URL**：
+**Standard VODTV callback URL format**:
+shturl.cc/dt39XuvL9cvJZ
 
 ```
-Issuer URL: https://accounts.google.com
+8. **Authorized redirect URIs** (**required**):
 ```
 
-**自动发现端点**：
-```
-https://accounts.google.com/.well-known/openid-configuration
-```
-
-或者手动配置各端点：
+shturl.cc/dTTnmQ59tLdtTqX5699pH6S4OLIDwBDtf5Gu
 
 ```
-Authorization Endpoint: https://accounts.google.com/o/oauth2/v2/auth
-Token Endpoint:         https://oauth2.googleapis.com/token
-UserInfo Endpoint:      https://openidconnect.googleapis.com/v1/userinfo
+9. Click **Create**
+
+### Step 4: Retrieve Credentials
+After creation a popup will display:
+‑ Client ID: `xxxxxx.apps.googleusercontent.com`
+‑ Client secret: `GOCSPX‑xxxxxxxxxx`
+
+⚠️ **Important note (2025 update)**:
+‑ Starting June 2025, newly‑generated client secrets are visible only once at creation time
+‑ Copy and store the secret immediately
+‑ If lost you must regenerate a new secret
+
+### Google OIDC Endpoints
+Google supports OIDC auto‑discovery, only the **Issuer URL** is required:
 ```
 
-### 参考资料
-- [Setting up OAuth 2.0 - Google Cloud Console Help](https://support.google.com/cloud/answer/6158849?hl=en)
-- [OpenID Connect | Sign in with Google](https://developers.google.com/identity/openid-connect/openid-connect)
-- [Get your Google API client ID](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
+Issuer URL: [https://accounts.google.com](https://accounts.google.com)
+
+```
+Auto‑discovery document:
+```
+
+[https://accounts.google.com/.well-known/openid-configuration](https://accounts.google.com/.well-known/openid-configuration)
+
+```
+
+Manual endpoint configuration fallback:
+```
+
+Authorization Endpoint: [https://accounts.google.com/o/oauth2/v2/auth](https://accounts.google.com/o/oauth2/v2/auth)
+Token Endpoint:         [https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)
+UserInfo Endpoint:      [https://openidconnect.googleapis.com/v1/userinfo](https://openidconnect.googleapis.com/v1/userinfo)
+
+```
+
+### References
+‑ [Setting up OAuth 2.0 ‑ Google Cloud Console Help](https://support.google.com/cloud/answer/6158849?hl=en)
+‑ [OpenID Connect | Sign in with Google](https://developers.google.com/identity/openid-connect/openid-connect)
+‑ [Get your Google API client ID](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
 
 ---
 
-## Microsoft Entra ID 配置
+## Microsoft Entra ID Setup
 
-Microsoft Entra ID（前身为 Azure Active Directory）提供企业级身份认证服务。
+Microsoft Entra ID (formerly Azure Active Directory) provides enterprise‑grade identity services.
 
-### 步骤 1：注册应用
+### Step 1: Register an Application
+1. Sign‑in to [Microsoft Entra Admin Center](https://entra.microsoft.com/)
+2. Navigate to **Applications** → **App registrations** → **New registration**
+3. Fill in application properties:
+   - **Name**: `VODTV`
+   - **Supported account types**:
+     - **Accounts in this organizational directory only** (single‑tenant, internal users only)
+     - **Accounts in any organizational directory** (multi‑tenant, corporate accounts)
+     - **Accounts in any organizational directory and personal Microsoft accounts** (recommended, supports Outlook/Xbox consumer accounts)
+   - **Redirect URI**:
+     - Platform: **Web**
+     - URI: `shturl.cc/dTTnmQ59tLdtTqX5699pH6S4OLIDwBDtf5Gu`
+4. Click **Register**
 
-1. 登录 [Microsoft Entra 管理中心](https://entra.microsoft.com/)
-2. 导航到 **应用** → **应用注册** → **新注册**
-3. 填写应用信息：
-   - **名称**：`VODTV`
-   - **支持的账户类型**：
-     - **仅此目录中的账户**（单租户，仅你组织内用户）
-     - **任何组织目录中的账户**（多租户，任何企业账户）
-     - **任何组织目录中的账户和个人 Microsoft 账户**（推荐，支持个人 Outlook/Xbox 等账号）
-   - **重定向 URI**：
-     - 平台：**Web**
-     - URI：`https://your-domain.com/api/auth/oidc/callback`
-4. 点击 **注册**
+### Step 2: Configure Authentication
+1. Inside your app registration page select **Authentication** from the sidebar
+2. Under **Implicit grant and hybrid flows** check:
+   - ✅ **ID tokens (used for implicit and hybrid flows)**
+3. Click **Save**
 
-### 步骤 2：配置身份验证
+### Step 3: Create a Client Secret
+1. Open **Certificates & secrets** from sidebar
+2. Switch to the **Client secrets** tab
+3. Click **New client secret**
+4. Description e.g. "VODTV Production"
+5. Expiry options:
+   - 6 months
+   - 12 months
+   - 24 months
+   - **Custom** (max 2 years)
+6. Click **Add**
+7. **Copy and save the secret value right away (only shown once)**
 
-1. 在应用页面，点击左侧 **身份验证**
-2. 在 **隐式授权和混合流** 部分，勾选：
-   - ✅ **ID 令牌（用于隐式和混合流）**
-3. 点击 **保存**
+### Step 4: Retrieve Endpoint Information
+1. On the application overview page click **Endpoints**
+2. Copy endpoint URLs:
 
-### 步骤 3：创建客户端密钥
-
-1. 点击左侧 **证书和密码**
-2. 选择 **客户端密码** 标签页
-3. 点击 **新客户端密码**
-4. 输入描述（如 "VODTV Production"）
-5. 选择过期时间：
-   - 6 个月
-   - 12 个月
-   - 24 个月
-   - **自定义**（最长可设为 2 年）
-6. 点击 **添加**
-7. **立即复制并保存客户端密钥值**（仅此一次显示）
-
-### 步骤 4：获取端点信息
-
-1. 在应用概述页面，点击 **端点**
-2. 复制以下端点 URL：
-
-**对于单租户应用**：
-```
-Issuer URL: https://login.microsoftonline.com/{tenant-id}/v2.0
+Single‑tenant application:
 ```
 
-**对于多租户应用**（推荐）：
-```
-Issuer URL: https://login.microsoftonline.com/common/v2.0
-```
-
-其中 `{tenant-id}` 可在应用概述页面的 **目录(租户) ID** 中找到。
-
-**自动发现端点**：
-```
-https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
-```
-
-或者手动配置各端点：
+Issuer URL: [https://login.microsoftonline.com/{tenant-id}/v2.0](https://login.microsoftonline.com/%7Btenant-id%7D/v2.0)
 
 ```
-Authorization Endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
-Token Endpoint:         https://login.microsoftonline.com/common/oauth2/v2.0/token
-UserInfo Endpoint:      https://graph.microsoft.com/oidc/userinfo
+
+Multi‑tenant application (recommended):
 ```
 
-### 参考资料
-- [OpenID Connect (OIDC) on the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc)
-- [How to register an app in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
-- [Microsoft identity platform UserInfo endpoint](https://learn.microsoft.com/en-us/entra/identity-platform/userinfo)
+Issuer URL: [https://login.microsoftonline.com/common/v2.0](https://login.microsoftonline.com/common/v2.0)
+
+```
+`{tenant‑id}` value can be found on overview page under **Directory (tenant) ID**.
+
+Auto‑discovery document:
+```
+
+[https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration](https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration)
+
+```
+
+Manual fallback endpoints:
+```
+
+Authorization Endpoint: [https://login.microsoftonline.com/common/oauth2/v2.0/authorize](https://login.microsoftonline.com/common/oauth2/v2.0/authorize)
+Token Endpoint:         [https://login.microsoftonline.com/common/oauth2/v2.0/token](https://login.microsoftonline.com/common/oauth2/v2.0/token)
+UserInfo Endpoint:      [https://graph.microsoft.com/oidc/userinfo](https://graph.microsoft.com/oidc/userinfo)
+
+```
+
+### References
+‑ [OpenID Connect (OIDC) on the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc)
+‑ [How to register an app in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
+‑ [Microsoft identity platform UserInfo endpoint](https://learn.microsoft.com/en-us/entra/identity-platform/userinfo)
 
 ---
 
-## GitHub OAuth 配置
+## GitHub OAuth Setup
 
-GitHub 提供 OAuth 2.0 认证（虽然不是完整的 OIDC，但兼容大部分 OIDC 流程）。
+GitHub provides OAuth 2.0 authentication. While it is not fully OIDC‑compliant, most of the workflow is compatible.
 
-### 步骤 1：创建 OAuth App
+### Step 1: Create OAuth App
+1. Log into GitHub, click avatar at top‑right → **Settings**
+2. Scroll sidebar down to **Developer settings**
+3. Open **OAuth Apps** → **New OAuth App**
 
-1. 登录 GitHub，点击右上角头像 → **Settings**
-2. 左侧菜单滚动到底部，点击 **Developer settings**
-3. 点击 **OAuth Apps** → **New OAuth App**
+### Step 2: Fill Application Information
+‑ **Application name**: `VODTV`
+‑ **Homepage URL**: `shturl.cc/dt39XuvL9cvJZ`
+‑ **Application description** (optional): `VODTV media platform`
+‑ **Authorization callback URL**: `shturl.cc/dTTnmQ59tLdtTqX5699pH6S4OLIDwBDtf5Gu`
+‑ Click **Register application**
 
-### 步骤 2：填写应用信息
+### Step 3: Retrieve Credentials
+1. After creation your **Client ID** is visible directly on the page
+2. Click **Generate a new client secret** to create the secret
+3. **Copy Client Secret immediately; it is only displayed once**
 
-- **Application name**：`VODTV`
-- **Homepage URL**：`https://your-domain.com`
-- **Application description**（可选）：`VODTV 影视平台`
-- **Authorization callback URL**：`https://your-domain.com/api/auth/oidc/callback`
-- 点击 **Register application**
+⚠️ Security reminder:
+‑ Never commit Client Secret to public source repositories
+‑ Regenerate immediately if the secret is leaked
 
-### 步骤 3：获取凭据
-
-1. 创建成功后，你会看到 **Client ID**（直接显示）
-2. 点击 **Generate a new client secret** 生成客户端密钥
-3. **立即复制并保存 Client Secret**（仅显示一次）
-
-⚠️ **安全提示**：
-- Client Secret 不要公开或提交到代码仓库
-- 如果泄露，请立即在 GitHub 重新生成新密钥
-
-### GitHub OAuth 端点信息
-
-GitHub 使用标准的 OAuth 2.0 端点：
-
-```
-Authorization Endpoint: https://github.com/login/oauth/authorize
-Token Endpoint:         https://github.com/login/oauth/access_token
-UserInfo Endpoint:      https://api.github.com/user
+### GitHub OAuth Endpoints
+GitHub OAuth 2.0 endpoint addresses:
 ```
 
-**特殊说明**：
-- GitHub OAuth 不完全符合 OIDC 标准，没有 Issuer URL
-- 需要在 VODTV 后台**手动配置**各端点 URL
-- UserInfo 端点返回的是 GitHub API 用户信息格式
+Authorization Endpoint: [https://github.com/login/oauth/authorize](https://github.com/login/oauth/authorize)
+Token Endpoint:         [https://github.com/login/oauth/access_token](https://github.com/login/oauth/access_token)
+UserInfo Endpoint:      [https://api.github.com/user](https://api.github.com/user)
 
-### 技术实现说明
+```
 
-#### GitHub OAuth 的特殊性
+**Special note**:
+‑ GitHub OAuth does not implement full OIDC, there is no Issuer URL for discovery
+‑ All endpoints need to be entered manually within VODTV backend
+‑ UserInfo returns native GitHub API‑formatted JSON
 
-| 特性 | 标准 OIDC | GitHub OAuth | VODTV 处理 |
-|------|-----------|--------------|-------------|
-| **OAuth Scope** | `openid profile email` | `read:user user:email` | ✅ 自动使用 GitHub scope |
-| **Token 响应格式** | JSON | URL编码（默认） | ✅ 添加 Accept header 获取 JSON |
-| **id_token** | 返回 | ❌ 不返回 | ✅ 使用 access_token |
-| **Email 可见性** | 公开 | 可能为 null（私有） | ✅ 自动从 `/user/emails` 获取 |
-| **UserInfo Headers** | 标准 Authorization | 需要 GitHub API headers | ✅ 添加专用 headers |
+### Technical Implementation Notes
 
-#### VODTV 的适配处理
+#### GitHub OAuth Differences
+| Feature | Standard OIDC | GitHub OAuth | VODTV Handling |
+|---|---|---|---|
+| **OAuth Scope** | `openid profile email` | `read:user user:email` | ✅ Auto‑select GitHub scopes |
+| **Token Response Format** | JSON | URL‑encoded (default) | ✅ Adds Accept header for JSON |
+| **id_token** | Returned | ❌ Not provided | ✅ Uses access_token directly |
+| **Email Visibility** | Public | May be null (private) | ✅ Auto‑fetch from `/user/emails` |
+| **UserInfo Headers** | Standard Authorization | GitHub‑specific headers | ✅ Inject dedicated headers |
 
-1. **Scope 自动适配**：
-   - 标准 OIDC 使用 `openid profile email`
-   - GitHub 自动使用 `read:user user:email`
+#### VODTV Adaptation Logic
+1. **Scope auto‑adaptation**:
+   - Standard OIDC uses `openid profile email`
+   - GitHub automatically uses `read:user user:email`
 
-2. **Token 请求 Accept Header**：
-   - 添加 `Accept: application/json` header
-   - 确保 Token 端点返回 JSON 格式而非 URL 编码
+2. **Token request Accept Header**:
+   - Adds `Accept: application/json` header
+   - Forces JSON‑formatted response instead of urlencoded data
 
-3. **UserInfo API Headers**：
+3. **UserInfo API Headers**:
    - `Accept: application/vnd.github+json`
-   - `X-GitHub-Api-Version: 2022-11-28`
+   - `X‑GitHub‑Api‑Version: 2022‑11‑28`
 
-4. **私有邮箱获取**：
-   - 如果 `/user` 返回的 `email` 为 null
-   - 自动调用 `/user/emails` 端点
-   - 优先使用 primary verified email
+4. **Private email retrieval**:
+   - If email from `/user` response is null
+   - Automatically calls `/user/emails` endpoint
+   - Prioritizes primary verified email address
 
-5. **用户唯一标识**：
-   - 使用 `id` 字段（而非标准 OIDC 的 `sub`）
+5. **Unique user identifier**:
+   - Uses GitHub `id` field instead of standard OIDC `sub`
 
-#### 获取的用户信息
+#### Retrieved User Fields
+VODTV fetches these properties from GitHub API:
+‑ `id`: Numeric unique user identifier for account linking
+‑ `login`: GitHub username
+‑ `name`: User display name
+‑ `email`: Email address (auto‑retrieved for private emails)
+‑ `avatar_url`: User avatar image
 
-VODTV 从 GitHub API 获取：
-- `id`：用户唯一标识符（用于关联账号）
-- `login`：GitHub 用户名
-- `name`：用户显示名称
-- `email`：邮箱地址（自动获取私有邮箱）
-- `avatar_url`：用户头像
+> 📝 Privacy note: When user email is not public on GitHub profile, VODTV fetches primary verified email via `/user/emails` endpoint (requires `user:email` scope).
 
-> 📝 **隐私说明**：如果用户未公开邮箱，VODTV 会自动从 `/user/emails` 端点获取 primary verified email（需要 `user:email` scope）。
-
-### 参考资料
-- [Creating an OAuth app - GitHub Docs](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
-- [Authorizing OAuth apps - GitHub Docs](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
-- [Setting up Github OAuth 2.0](https://apidog.com/blog/set-up-github-oauth2/)
+### References
+‑ [Creating an OAuth app ‑ GitHub Docs](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
+‑ [Authorizing OAuth apps ‑ GitHub Docs](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
+‑ [Setting up Github OAuth 2.0](https://apidog.com/blog/set-up-github-oauth2/)
 
 ---
 
-## Facebook OAuth 配置
+## Facebook OAuth Setup
 
-Facebook 提供 OAuth 2.0 认证服务，拥有全球最大的用户基数。VODTV 已针对 Facebook 的特殊实现进行了适配。
+Facebook provides OAuth 2.0 authentication with a large global user‑base. VODTV contains dedicated compatibility adaptations for Facebook implementation.
 
-### 步骤 1：创建 Facebook 应用
+### Step 1: Create Facebook Application
 
-#### 1.1 注册为开发者
+#### 1.1 Register as Facebook Developer
+1. Navigate to [Facebook for Developers](https://developers.facebook.com/)
+2. Log‑in with your Facebook account
+3. Complete developer registration, accept terms and verify your identity if this is your first visit.
 
-1. 访问 [Facebook for Developers](https://developers.facebook.com/)
-2. 使用您的 Facebook 账号登录
-3. 如果是首次使用，需要注册成为开发者（同意条款并验证账号）
+#### 1.2 Create New App
+1. After logging in click top‑right **My Apps**
+2. Click **Create App**
+3. Select app type:
+  ‑ Recommended: **Consumer** or **None**
+4. Fill app details:
+   - **App Name**: e.g. `VODTV`
+   - **App Contact Email**: valid email address
+   - **App Purpose**: **Yourself or your own business**
+5. Click **Create App**
 
-#### 1.2 创建新应用
+### Step 2: Retrieve App Credentials
 
-1. 登录后，点击右上角的 **"My Apps"**（我的应用）
-2. 点击 **"Create App"**（创建应用）按钮
-3. 选择应用类型：
-   - 推荐选择 **"Consumer"**（消费者）或 **"None"**（无）
-4. 填写应用信息：
-   - **App Name**（应用名称）：输入您的应用名称（例如：VODTV）
-   - **App Contact Email**（联系邮箱）：输入有效的邮箱地址
-   - **App Purpose**（应用用途）：选择 **"Yourself or your own business"**
-5. 点击 **"Create App"**（创建应用）
+#### 2.1 Locate App ID and App Secret
+1. Enter your newly created app dashboard
+2. From sidebar go to **Settings** → **Basic**
+3. You can view:
+  ‑ **App ID** (this is your Client ID)
+  ‑ **App Secret** click **Show** to reveal value (Client Secret)
 
-### 步骤 2：获取应用凭据
+> ⚠️ Important note:
+> App Secret functions as a password. Do not expose it publicly. Copy it immediately. Regenerate in developer dashboard if leaked.
 
-#### 2.1 查看 App ID 和 App Secret
+### Step 3: Add Facebook Login Product
+1. Inside app dashboard sidebar click **Add Product**
+2. Locate **Facebook Login**
+3. Press **Set Up**
 
-1. 创建完成后，进入应用面板
-2. 在左侧菜单中点击 **"Settings"** → **"Basic"**（设置 → 基本）
-3. 您将看到：
-   - **App ID**（应用编号）- 这就是您的 **Client ID**
-   - **App Secret**（应用密钥）- 点击 **"Show"**（显示）按钮查看，这就是您的 **Client Secret**
-
-> ⚠️ **重要提示**：
-> - App Secret 类似于密码，切勿公开或提交到代码仓库
-> - 创建后请立即复制并妥善保管
-> - 如果泄露，请立即在 Facebook 后台重新生成新密钥
-
-### 步骤 3：添加 Facebook Login 产品
-
-1. 在应用面板左侧菜单中，点击 **"Add Product"**（添加产品）
-2. 找到 **"Facebook Login"**（Facebook 登录）
-3. 点击 **"Set Up"**（设置）按钮
-
-### 步骤 4：配置 OAuth 重定向 URI
-
-1. 在左侧菜单中点击 **"Facebook Login"** → **"Settings"**（设置）
-2. 找到 **"Valid OAuth Redirect URIs"**（有效的 OAuth 重定向 URI）
-3. 添加您的回调地址：
-   ```
-   https://your-domain.com/api/auth/oidc/callback
-   ```
-
-   **示例**：
-   - 生产环境：`https://VODTV.example.com/api/auth/oidc/callback`
-   - 本地测试（使用 ngrok）：`https://abc123.ngrok.io/api/auth/oidc/callback`
-
-4. 点击 **"Save Changes"**（保存更改）
-
-> ⚠️ **注意**：Facebook 要求重定向 URI 必须使用 **HTTPS** 协议（本地开发需要使用 ngrok 等工具）
-
-### 步骤 5：上线应用
-
-Facebook 应用默认处于 **"开发模式"**（Development），只有应用管理员和测试用户可以登录。
-
-#### 切换到生产模式
-
-1. 在 Facebook 应用面板顶部，找到模式切换开关
-2. 当前应该显示 **"In development"**（开发中）
-3. 点击切换开关，选择 **"Live"**（上线）
-4. 确认上线操作
-
-> 💡 **提示**：上线前建议配置应用图标和隐私政策 URL，虽然不是强制要求，但能提升用户信任度。
-
-### Facebook OAuth 端点信息
-
-Facebook 使用 OAuth 2.0 协议，端点配置如下：
-
-```
-Authorization Endpoint: https://www.facebook.com/v24.0/dialog/oauth
-Token Endpoint:         https://graph.facebook.com/v24.0/oauth/access_token
-UserInfo Endpoint:      https://graph.facebook.com/v24.0/me
+### Step 4: Configure OAuth Redirect URI
+1. Sidebar → **Facebook Login** → **Settings**
+2. Find **Valid OAuth Redirect URIs**
+3. Add your callback address:
 ```
 
-**版本说明**：
-- 当前示例使用 `v24.0`（2025 年最新版本）
-- Facebook 会定期发布新版本，可访问 [Graph API 版本文档](https://developers.facebook.com/docs/graph-api/changelog) 查看最新版本
-- 旧版本会在发布后至少 2 年内保持可用
+shturl.cc/dTTnmQ59tLdtTqX5699pH6S4OLIDwBDtf5Gu
 
-### VODTV 后台配置（Facebook）
+```
+Examples:
+‑ Production: `https://VODTV.example.com/api/auth/oidc/callback`
+‑ Local testing via ngrok: `https://abc123.ngrok.io/api/auth/oidc/callback`
+4. Click **Save Changes**
 
-在 VODTV 管理后台 → **系统设置** → **OIDC 认证配置** 中：
+> ⚠️ Note: Facebook mandates HTTPS protocol for redirect URIs (use ngrok for local testing).
 
-#### 点击 **"添加 Provider"**，填写以下信息：
+### Step 5: Publish Application
+Facebook apps start in **Development mode**, accessible only for app admins and designated test‑users.
 
-| 字段 | 值 | 说明 |
-|------|-----|------|
-| **Provider ID** | `facebook` | ⚠️ **必须**填写 `facebook`（全部小写）才能显示 Facebook logo |
-| **启用** | ✅ 勾选 | 启用此 Provider |
-| **按钮文字** | `使用 Facebook 登录` | 可选，留空则使用默认文字 |
-| **允许注册** | ✅ 勾选（可选） | 是否允许新用户通过 Facebook 注册 |
-| **Issuer URL** | `https://www.facebook.com` | Facebook 的 Issuer |
-| **Authorization Endpoint** | `https://www.facebook.com/v24.0/dialog/oauth` | 授权端点 |
-| **Token Endpoint** | `https://graph.facebook.com/v24.0/oauth/access_token` | Token 端点 |
-| **UserInfo Endpoint** | `https://graph.facebook.com/v24.0/me` | 用户信息端点 |
-| **Client ID** | `您的 App ID` | 从 Facebook 应用设置中获取 |
-| **Client Secret** | `您的 App Secret` | 从 Facebook 应用设置中获取 |
+#### Switch to Live production mode
+1. Find the mode toggle switch at top of app dashboard
+2. Current state shows "In development"
+3. Toggle switch to enable **Live**
+4. Confirm publish operation
 
-#### 完整配置示例
+> 💡 Tip: Before going live you may configure app icon and privacy policy URL, not strictly mandatory but improves user trust.
 
+### Facebook OAuth Endpoints
+Facebook OAuth 2.0 endpoint addresses:
+```
+
+Authorization Endpoint: [https://www.facebook.com/v24.0/dialog/oauth](https://www.facebook.com/v24.0/dialog/oauth)
+Token Endpoint:         [https://graph.facebook.com/v24.0/oauth/access_token](https://graph.facebook.com/v24.0/oauth/access_token)
+UserInfo Endpoint:      [https://graph.facebook.com/v24.0/me](https://graph.facebook.com/v24.0/me)
+
+```
+
+Version note:
+‑ This example uses `v24.0` (2025 current version)
+‑ Facebook periodically releases new Graph API versions, review changelog page
+‑ Older API versions remain valid for minimum 2 years after release
+
+### VODTV Backend Configuration (Facebook)
+Inside VODTV admin dashboard → **System Settings** → **OIDC Authentication Configuration**:
+
+Click **Add Provider** and fill values:
+
+| Field | Value | Remarks |
+|---|---|---|
+| **Provider ID** | `facebook` | ⚠️ **MUST be lowercase `facebook`** to render Facebook logo button |
+| **Enabled** | ✅ Checked | Activate this provider |
+| **Button Text** | `Sign in with Facebook` | Optional, leave blank for default |
+| **Allow Registration** | ✅ Checked (optional) | Permit new account creation via Facebook |
+| **Issuer URL** | `https://www.facebook.com` | Facebook issuer |
+| **Authorization Endpoint** | `https://www.facebook.com/v24.0/dialog/oauth` | Authorization URL |
+| **Token Endpoint** | `https://graph.facebook.com/v24.0/oauth/access_token` | Token URL |
+| **UserInfo Endpoint** | `https://graph.facebook.com/v24.0/me` | User profile endpoint |
+| **Client ID** | Your App ID | Retrieved from Facebook developer console |
+| **Client Secret** | Your App Secret | Retrieved from Facebook developer console |
+
+#### Full JSON configuration example
 ```json
 {
   "id": "facebook",
   "enabled": true,
-  "buttonText": "使用 Facebook 登录",
+  "buttonText": "Sign in with Facebook",
   "enableRegistration": true,
   "issuer": "https://www.facebook.com",
   "authorizationEndpoint": "https://www.facebook.com/v24.0/dialog/oauth",
@@ -434,156 +371,163 @@ UserInfo Endpoint:      https://graph.facebook.com/v24.0/me
 }
 ```
 
-保存配置后，登录页面将显示蓝色的 **"使用 Facebook 登录"** 按钮（带 Facebook logo）。
+After saving, login page renders blue **Sign in with Facebook** button including official Facebook logo.
 
-### 技术实现说明
+### Technical Implementation Notes
 
-#### Facebook OAuth 与标准 OIDC 的差异
+#### Facebook OAuth vs Standard OIDC Differences
 
-Facebook 使用 OAuth 2.0 协议，与标准 OIDC 有以下差异（VODTV 已自动处理）：
+VODTV internally handles these incompatibilities automatically:
 
-| 差异项 | 标准 OIDC | Facebook OAuth | VODTV 处理 |
-|--------|-----------|----------------|-------------|
-| **用户唯一标识** | `sub` 字段 | `id` 字段 | ✅ 自动兼容 |
-| **ID Token** | 返回 `id_token` | 不一定返回 | ✅ 已适配 |
-| **UserInfo 字段** | 自动返回基础字段 | 需要 `fields` 参数指定 | ✅ 自动添加 |
+表格
 
-#### 获取的用户信息
+| Difference Item | Standard OIDC | Facebook OAuth | VODTV Handling |
+| --- | --- | --- | --- |
+| **Unique user identifier** | `sub` field | `id` field | ✅ Auto compatibility |
+| **ID Token** | Returns `id_token` | Not guaranteed | ✅ Adapted |
+| **UserInfo fields** | Returns basic fields automatically | Requires explicit `fields` parameter | ✅ Parameter appended automatically |
 
-VODTV 从 Facebook 获取以下字段：
-- `id`：用户唯一标识符（用于关联账号）
-- `name`：用户姓名
-- `email`：邮箱地址（如果用户授权分享）
-- `picture`：头像图片（640×640 像素）
+#### Retrieved User Information
 
-> 📝 **说明**：Facebook 用户可以选择不分享邮箱，VODTV 使用 `id` 字段作为唯一标识，不强制要求邮箱。
+VODTV obtains following fields:
+‑ `id`: Unique identifier for account binding
+‑ `name`: User full name
+‑ `email`: Email (if user grants sharing permission)
+‑ `picture`: Avatar image (640×640 px)
 
-### 常见问题（Facebook）
+> 
+> 📝 Note: Facebook users can deny sharing email address. VODTV uses `id` as primary unique identifier, email is not mandatory.
 
-#### Q1: 点击登录后提示 "redirect_uri_mismatch" 错误
+### FAQ for Facebook
 
-**原因**：重定向 URI 配置不匹配
+#### Q1: After clicking login you get `redirect_uri_mismatch` error
 
-**解决方法**：
-1. 检查 Facebook 应用中配置的 **"Valid OAuth Redirect URIs"** 是否与您的实际域名一致
-2. 确保使用 `https://` 协议
-3. 确保路径为 `/api/auth/oidc/callback`（无额外斜杠）
-4. 域名大小写必须完全匹配
+**Cause**: Redirect URI mismatch
+**Resolution**:
 
-#### Q2: 提示 "App Not Set Up" 错误
+1. Verify "Valid OAuth Redirect URIs" value in Facebook developer dashboard exactly matches your domain
+2. Confirm HTTPS protocol is used
+3. Path must strictly equal `/api/auth/oidc/callback` (no trailing slash)
+4. Domain letter case must match completely
 
-**原因**：Facebook 应用未正确配置 Facebook Login 产品
+#### Q2: Error message "App Not Set Up"
 
-**解决方法**：
-1. 确保已在 Facebook 应用中添加 **"Facebook Login"** 产品
-2. 检查 OAuth 重定向 URI 是否已保存
-3. 确认应用已切换到 **"Live"** 模式（如果要给其他用户使用）
+**Cause**: Facebook Login product is missing or misconfigured
+**Resolution**:
 
-#### Q3: 登录按钮显示 "使用 OIDC 登录" 而不是 Facebook logo
+1. Ensure you added the **Facebook Login** product to your application
+2. Verify OAuth redirect URI is saved
+3. Switch app status to **Live** for external user access
 
-**原因**：Provider ID 配置错误
+#### Q3: Login button displays generic "Sign in with OIDC" instead of Facebook logo
 
-**解决方法**：
-1. 检查 VODTV 配置中的 **"Provider ID"** 字段
-2. **必须**填写 `facebook`（全部小写，不能是 `Facebook` 或 `fb`）
-3. 保存配置后刷新登录页面
+**Cause**: Wrong Provider‑ID setting
+**Resolution**:
 
-#### Q4: 提示 "获取用户信息失败" 错误
+1. Double‑check Provider ID field in VODTV backend
+2. It **must be lowercase `facebook`**, not `Facebook` / `fb`
+3. Save configuration and refresh login page
 
-**原因**：UserInfo Endpoint 配置错误或权限问题
+#### Q4: "Failed to fetch user info" error
 
-**解决方法**：
-1. 确认 **"UserInfo Endpoint"** 配置为 `https://graph.facebook.com/v19.0/me`
-2. 查看服务器日志获取详细错误信息
-3. 检查 App ID 和 App Secret 是否正确
+**Cause**: Wrong UserInfo Endpoint or insufficient permissions
+**Resolution**:
 
-#### Q5: 如何在本地开发环境测试？
+1. Confirm UserInfo Endpoint URL
+2. Inspect server log for detailed error messages
+3. Validate App ID and App Secret correctness
 
-**方法 1：使用 ngrok（推荐）**
+#### Q5: How to test locally during development?
 
-```bash
+**Option1: ngrok (recommended)**
+
+```
 ngrok http 3000
 ```
 
-使用 ngrok 提供的 HTTPS 地址（如 `https://abc123.ngrok.io`）作为重定向 URI。
+Use the generated HTTPS ngrok address for redirect URI configuration.
 
-**方法 2：添加测试用户**
+**Option2: Test‑user accounts**
 
-1. 在 Facebook 应用面板中，进入 **"Roles"** → **"Test Users"**
-2. 创建测试用户
-3. 应用保持在 **"Development"** 模式，使用测试账号登录
+1. Inside Facebook app dashboard open **Roles** → **Test Users**
+2. Create test user accounts
+3. Keep app in Development mode and sign‑in with those test accounts.
 
-#### Q6: Facebook 登录后获取不到邮箱？
+#### Q6: Cannot retrieve user email after Facebook login?
 
-**说明**：
-- Facebook 用户可以选择不分享邮箱
-- VODTV 使用 Facebook 的唯一 ID（`id` 字段）作为用户标识，不强制要求邮箱
-- 如果需要邮箱，可以在首次注册时要求用户补充
+**Explanation**:
+Facebook users are allowed to refuse sharing email. VODTV relies on Facebook numeric user‑id for binding, email is not enforced. You may prompt user to supply email on first registration.
 
-#### Q7: 如何更新到新版本的 Facebook Graph API？
+#### Q7: How to upgrade Graph‑API version?
 
-1. 访问 [Facebook Graph API Changelog](https://developers.facebook.com/docs/graph-api/changelog)
-2. 查看最新版本号（例如 `v20.0`）
-3. 在 VODTV 配置中更新端点 URL 的版本号：
-   ```
-   https://www.facebook.com/v20.0/dialog/oauth
-   https://graph.facebook.com/v20.0/oauth/access_token
-   https://graph.facebook.com/v20.0/me
-   ```
+1. Visit Facebook Graph‑API changelog page
+2. Get latest version string e.g. `v20.0`
+3. Update version number embedded in endpoint URLs in VODTV settings:
 
-### 参考资料
-- [Facebook for Developers 官方文档](https://developers.facebook.com/docs/)
-- [Facebook Login 文档](https://developers.facebook.com/docs/facebook-login/)
-- [Facebook Graph API 文档](https://developers.facebook.com/docs/graph-api/)
-- [Set up Facebook login with OAuth 2](https://baserow.io/user-docs/configure-facebook-for-oauth-2-sso)
-- [Facebook OAuth 2.0 Access for Website](https://apidog.com/blog/facebook-oauth-2-0-access-for-website/)
+```
+https://www.facebook.com/v20.0/dialog/oauth
+https://graph.facebook.com/v20.0/oauth/access_token
+https://graph.facebook.com/v20.0/me
+```
+
+### References
+
+‑ https://developers.facebook.com/docs/
+‑ https://developers.facebook.com/docs/facebook-login/
+‑ https://developers.facebook.com/docs/graph-api/
+‑ [Set up Facebook login with OAuth 2](https://baserow.io/user-docs/configure-facebook-for-oauth-2-sso)
+‑ [Facebook OAuth 2.0 Access for Website](https://apidog.com/blog/facebook-oauth-2-0-access-for-website/)
 
 ---
 
-## 微信开放平台配置
+## WeChat Open Platform Setup
 
-微信开放平台提供网站应用微信登录功能，用户可通过扫描二维码使用微信账号登录你的网站。
+WeChat Open Platform provides website QR‑code login. End‑users scan QR‑code with WeChat to sign‑in.
 
-### 步骤 1：注册微信开放平台账号
+### Step 1: Register WeChat Open Platform Account
 
-1. 访问 [微信开放平台](https://open.weixin.qq.com/)
-2. 使用微信扫码登录
-3. 完成开发者资质认证（需要企业资质或个人开发者认证）
+1. Visit [WeChat Open Platform](https://open.weixin.qq.com/)
+2. Sign‑in via WeChat QR scan
+3. Complete developer qualification authentication
 
-> ⚠️ **注意**：微信开放平台需要认证才能创建网站应用，认证费用为 300 元人民币/年
+> 
+> ⚠️ Important note: Developer qualification authentication (300 CNY per year) is required to create website‑apps.
 
-### 步骤 2：创建网站应用
+### Step 2: Create Website Application
 
-1. 登录微信开放平台后，进入 **管理中心**
-2. 点击 **网站应用** → **创建网站应用**
-3. 填写应用信息：
-   - **应用名称**：`VODTV`
-   - **应用简介**：简要描述你的应用
-   - **应用官网**：`https://your-domain.com`
-   - **应用图标**：上传应用图标（108×108 像素）
-4. 填写 **授权回调域**：
-   ```
-   your-domain.com
-   ```
-   ⚠️ **重要**：只填写域名，不要加 `https://` 或路径
+1. After logging in go to **Management Center**
+2. Click **Website Application** → **Create Website Application**
+3. Fill application details:
+   - **Application Name**: `VODTV`
+   - **Brief Introduction**: Short description of your service
+   - **Official Website**: `shturl.cc/dt39XuvL9cvJZ`
+   - **Application Icon**: Upload icon (108×108 px)
+4. Fill **Authorized Callback Domain**:
 
-5. 提交审核，等待微信团队审核（通常 1-7 个工作日）
+```
+shturl.cc/koSIF
+```
 
-### 步骤 3：获取 AppID 和 AppSecret
+⚠️ Important: Enter domain name only, do **not** include `https://` or path suffix.
 
-审核通过后：
+5. Submit application for review, waiting time typically 1‑7 working days.
 
-1. 进入 **管理中心** → **网站应用**
-2. 点击你创建的应用
-3. 查看应用详情，获取：
-   - **AppID**（应用唯一标识）
-   - **AppSecret**（应用密钥，点击查看）
+### Step 3: Retrieve AppID and AppSecret
 
-> ⚠️ **安全提示**：AppSecret 非常重要，请妥善保管，不要泄露！
+After review approval:
 
-### 微信 OAuth 2.0 端点信息
+1. Management Center → Website Applications
+2. Open your newly created application
+3. Obtain credentials:
+‑ **AppID**: Unique application identifier
+‑ **AppSecret**: Application secret (click reveal to view)
 
-微信网站应用使用以下端点：
+> 
+> ⚠️ Security reminder: Keep AppSecret safe, do not leak.
+
+### WeChat OAuth 2.0 Endpoints
+
+Website QR‑login endpoints:
 
 ```
 Authorization Endpoint: https://open.weixin.qq.com/connect/qrconnect
@@ -591,37 +535,39 @@ Token Endpoint:         https://api.weixin.qq.com/sns/oauth2/access_token
 UserInfo Endpoint:      https://api.weixin.qq.com/sns/userinfo
 ```
 
-**特殊说明**：
-- 微信使用 `appid` 和 `secret` 参数，而不是标准的 `client_id` 和 `client_secret`
-- Scope 使用 `snsapi_login`（网站应用扫码登录）
-- VODTV 已自动处理这些差异
+**Special notes**:
+‑ WeChat uses `appid` / `secret` parameter names instead of standard `client_id` / `client_secret`
+‑ Scope is fixed as `snsapi_login` for website QR login
+‑ VODTV automatically handles these parameter differences internally.
 
-### VODTV 后台配置（微信）
+### VODTV Backend Configuration (WeChat)
 
-在 VODTV 管理后台 → **系统设置** → **OIDC 认证配置** 中：
+VODTV Admin → System Settings → OIDC Authentication Configuration
 
-#### 点击 **"添加 Provider"**，填写以下信息：
+Click **Add Provider** and fill:
 
-| 字段 | 值 | 说明 |
-|------|-----|------|
-| **Provider ID** | `wechat` | ⚠️ **必须**填写 `wechat`（全部小写）才能显示微信 logo |
-| **启用** | ✅ 勾选 | 启用此 Provider |
-| **按钮文字** | `使用微信登录` | 可选，留空则使用默认文字 |
-| **允许注册** | ✅ 勾选（可选） | 是否允许新用户通过微信注册 |
-| **Issuer URL** | `https://open.weixin.qq.com` | 微信开放平台地址 |
-| **Authorization Endpoint** | `https://open.weixin.qq.com/connect/qrconnect` | 扫码授权端点 |
-| **Token Endpoint** | `https://api.weixin.qq.com/sns/oauth2/access_token` | Token 端点 |
-| **UserInfo Endpoint** | `https://api.weixin.qq.com/sns/userinfo` | 用户信息端点 |
-| **Client ID** | `您的 AppID` | 从微信开放平台获取 |
-| **Client Secret** | `您的 AppSecret` | 从微信开放平台获取 |
+表格
 
-#### 完整配置示例
+| Field | Value | Remarks |
+| --- | --- | --- |
+| **Provider ID** | `wechat` | ⚠️ Must be lowercase `wechat` to render WeChat logo button |
+| **Enabled** | ✅ Checked | Activate provider |
+| **Button Text** | `Sign in with WeChat` | Optional, blank uses default |
+| **Allow Registration** | ✅ Checked (optional) | Allow new user registration via WeChat |
+| **Issuer URL** | `https://open.weixin.qq.com` | WeChat issuer address |
+| **Authorization Endpoint** | `https://open.weixin.qq.com/connect/qrconnect` | QR authorization endpoint |
+| **Token Endpoint** | `https://api.weixin.qq.com/sns/oauth2/access_token` | Token endpoint |
+| **UserInfo Endpoint** | `https://api.weixin.qq.com/sns/userinfo` | User info endpoint |
+| **Client ID** | Your AppID | From WeChat open platform |
+| **Client Secret** | Your AppSecret | From WeChat open platform |
 
-```json
+#### JSON configuration sample
+
+```
 {
   "id": "wechat",
   "enabled": true,
-  "buttonText": "使用微信登录",
+  "buttonText": "Sign in with WeChat",
   "enableRegistration": true,
   "issuer": "https://open.weixin.qq.com",
   "authorizationEndpoint": "https://open.weixin.qq.com/connect/qrconnect",
@@ -632,175 +578,162 @@ UserInfo Endpoint:      https://api.weixin.qq.com/sns/userinfo
 }
 ```
 
-保存配置后，登录页面将显示绿色的 **"使用微信登录"** 按钮（带微信 logo）。
+After saving login page renders green **Sign in with WeChat** button with official logo.
 
-### 技术实现说明
+### Technical Implementation Notes
 
-#### 微信 OAuth 2.0 与标准 OIDC 的差异
+#### WeChat OAuth differences against standard OIDC
 
-微信使用 OAuth 2.0 协议，与标准 OIDC 有以下差异（VODTV 已自动处理）：
+VODTV automatically adapts these differences:
 
-| 差异项 | 标准 OIDC | 微信 OAuth | VODTV 处理 |
-|--------|-----------|------------|-------------|
-| **Client ID 参数名** | `client_id` | `appid` | ✅ 自动转换 |
-| **Client Secret 参数名** | `client_secret` | `secret` | ✅ 自动转换 |
-| **Scope** | `openid profile email` | `snsapi_login` | ✅ 自动设置 |
-| **用户唯一标识** | `sub` 字段 | `openid` 字段 | ✅ 自动兼容 |
-| **UserInfo 参数** | Bearer Token | URL 参数 `access_token` + `openid` | ✅ 自动添加 |
+表格
 
-#### 获取的用户信息
+| Item | Standard OIDC | WeChat OAuth | VODTV Handling |
+| --- | --- | --- | --- |
+| Client‑ID parameter name | `client_id` | `appid` | ✅ Auto‑remap |
+| Client‑Secret parameter name | `client_secret` | `secret` | ✅ Auto‑remap |
+| OAuth Scope | `openid profile email` | `snsapi_login` | ✅ Hard‑coded scope |
+| User unique identifier | `sub` | `openid` | ✅ Auto‑compatible |
+| UserInfo auth method | Bearer Authorization header | URL params `access_token` + `openid` | ✅ Build query params automatically |
 
-VODTV 从微信获取以下字段：
-- `openid`：用户唯一标识符（用于关联账号）
-- `nickname`：用户昵称
-- `headimgurl`：用户头像 URL
-- `sex`：用户性别（1=男性，2=女性，0=未知）
-- `province`、`city`、`country`：用户地区信息
+#### Retrieved User Fields
 
-> 📝 **说明**：微信不一定返回邮箱，VODTV 使用 `openid` 作为唯一标识。
+‑ `openid`: Unique identifier for account binding
+‑ `nickname`: User nickname
+‑ `headimgurl`: Avatar URL
+‑ `sex`: Gender (1=male,2=female,0=unknown)
+‑ `province`, `city`, `country`: Location metadata
 
-### 常见问题（微信）
+> 
+> 📝 Note: WeChat does not always return email address. `openid` is used as primary unique identifier.
 
-#### Q1: 提示 "redirect_uri 参数错误"
+### WeChat‑Specific FAQ
 
-**原因**：授权回调域配置不正确
+#### Q1: Error "redirect_uri parameter error"
 
-**解决方法**：
-1. 检查微信开放平台应用设置中的 **授权回调域**
-2. 只填写域名（如 `VODTV.example.com`），不要加协议或路径
-3. 确保域名与实际访问域名完全一致
+**Cause**: Incorrect authorized callback domain setting
+**Resolution**:
 
-#### Q2: 扫码后提示 "应用未上线"
+1. Review authorized callback domain setting on WeChat open‑platform website‑app page
+2. Only domain name should be entered, no protocol or path
+3. Domain name must exactly match production access domain.
 
-**原因**：应用处于开发模式
+#### Q2: After scanning QR‑code it says "Application is not online"
 
-**解决方法**：
-1. 进入微信开放平台 → 管理中心 → 网站应用
-2. 找到你的应用，确认审核状态为 **"审核通过"**
-3. 开发阶段可以使用微信开放平台的测试账号功能
+**Cause**: Application remains in development state
+**Resolution**:
 
-#### Q3: 登录按钮显示 "使用OIDC登录" 而不是微信 logo
+1. Open WeChat Open Platform → Management Center → Website Application
+2. Confirm status shows **Review passed**
+3. During development you can use official WeChat test‑account feature.
 
-**原因**：Provider ID 配置错误
+#### Q3: Button shows generic "Sign in with OIDC" instead of WeChat logo
 
-**解决方法**：
-1. 检查 VODTV 配置中的 **"Provider ID"** 字段
-2. **必须**填写 `wechat`（全部小写，不能是 `WeChat` 或 `weixin`）
-3. 保存配置后刷新登录页面
+**Cause**: Wrong Provider‑ID
+**Resolution**:
 
-#### Q4: 如何在本地开发环境测试？
+1. In VODTV settings confirm Provider ID = lowercase `wechat`
+2. Not `WeChat` or `weixin`
+3. Save config and refresh login page.
 
-**问题**：微信要求回调域名，不支持 `localhost`
+#### Q4: Local development testing
 
-**推荐方案：使用 ngrok（简单易用）**
+**Limitation**: WeChat does not accept plain [localhost](https://localhost) for callback domain.
+**Recommended solution using ngrok**:
 
-1. 安装 ngrok：访问 [ngrok.com](https://ngrok.com/) 下载
-2. 启动 ngrok：
-   ```bash
-   ngrok http 3000
-   ```
-3. ngrok 会生成一个临时 HTTPS 域名，例如：
-   ```
-   https://abc123.ngrok.io -> http://localhost:3000
-   ```
-4. 使用这个 ngrok 域名配置到微信开放平台：
-   - **授权回调域**：`abc123.ngrok.io`（不要加 https://）
-5. 用浏览器访问 `https://abc123.ngrok.io` 即可测试
+```
+ngrok http 3000
+```
 
-> 💡 **注意**：免费版 ngrok 每次重启域名会变化，需要重新配置到微信开放平台
+Use generated temporary HTTPS ngrok domain as authorized callback domain inside WeChat Open Platform settings.
 
-#### Q5: 微信认证费用是否必须？
+> 
+> 💡 Note: Free ngrok resets domain after restart, you will need to re‑update WeChat platform settings every restart.
 
-**回答**：
-- 个人开发者：可以申请个人开发者认证（免费），但功能受限
-- 企业应用：需要企业认证（300元/年），功能完整
-- 测试阶段：可以使用微信提供的测试号进行开发调试
+#### Q5: Is the developer authentication fee mandatory?
 
-#### Q6: 用户取消授权后如何重新授权？
+‑ Individual developer: Individual qualification available with feature limitations
+‑ Enterprise deployment: Enterprise authentication (300 CNY/year) required for complete functionality
+‑ Development testing: Official WeChat test‑accounts can be used for debugging.
 
-用户可以在微信中进入 **"我"** → **"设置"** → **"隐私"** → **"授权管理"**，找到你的应用并重新授权。
+#### Q6: How users revoke authorization
 
-### 参考资料
+Users navigate WeChat app → Me → Settings → Privacy → Authorized management to revoke permissions for your application.
 
-- [微信开放平台官方文档](https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login)
-- [微信网页授权说明](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html)
-- [微信开放平台扫码登录](https://www.cnblogs.com/0201zcr/p/5133062.html)
+### References
+
+‑ https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login
 
 ---
 
-## Apple Sign In 配置
+## Apple Sign In Setup
 
-Apple Sign In 提供安全、隐私友好的登录方式，支持所有苹果设备用户。Apple 使用标准的 OpenID Connect (OIDC) 协议。
+Sign in with Apple provides privacy‑friendly authentication for Apple ecosystem users, built upon standard OpenID‑Connect protocol.
 
-### 步骤 1：注册 Apple Developer 账号
+### Step 1: Apple Developer Account
 
-1. 访问 [Apple Developer](https://developer.apple.com/)
-2. 使用 Apple ID 登录
-3. 注册成为开发者（个人：$99/年，企业：$299/年）
+1. Visit [Apple Developer](https://developer.apple.com/)
+2. Sign‑in using your Apple ID
+3. Enroll in Apple Developer Program ($99/year individual, $299/year organization)
 
-> 💡 **提示**：Apple Developer Program 需要付费订阅才能使用 Sign in with Apple
+> 
+> 💡 Note: Paid Apple Developer Program subscription is required to enable Sign‑in with Apple for web usage.
 
-### 步骤 2：创建 App ID
+### Step 2: Create App ID
 
-1. 登录 [Apple Developer Portal](https://developer.apple.com/account/)
-2. 进入 **Certificates, Identifiers & Profiles**
-3. 选择 **Identifiers** → 点击 **+** 创建新 ID
-4. 选择 **App IDs** → **Continue**
-5. 选择类型：**App**
-6. 填写信息：
-   - **Description**：`VODTV App`
-   - **Bundle ID**：`com.yourcompany.VODTV`
-7. 在 **Capabilities** 中勾选 **Sign in with Apple**
-8. 点击 **Continue** → **Register**
+1. Open [Apple Developer Portal](https://developer.apple.com/account/)
+2. Go to **Certificates, Identifiers & Profiles**
+3. Select **Identifiers** → click **+** to create new identifier
+4. Choose **App IDs** → **Continue**
+5. Identifier type: **App**
+6. Fill:
+   - **Description**: `VODTV App`
+   - **Bundle ID**: `com.yourcompany.VODTV`
+7. Under Capabilities tick **Sign in with Apple**
+8. Click **Continue** → **Register**
 
-### 步骤 3：创建 Services ID
+### Step 3: Create Services ID
 
-1. 返回 **Identifiers**，点击 **+** 创建
-2. 选择 **Services IDs** → **Continue**
-3. 填写信息：
-   - **Description**：`VODTV Web Login`
-   - **Identifier**：`com.yourcompany.VODTV.web`（不同于 App ID）
-4. 勾选 **Sign in with Apple**
-5. 点击 **Configure** 配置：
-   - **Primary App ID**：选择刚才创建的 App ID
-   - **Web Domain**：`your-domain.com`（不要加 https://）
-   - **Return URLs**：`https://your-domain.com/api/auth/oidc/callback`
-6. 点击 **Save** → **Continue** → **Register**
+1. Back to Identifiers page click **+** again
+2. Choose **Services IDs** → **Continue**
+3. Fill:
+   - **Description**: `VODTV Web Login`
+   - **Identifier**: `com.yourcompany.VODTV.web` (different string from App‑ID)
+4. Check **Sign in with Apple**
+5. Click **Configure**:
+   - **Primary App ID**: Select previously created App‑ID
+   - **Web Domain**: `your‑domain.com` (without https:// prefix)
+   - **Return URLs**: `https://your‑domain.com/api/auth/oidc/callback`
+6. Click **Save** → **Continue** → **Register**
 
-> 📝 **记录**：Services ID 的 Identifier 就是你的 **Client ID**
+> 
+> 📝 Note: Services‑ID identifier value is your **Client ID**.
 
-### 步骤 4：创建私钥（用于生成 Client Secret）
+### Step 4: Generate Private Key for Client Secret
 
-1. 进入 **Keys** → 点击 **+** 创建
-2. **Key Name**：`VODTV Sign in with Apple Key`
-3. 勾选 **Sign in with Apple**
-4. 点击 **Configure**，选择刚才创建的 **Primary App ID**
-5. 点击 **Save** → **Continue** → **Register**
-6. **下载 .p8 私钥文件**（⚠️ 只能下载一次！）
-7. 记录 **Key ID**（10 位字符）
+1. Navigate to **Keys** → click **+** new key
+2. **Key Name**: `VODTV Sign in with Apple Key`
+3. Check **Sign in with Apple** capability
+4. Click **Configure**, pick your Primary App‑ID
+5. Save → Continue → Register
+6. **Download the .p8 private‑key file (⚠️ downloadable exactly once)**
+7. Record your **Key ID** (10‑character string)
 
-> ⚠️ **重要**：
-> - .p8 私钥文件只能下载一次，请妥善保管
-> - 记录你的 **Team ID**（在账号页面右上角）
+> 
+> ⚠️ Critical reminder: Store .p8 securely, download link disappears permanently. Also note your account's **Team ID** visible on developer portal account page.
 
-### 步骤 5：生成 Client Secret（JWT）
+### Step 5: Generate dynamic Client Secret (JWT)
 
-Apple 的 Client Secret 是动态生成的 JWT，有效期最长 6 个月。你需要使用私钥生成 JWT。
+Apple Client‑Secret is a short‑lived JWT token with maximum lifetime of six months, regenerate before expiry.
 
-#### 使用在线工具生成（推荐）
+#### Online generator (quick method)
 
-1. 访问 [Apple Client Secret Generator](https://github.com/LoginRadius/apple-client-secret-generator)
-2. 或使用其他 JWT 生成工具
-3. 填写参数：
-   - **Team ID**：你的 Team ID（10 位字符）
-   - **Client ID**：Services ID 的 Identifier
-   - **Key ID**：私钥的 Key ID
-   - **Private Key**：上传或粘贴 .p8 文件内容
-   - **Expiration**：最长 15777000 秒（6 个月）
+‑ Third‑party tool repository: [Apple Client Secret Generator](https://github.com/LoginRadius/apple-client-secret-generator)
+‑ Input parameters: Team ID, Client ID(Services‑ID), Key ID, contents of downloaded p8 key, expiry ≤180 days.
 
-#### 使用 Node.js 生成（开发者）
+#### Node.js generation snippet for developers
 
-```javascript
+```
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
@@ -808,27 +741,28 @@ const privateKey = fs.readFileSync('AuthKey_XXXXXXXXXX.p8', 'utf8');
 
 const token = jwt.sign({}, privateKey, {
   algorithm: 'ES256',
-  expiresIn: '180d', // 6 个月
+  expiresIn: '180d', // 6 months
   audience: 'https://appleid.apple.com',
-  issuer: 'YOUR_TEAM_ID', // 你的 Team ID
-  subject: 'com.yourcompany.VODTV.web', // 你的 Services ID
-  keyid: 'YOUR_KEY_ID' // 你的 Key ID
+  issuer: 'YOUR_TEAM_ID',
+  subject: 'com.yourcompany.VODTV.web',
+  keyid: 'YOUR_KEY_ID'
 });
 
 console.log(token);
 ```
 
-> ⏰ **提醒**：Client Secret 有效期最长 6 个月，到期前需要重新生成并更新配置。
+> 
+> ⏰ Reminder: Schedule calendar reminder to regenerate JWT before 6‑month expiry and update backend configuration.
 
-### Apple Sign In 端点信息
+### Apple Sign‑In Endpoints
 
-Apple 支持 OIDC 自动发现：
+Apple supports standard OIDC discovery document:
 
 ```
 OIDC Discovery: https://appleid.apple.com/.well-known/openid-configuration
 ```
 
-或手动配置各端点：
+Manual fallback endpoint values:
 
 ```
 Authorization Endpoint: https://appleid.apple.com/auth/authorize
@@ -836,38 +770,38 @@ Token Endpoint:         https://appleid.apple.com/auth/token
 JWKS Endpoint:          https://appleid.apple.com/auth/keys
 ```
 
-**特殊说明**：
-- Apple **没有 UserInfo Endpoint**
-- 用户信息在 `id_token`（JWT）中返回
-- 用户信息（姓名、邮箱）**只在首次授权时**返回
-- VODTV 会自动解析 id_token 获取用户信息
+**Special notes**:
+‑ Apple **does NOT expose a UserInfo Endpoint**
+‑ All user profile data is embedded directly within returned `id_token` JWT
+‑ User name and email fields are **only supplied during the very first authorization**
+‑ VODTV automatically parses id_token payload.
 
-### VODTV 后台配置（Apple）
+### VODTV Backend Configuration (Apple)
 
-在 VODTV 管理后台 → **系统设置** → **OIDC 认证配置** 中：
+Admin backend → System Settings → OIDC Authentication Configuration, click **Add Provider**
 
-#### 点击 **"添加 Provider"**，填写以下信息：
+表格
 
-| 字段 | 值 | 说明 |
-|------|-----|------|
-| **Provider ID** | `apple` | ⚠️ **必须**填写 `apple`（全部小写）才能显示 Apple logo |
-| **启用** | ✅ 勾选 | 启用此 Provider |
-| **按钮文字** | `使用 Apple 登录` | 可选，留空则使用默认文字 |
-| **允许注册** | ✅ 勾选（可选） | 是否允许新用户通过 Apple 注册 |
-| **Issuer URL** | `https://appleid.apple.com` | Apple 的 Issuer（支持自动发现） |
-| **Authorization Endpoint** | `https://appleid.apple.com/auth/authorize` | 授权端点（自动发现会填充） |
-| **Token Endpoint** | `https://appleid.apple.com/auth/token` | Token 端点（自动发现会填充） |
-| **JWKS URI** | `https://appleid.apple.com/auth/keys` | 用于验证 id_token 签名（自动发现会填充） |
-| **Client ID** | `com.yourcompany.VODTV.web` | 你的 Services ID |
-| **Client Secret** | `eyJhbGc...` | 生成的 JWT（很长的字符串） |
+| Field | Value | Remarks |
+| --- | --- | --- |
+| **Provider ID** | `apple` | ⚠️ Must be lowercase `apple` to render official logo button |
+| **Enabled** | ✅ Checked | Activate provider |
+| **Button Text** | `Sign in with Apple` | Optional, leave blank for default |
+| **Allow Registration** | ✅ Checked (optional) | Allow new user registration |
+| **Issuer URL** | `https://appleid.apple.com` | Apple issuer (supports auto‑discovery) |
+| **Authorization Endpoint** | `https://appleid.apple.com/auth/authorize` | Auto‑filled during discovery |
+| **Token Endpoint** | `https://appleid.apple.com/auth/token` | Auto‑filled during discovery |
+| **JWKS URI** | `https://appleid.apple.com/auth/keys` | For id‑token signature validation |
+| **Client ID** | `com.yourcompany.VODTV.web` | Your Services‑ID identifier |
+| **Client Secret** | `eyJhbGc...` | Generated long JWT string |
 
-#### 完整配置示例
+#### JSON configuration example
 
-```json
+```
 {
   "id": "apple",
   "enabled": true,
-  "buttonText": "使用 Apple 登录",
+  "buttonText": "Sign in with Apple",
   "enableRegistration": true,
   "issuer": "https://appleid.apple.com",
   "authorizationEndpoint": "https://appleid.apple.com/auth/authorize",
@@ -879,173 +813,138 @@ JWKS Endpoint:          https://appleid.apple.com/auth/keys
 }
 ```
 
-保存配置后，登录页面将显示黑色的 **"使用 Apple 登录"** 按钮（带 Apple logo）。
+After saving login page renders black official **Sign in with Apple** button.
 
-### 技术实现说明
+### Technical Implementation Notes
 
-#### Apple Sign In 的特殊性
+#### Apple Sign‑In Special Properties
 
-| 特性 | 标准 OIDC | Apple Sign In | VODTV 处理 |
-|------|-----------|---------------|-------------|
-| **Client Secret** | 静态字符串 | 动态生成的 JWT（6个月有效期） | ✅ 支持 JWT |
-| **UserInfo Endpoint** | 提供 | ❌ 不提供 | ✅ 从 id_token 解析 |
-| **JWKS URI** | 可选 | ✅ 提供（验证签名） | ✅ 支持配置 |
-| **响应模式** | Query params（GET） | form_post（POST） | ✅ 支持 POST handler |
-| **用户信息返回** | 每次都返回 | 只在首次授权时返回 | ✅ 自动处理 |
-| **Email 隐藏** | 真实邮箱 | 可选择隐藏（relay邮箱） | ✅ 支持 |
+表格
 
-#### VODTV 的适配处理
+| Feature | Standard OIDC | Apple Sign‑In | VODTV Handling |
+| --- | --- | --- | --- |
+| Client Secret | Static string | Dynamically generated JWT (max 6‑month lifetime) | ✅ Supports JWT client secret |
+| UserInfo Endpoint | Provided | ❌ Not available | ✅ Parse profile fields from id_token |
+| JWKS URI | Optional | ✅ Mandatory signature verification | ✅ Configurable JWKS URI |
+| Response mode | Query GET params | form_post POST callback | ✅ Implements POST callback handler |
+| User profile payload | Returned every login | Only first authorization returns name/email | ✅ Persist fields on first‑time registration |
+| Email privacy mode | Real email always | Optional private relay email | ✅ Fully supports relay email addresses |
 
-1. **response_mode=form_post**：
-   - Apple 要求使用 `response_mode=form_post`
-   - 授权响应通过 POST 请求发送（而非 GET）
-   - 参数在 form data 中（而非 URL query params）
-   - VODTV 添加了 POST handler 专门处理 Apple 回调
+#### VODTV Adaptation Behaviour
 
-2. **id_token 解析**：
-   - Apple 不提供 UserInfo Endpoint
-   - 用户信息在 id_token（JWT）中
-   - VODTV 自动解析 JWT payload 获取用户信息
+1. **response_mode=form_post**:
+Apple requires form‑POST callback, authorization response arrives via POST form‑data instead of URL query‑string. VODTV backend implements dedicated POST callback handler for Apple.
+2. **id_token parsing**:
+Since UserInfo endpoint does not exist, profile information is decoded directly from JWT payload.
+3. **First‑login one‑shot profile data**:
+Full name and email payload are sent **only once on initial user consent**. Subsequent logins only deliver `sub` user identifier. VODTV persists profile fields on first‑time registration.
+4. **JWKS signature validation**:
+Signature validation against Apple public keys from JWKS URI verifies authenticity of id‑token payload.
 
-3. **首次授权数据**：
-   - 用户姓名和邮箱只在首次授权时返回
-   - 后续登录仅返回 `sub`（用户 ID）
-   - VODTV 在首次注册时保存用户信息
+#### Retrieved User Fields from id_token
 
-4. **JWKS 签名验证**：
-   - 使用 Apple 的 JWKS URI 验证 id_token 签名
-   - 确保 token 真实性和完整性
+‑ `sub`: Stable unique user identifier for account linking
+‑ `email`: User email address (may be Apple private relay address `xxx@privaterelay.appleid.com`)
+‑ `email_verified`: Boolean flag confirming email validation status
 
-#### 获取的用户信息
+> 
+> 📝 Privacy relay note: End‑users can opt‑out of sharing real mailbox address, Apple generates relay forwarding email address for your application.
 
-VODTV 从 Apple id_token 中获取：
-- `sub`：用户唯一标识符（用于关联账号）
-- `email`：邮箱地址（可能是中继邮箱）
-- `email_verified`：邮箱是否已验证（通常为 true）
+### Apple‑Specific FAQ
 
-> 📝 **隐私中继邮箱**：用户可选择隐藏真实邮箱，Apple 会生成形如 `abc123@privaterelay.appleid.com` 的中继邮箱，转发邮件到用户真实邮箱。
+#### Q1: Client‑Secret JWT expired
 
-### 常见问题（Apple）
+‑ JWT maximum lifetime is six months
+‑ Regenerate new JWT using same p8 private‑key before expiry
+‑ Update Client‑Secret field in VODTV admin backend
+‑ Set calendar reminder for renewal.
 
-#### Q1: Client Secret 过期怎么办？
+#### Q2: Local development testing
 
-**回答**：
-- Client Secret（JWT）最长有效期 6 个月
-- 到期前，使用相同的私钥重新生成 JWT
-- 在 VODTV 管理后台更新 Client Secret
-- 建议设置日历提醒，提前 1-2 周更新
+‑ Apple enforces HTTPS with valid public domain, [localhost](https://localhost) is not accepted
+‑ Recommended workaround: ngrok
 
-#### Q2: 本地开发如何测试？
+```
+ngrok http 3000
+```
 
-**问题**：Apple 要求 HTTPS 和真实域名，不支持 `localhost`
+‑ Register temporary ngrok HTTPS domain as Web Domain and Return‑URL value in Apple Developer Portal for testing.
+‑ Free ngrok changes domain on restart requiring developer portal settings update every restart.
 
-**推荐方案：使用 ngrok（简单易用）**
+#### Q3: `invalid_client` error
 
-1. 安装 ngrok：访问 [ngrok.com](https://ngrok.com/) 下载
-2. 启动 ngrok：
-   ```bash
-   ngrok http 3000
-   ```
-3. ngrok 会生成一个临时 HTTPS 域名，例如：
-   ```
-   https://abc123.ngrok.io -> http://localhost:3000
-   ```
-4. 在 Apple Developer Portal 中配置：
-   - **Web Domain**: `abc123.ngrok.io`（不要加 https://）
-   - **Return URLs**: `https://abc123.ngrok.io/api/auth/oidc/callback`
-5. 用浏览器访问 `https://abc123.ngrok.io` 即可测试
+‑ Root cause: malformed or expired JWT Client‑Secret
+‑ Double‑check Team‑ID, Client‑ID, Key‑ID inputs used for JWT generation
+‑ Regenerate fresh JWT token and update backend configuration.
 
-> 💡 **注意**：免费版 ngrok 每次重启域名会变化，需要重新配置到 Apple Developer Portal
+#### Q4: No email value retrieved after login
 
-#### Q3: 提示 "invalid_client" 错误
+‑ User selected private relay option or email payload only present on first consent
+‑ VODTV uses `sub` identifier for binding, email is not mandatory. You can prompt user to supply email manually on first registration screen.
 
-**原因**：Client Secret（JWT）无效或过期
+#### Q5: How to reset first‑time authorization consent for testing
 
-**解决方法**：
-1. 检查 JWT 是否正确生成（Team ID、Client ID、Key ID 是否正确）
-2. 检查 JWT 是否过期
-3. 重新生成 Client Secret 并更新配置
+1. Open [appleid.apple.com](https://appleid.apple.com/)
+2. Navigate **Security** → **Apps Using Your Apple ID**
+3. Revoke your application entry
+4. Next login will trigger fresh first‑time consent dialog again.
 
-#### Q4: 登录后获取不到邮箱？
+#### Q6: Lost downloaded .p8 private‑key file
 
-**原因**：
-- 用户首次登录时选择了隐藏邮箱
-- 或者用户使用的是中继邮箱
+‑ Private‑key download link is one‑time only and cannot be recovered
+‑ Create a brand‑new key entry in Apple Developer Portal
+‑ Generate new JWT Client‑Secret and update VODTV backend configuration.
 
-**说明**：
-- Apple 允许用户隐藏真实邮箱
-- VODTV 使用 `sub` 字段作为唯一标识，不强制要求邮箱
-- 如果需要邮箱，可以在首次注册时要求用户补充
+### References
 
-#### Q5: 如何测试首次登录流程？
-
-**方法**：
-1. 在 Apple ID 账户页面 [appleid.apple.com](https://appleid.apple.com/)
-2. 进入 **"安全"** → **"使用您 Apple ID 登录的 App"**
-3. 找到你的应用，点击 **"停止使用 Apple ID"**
-4. 再次登录将被视为首次登录
-
-#### Q6: 私钥文件丢失怎么办？
-
-**解决方案**：
-- 私钥只能下载一次，丢失后无法恢复
-- 需要在 Apple Developer Portal 创建新的私钥
-- 使用新私钥重新生成 Client Secret
-- 更新 VODTV 配置
-
-### 参考资料
-
-- [Apple Sign In 官方文档](https://developer.apple.com/sign-in-with-apple/)
-- [Configure Sign in with Apple for the web](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web)
-- [Creating a Client Secret](https://developer.apple.com/documentation/accountorganizationaldatasharing/creating-a-client-secret)
-- [Apple OAuth & OIDC endpoints](https://logto.io/oauth-providers-explorer/apple)
+‑ [Apple Sign In official documentation](https://developer.apple.com/sign-in-with-apple/)
+‑ [Configure Sign in with Apple for the web](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web)
+‑ [Creating a Client Secret](https://developer.apple.com/documentation/accountorganizationaldatasharing/creating-a-client-secret)
+‑ [Apple OAuth & OIDC endpoints](https://logto.io/oauth-providers-explorer/apple)
 
 ---
 
-## LinuxDo 配置
+## LinuxDo Setup
 
-LinuxDo 是基于 Discourse 论坛系统的中文技术社区，提供了独立的 OAuth2 认证服务 **LinuxDo Connect**，可直接用于第三方应用登录。
+LinuxDo is a Chinese Discourse‑based technical forum community providing OAuth2 authentication service called LinuxDo Connect for third‑party application login.
 
-### 步骤 1：注册 OAuth2 应用
+### Step 1: Register OAuth2 Application
 
-1. 访问 LinuxDo Connect 应用注册页面：
-   ```
-   https://connect.linux.do/dash/sso/new
-   ```
+1. Navigate to LinuxDo Connect application registration page:
 
-2. 登录你的 LinuxDo 账号（如果尚未登录）
+```
+https://connect.linux.do/dash/sso/new
+```
 
-3. 填写应用注册表单：
+2. Log‑in with your LinuxDo forum account
+3. Complete registration form:
 
-   | 字段 | 说明 | 示例值 |
-   |------|------|--------|
-   | **Client Name** | 应用显示名称 | `VODTV 影视平台` |
-   | **Client URI** | 应用官网地址 | `https://your-domain.com` |
-   | **Redirect URI** | 授权回调地址（必须精确匹配） | `https://your-domain.com/api/auth/oidc/callback` |
-   | **Logo URI** | 应用Logo图标地址（可选） | `https://your-domain.com/logo.png` |
-   | **TOS URI** | 服务条款页面地址（可选） | `https://your-domain.com/terms` |
-   | **Policy URI** | 隐私政策页面地址（可选） | `https://your-domain.com/privacy` |
-   | **Software ID** | 软件包标识符（可选） | `com.yourcompany.VODTV` |
-   | **Software Version** | 软件版本号（可选） | `1.0.0` |
+表格
 
-4. 提交表单，等待审核通过
+| Field | Explanation | Example |
+| --- | --- | --- |
+| **Client Name** | Application display name | `VODTV Media Platform` |
+| **Client URI** | Official homepage URL | `shturl.cc/dt39XuvL9cvJZ` |
+| **Redirect URI** | Callback address (exact string match required) | `shturl.cc/dTTnmQ59tLdtTqX5699pH6S4OLIDwBDtf5Gu` |
+| **Logo URI** | Application logo URL (optional) | `shturl.cc/dt39XuvL9cvJZ/logo.png` |
+| **TOS URI** | Terms‑of‑service page (optional) | `shturl.cc/VQ7y3HQ2b3UVhPQbF2x` |
+| **Policy URI** | Privacy policy page (optional) | `shturl.cc/qLb4ajGa4chET5rimOGjv` |
+| **Software ID** | Software identifier (optional) | `com.yourcompany.VODTV` |
+| **Software Version** | Application version string (optional) | `1.0.0` |
 
-### 步骤 2：获取认证凭据
+4. Submit form, application will go through manual review.
 
-应用审核通过后，你会收到以下凭据：
+### Step 2: Retrieve Credentials
 
-- **Client ID**：应用的唯一标识符
-- **Client Secret**：应用的密钥（请妥善保管，不要公开）
+After review approval you receive:
+‑ **Client ID**: Unique application identifier
+‑ **Client Secret**: Application secret key, store securely.
 
-⚠️ **安全提示**：
-- Client Secret 类似于密码，切勿公开或提交到代码仓库
-- 如果泄露，请立即删除应用并重新注册
+⚠️ Security note: If secret leaks delete application and register a new one immediately.
 
-### LinuxDo Connect OAuth2 端点信息
+### LinuxDo Connect OAuth2 Endpoints
 
-LinuxDo Connect 提供以下 OAuth2 端点：
-
-#### 主域名端点（推荐）
+Primary domain (recommended):
 
 ```
 Authorization Endpoint: https://connect.linux.do/oauth2/authorize
@@ -1053,9 +952,7 @@ Token Endpoint:         https://connect.linux.do/oauth2/token
 UserInfo Endpoint:      https://connect.linux.do/api/user
 ```
 
-#### 备用域名端点
-
-如果主域名无法访问，可以使用备用域名：
+Fallback alternate domain:
 
 ```
 Authorization Endpoint: https://connect.linuxdo.org/oauth2/authorize
@@ -1063,33 +960,34 @@ Token Endpoint:         https://connect.linuxdo.org/oauth2/token
 UserInfo Endpoint:      https://connect.linuxdo.org/api/user
 ```
 
-### 技术实现要点
+### Technical Implementation Notes
 
-#### 1. Token 请求认证方式
+#### 1. Token request authentication method
 
-LinuxDo Connect 使用 **HTTP Basic Authentication** 方式验证 Token 请求：
+LinuxDo Connect enforces **HTTP Basic Authentication** on token endpoint requests:
 
-```http
+```
 POST /oauth2/token HTTP/1.1
 Host: connect.linux.do
-Content-Type: application/x-www-form-urlencoded
+Content‑Type: application/x‑www‑form‑urlencoded
 Authorization: Basic <Base64(ClientId:ClientSecret)>
 
-grant_type=authorization_code&code=xxx&redirect_uri=https://your-domain.com/api/auth/oidc/callback
+grant_type=authorization_code&code=xxx&redirect_uri=https://your‑domain.com/api/auth/oidc/callback
 ```
 
-**计算 Authorization Header**：
-```javascript
+Base64 encoding logic:
+
+```
 const credentials = `${clientId}:${clientSecret}`;
 const base64Credentials = Buffer.from(credentials).toString('base64');
 const authHeader = `Basic ${base64Credentials}`;
 ```
 
-#### 2. UserInfo 响应格式
+#### 2. UserInfo Response JSON Schema
 
-调用 UserInfo 端点后，返回的 JSON 数据包含以下字段：
+Sample returned payload:
 
-```json
+```
 {
   "id": 12345,
   "username": "johndoe",
@@ -1100,197 +998,200 @@ const authHeader = `Basic ${base64Credentials}`;
 }
 ```
 
-**字段说明**：
-- `id`：用户在 LinuxDo 的唯一 ID
-- `username`：用户名
-- `name`：用户显示名称
-- `active`：账号是否激活
-- `trust_level`：信任等级（0-4）
-- `silenced`：是否被禁言
+Field description:
+‑ `id`: Numeric unique user identifier on LinuxDo
+‑ `username`: Forum account username
+‑ `name`: Public display name
+‑ `active`: Boolean flag if user account is activated
+‑ `trust_level`: Discourse trust‑level integer value 0‑4
+‑ `silenced`: Boolean muted status flag
 
-### Trust Level（信任等级）说明
+### Trust‑Level Explanation
 
-LinuxDo 使用 Discourse 的信任等级系统（Trust Level 0-4）来管理用户权限：
+LinuxDo inherits Discourse Trust‑Level system (TL0‑TL4) for user privilege grading:
 
-| 等级 | 名称 | 获得条件 | 特点 |
-|------|------|----------|------|
-| **TL0** | 新用户 | 刚注册 | 功能受限，防止垃圾账号 |
-| **TL1** | 基础用户 | 阅读主题、花费一定时间 | 可以发帖回复 |
-| **TL2** | 成员 | 持续活跃、收到点赞 | 更多权限，如上传图片 |
-| **TL3** | 资深成员 | 长期活跃、高质量内容 | 可以重新分类主题 |
-| **TL4** | 领袖 | 由管理员手动授予 | 接近版主权限 |
+表格
 
-**在 VODTV 中配置最低信任等级**（`minTrustLevel` 字段）：
+| Level | Name | Acquisition Condition | Behaviour |
+| --- | --- | --- | --- |
+| **TL0** | New User | Freshly registered account | Restricted permissions, spam prevention |
+| **TL1** | Basic User | Reading topics and minimum site time | Normal posting permissions unlocked |
+| **TL2** | Member | Continuous forum activity and receiving likes | Additional upload privileges |
+| **TL3** | Senior Member | Long‑term high‑quality participation | Moderate re‑categorization permissions |
+| **TL4** | Leader | Manually granted by forum administrators | Near‑moderator privileges |
 
-- 设置为 `0`：允许所有 LinuxDo 注册用户登录
-- 设置为 `1`：只允许 TL1 及以上用户登录（有基础活跃度）
-- 设置为 `2`：只允许 TL2 及以上用户登录（**推荐**，过滤不活跃账号）
-- 设置为 `3` 或 `4`：仅限资深用户（适用于内测/邀请制）
+**VODTV backend setting: minimum trust‑level (`minTrustLevel`)**
+‑ `0`: No trust‑level filtering, all LinuxDo users can log‑in
+‑ `1`: Only TL1+ users allowed (minimum activity requirement)
+‑ `2`: Only TL2+ users allowed (**recommended**, filter low‑activity spam accounts)
+‑ `3` / `4`: Restrict login exclusively to senior forum members (closed beta / invite‑only scenario)
 
-⚠️ **注意**：如果设置为 `0`，则不进行信任等级检查。
+⚠️ If value is `0`, trust‑level validation check is skipped entirely.
 
-### 配置示例（VODTV 后台）
+### VODTV Backend Configuration Example for LinuxDo
 
-在 VODTV 管理后台 → OIDC 登录配置 中填写：
+Inside VODTV admin OIDC settings page:
 
 ```
-✅ 启用 OIDC 登录
-✅ 启用 OIDC 注册
+✅ Enable OIDC login
+✅ Enable OIDC registration
 
-Issuer URL:              留空（LinuxDo 不支持自动发现）
+Issuer URL:              leave blank (auto‑discovery unsupported)
 Authorization Endpoint:  https://connect.linux.do/oauth2/authorize
 Token Endpoint:          https://connect.linux.do/oauth2/token
 UserInfo Endpoint:       https://connect.linux.do/api/user
-Client ID:               你的 Client ID
-Client Secret:           你的 Client Secret
-登录按钮文字:             使用 LinuxDo 账号登录
-最低信任等级:             2
+Client ID:               your‑client‑id‑here
+Client Secret:           your‑client‑secret‑here
+Login button text:       Sign in with LinuxDo account
+Minimum trust level:     2
 ```
 
-### 常见问题
+### LinuxDo‑Specific FAQ
 
-**Q1：为什么我的应用一直显示"待审核"？**
+**Q1: My application status remains "Pending review"**
+A: LinuxDo Connect applications require manual administrator review, normally finished within 1‑3 working days. You may send private message to forum admins for progress inquiry.
 
-A：LinuxDo Connect 应用需要人工审核，通常 1-3 个工作日内会处理。可以在论坛私信管理员催促审核。
+**Q2: Token POST request returns HTTP 401 Unauthorized**
+A: Troubleshooting checklist:
+‑ Verify Client‑ID and Client‑Secret correctness
+‑ Confirm HTTP Basic Auth Base64 encoding is correctly implemented
+‑ The Redirect URI value must match exactly what was registered on LinuxDo Connect page (case‑sensitive, full string match).
 
-**Q2：Token 请求返回 401 Unauthorized？**
+**Q3: Login rejected with message "Trust‑level requirement not satisfied"**
+A: The logged‑in user's forum trust_level value is lower than your configured `minTrustLevel`.
+‑ Lower the minimum trust‑level threshold in backend settings;
+‑ Or advise user to become more active on LinuxDo forum to raise trust‑level.
 
-A：检查以下几点：
-- Client ID 和 Client Secret 是否正确
-- Authorization Header 是否正确计算 Base64 编码
-- Redirect URI 是否与注册时填写的**完全一致**（包括协议、域名、路径）
+**Q4: How can I debug OAuth workflow locally?**
+A: Debugging suggestions:
+‑ Use Postman / curl to manually test each OAuth endpoint
+‑ Inspect browser developer‑tool network trace
+‑ Review VODTV application server log entries for OIDC‑related error traces.
 
-**Q3：用户登录后提示"信任等级不满足要求"？**
+### References
 
-A：该用户的 `trust_level` 低于你在后台配置的 `minTrustLevel`。解决方案：
-- 降低 `minTrustLevel` 设置
-- 或者让用户在 LinuxDo 论坛多活跃，提升信任等级
-
-**Q4：如何测试 OAuth2 流程？**
-
-A：可以使用 LinuxDo 提供的测试工具：
-1. 使用 Postman 或 curl 测试各端点
-2. 检查浏览器开发者工具的网络请求
-3. 查看 VODTV 服务器日志中的 OIDC 相关输出
-
-### 参考资料
-- [LinuxDo Connect 官方文档](https://connect.linux.do/docs)（如有）
-- [小白也能懂的 LinuxDo OAuth2 快速上手](https://linux.do/t/topic/30578)
-- [Discourse Trust Levels 官方说明](https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)
+‑ [LinuxDo Connect documentation](https://connect.linux.do/docs)
+‑ [LinuxDo OAuth beginner tutorial](https://linux.do/t/topic/30578)
+‑ [Discourse Trust‑Levels official blog article](https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)
 
 ---
 
-## VODTV 管理后台配置
+## VODTV Admin Panel Configuration
 
-### 访问 OIDC 配置页面
+### Navigate to OIDC Configuration Page
 
-1. 登录 VODTV 管理后台：`https://your-domain.com/admin`
-2. 滚动到 **OIDC 登录配置** 部分
-3. 点击配置卡片展开设置
+1. Log‑in to VODTV admin backend: `https://your‑domain.com/admin`
+2. Scroll down to section labelled **OIDC Login Configuration**
+3. Expand configuration card to edit settings
 
-### 配置选项说明
+### Configuration Field Explanation
 
-#### 1. 基础设置
+#### 1. Global Base Settings
 
-| 选项 | 说明 | 示例 |
-|------|------|------|
-| **启用 OIDC 登录** | 总开关，控制是否启用 OIDC 功能 | `开启` |
-| **启用 OIDC 注册** | 允许新用户通过 OIDC 自动注册 | `开启`（推荐） |
-| **登录按钮文字** | 登录页面显示的按钮文本 | `使用 Google 登录` |
+表格
 
-#### 2. OIDC 提供商信息
+| Option | Explanation | Example |
+| --- | --- | --- |
+| **Enable OIDC Login** | Master toggle for whole OIDC subsystem | On |
+| **Enable OIDC Registration** | Allow new local user accounts to be created automatically after external OIDC authentication | On (recommended) |
+| **Login Button Text** | Label displayed on login‑page button | `Sign in with Google` |
 
-| 选项 | 说明 | 获取方式 |
-|------|------|----------|
-| **Issuer URL** | OIDC 提供商的基础 URL | 见上文各提供商配置 |
-| **Client ID** | 应用的唯一标识符 | 在提供商后台获取 |
-| **Client Secret** | 应用密钥（**保密**） | 在提供商后台获取 |
+#### 2. OIDC Provider Metadata
 
-#### 3. 端点配置
+表格
 
-**选项 A：自动发现（推荐）**
+| Field | Explanation | Where to obtain |
+| --- | --- | --- |
+| **Issuer URL** | Base identity‑provider URL for auto‑discovery | Refer per‑provider setup sections |
+| **Client ID** | Unique application identifier | Created at identity‑provider developer console |
+| **Client Secret** | Application secret key (confidential) | Generated within identity‑provider developer console |
 
-只需填写 **Issuer URL**，系统会自动从 `{issuer}/.well-known/openid-configuration` 获取端点信息。
+#### 3. Endpoint Configuration
 
-- ✅ 支持：Google、Microsoft
-- ❌ 不支持：GitHub（需手动配置）
+**Option A: Auto‑discovery (Recommended)**
+‑ Fill out only **Issuer URL**. System fetches remaining endpoint addresses automatically from `{issuer}/.well‑known/openid‑configuration`.
+‑ ✅ Supported: Google, Microsoft
+‑ ❌ Not supported: GitHub (manual endpoint entry required)
 
-**选项 B：手动配置**
+**Option B: Manual Endpoint Entry**
+Use manual entry if auto‑discovery fails or provider does not publish discovery document.
 
-如果自动发现失败，或提供商不支持，需手动填写：
+表格
 
-| 端点 | 说明 |
-|------|------|
-| **Authorization Endpoint** | 授权端点 URL |
-| **Token Endpoint** | 令牌端点 URL |
-| **UserInfo Endpoint** | 用户信息端点 URL |
+| Endpoint | Explanation |
+| --- | --- |
+| **Authorization Endpoint** | User browser redirect URL for granting application permissions |
+| **Token Endpoint** | Backend‑to‑backend API endpoint used to exchange authorization‑code for access‑token |
+| **UserInfo Endpoint** | API endpoint for fetching authenticated user profile information |
 
-#### 4. LinuxDo 专属配置
+#### 4. LinuxDo‑Exclusive Setting
 
-| 选项 | 说明 | 推荐值 |
-|------|------|--------|
-| **最低信任等级** | 限制用户最低 Trust Level | `0`（允许所有用户）或 `2`（防垃圾账号） |
+表格
 
-**设为 0**：允许所有 LinuxDo 用户登录
-**设为 2**：只允许活跃用户（TL2+）登录
+| Setting | Explanation | Recommended Value |
+| --- | --- | --- |
+| **Minimum Trust Level** | Enforce minimum Discourse trust‑level requirement for LinuxDo logins | `0` (no restriction) or `2` (spam‑filtering) |
 
-### 配置示例
+‑ Value `0`: All LinuxDo accounts permitted
+‑ Value `2`: Restrict login to TL2+ active forum users
 
-#### Google 配置示例
+### Configuration Examples
+
+#### Google Example
 
 ```
-启用 OIDC 登录: ✅
-启用 OIDC 注册: ✅
-登录按钮文字: 使用 Google 账号登录
+Enable OIDC login: ✅
+Enable OIDC registration: ✅
+Login button text: Sign in with Google account
 
 Issuer URL: https://accounts.google.com
-Client ID: 123456789-abcdefg.apps.googleusercontent.com
-Client Secret: GOCSPX-xxxxxxxxxxxxxx
+Client ID: 123456789‑abcdefg.apps.googleusercontent.com
+Client Secret: GOCSPX‑xxxxxxxxxxxxxx
 
-Authorization Endpoint: （留空，自动发现）
-Token Endpoint: （留空，自动发现）
-UserInfo Endpoint: （留空，自动发现）
+Authorization Endpoint: (leave blank, auto‑discovery)
+Token Endpoint: (leave blank, auto‑discovery)
+UserInfo Endpoint: (leave blank, auto‑discovery)
 ```
 
-#### Microsoft 配置示例
+#### Microsoft Example
 
 ```
-启用 OIDC 登录: ✅
-启用 OIDC 注册: ✅
-登录按钮文字: 使用 Microsoft 账号登录
+Enable OIDC login: ✅
+Enable OIDC registration: ✅
+Login button text: Sign in with Microsoft account
 
 Issuer URL: https://login.microsoftonline.com/common/v2.0
-Client ID: 12345678-1234-1234-1234-123456789abc
+Client ID: 12345678‑1234‑1234‑1234‑123456789abc
 Client Secret: xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-Authorization Endpoint: （留空，自动发现）
-Token Endpoint: （留空，自动发现）
-UserInfo Endpoint: （留空，自动发现）
+Authorization Endpoint: (leave blank, auto‑discovery)
+Token Endpoint: (leave blank, auto‑discovery)
+UserInfo Endpoint: (leave blank, auto‑discovery)
 ```
 
-#### GitHub 配置示例
+#### GitHub Example
 
 ```
-启用 OIDC 登录: ✅
-启用 OIDC 注册: ✅
-登录按钮文字: 使用 GitHub 账号登录
+Enable OIDC login: ✅
+Enable OIDC registration: ✅
+Login button text: Sign in with GitHub account
 
-Issuer URL: （留空，GitHub 不支持）
+Issuer URL: (leave blank, GitHub discovery unsupported)
 Client ID: Iv1.1234567890abcdef
 Client Secret: 1234567890abcdef1234567890abcdef12345678
 
 Authorization Endpoint: https://github.com/login/oauth/authorize
-Token Endpoint: https://github.com/login/oauth/access_token
-UserInfo Endpoint: https://api.github.com/user
+Token Endpoint:         https://github.com/login/oauth/access_token
+UserInfo Endpoint:      https://api.github.com/user
 ```
 
-#### Facebook 配置示例
+#### Facebook Example
 
 ```
 Provider ID: facebook
-启用: ✅
-允许注册: ✅
-按钮文字: 使用 Facebook 登录
+Enabled: ✅
+Allow registration: ✅
+Button text: Sign in with Facebook
 
 Issuer URL: https://www.facebook.com
 Client ID: 1234567890123456
@@ -1301,143 +1202,42 @@ Token Endpoint: https://graph.facebook.com/v19.0/oauth/access_token
 UserInfo Endpoint: https://graph.facebook.com/v19.0/me
 ```
 
-> ⚠️ **重要**：Provider ID 必须填写 `facebook`（全部小写）才能正确显示 Facebook logo 和品牌色按钮。
+> 
+> ⚠️ Important note: Provider‑ID must be lowercase string `facebook` for branded logo button rendering.
 
-#### LinuxDo 配置示例
+#### LinuxDo Example
 
 ```
-启用 OIDC 登录: ✅
-启用 OIDC 注册: ✅
-登录按钮文字: 使用 LinuxDo 账号登录
+Enable OIDC login: ✅
+Enable OIDC registration: ✅
+Login button text: Sign in with LinuxDo account
 
-Issuer URL: 留空（不支持自动发现）
+Issuer URL: leave blank (auto‑discovery unsupported)
 Client ID: xxxxxxxxxx
 Client Secret: xxxxxxxxxx
 
 Authorization Endpoint: https://connect.linux.do/oauth2/authorize
-Token Endpoint: https://connect.linux.do/oauth2/token
-UserInfo Endpoint: https://connect.linux.do/api/user
+Token Endpoint:         https://connect.linux.do/oauth2/token
+UserInfo Endpoint:      https://connect.linux.do/api/user
 
-最低信任等级: 2
+Minimum trust level: 2
 ```
 
 ---
 
-## 常见问题
+## Frequently Asked Questions
 
-### Q1: 为什么 OIDC 登录失败，提示 "redirect_uri_mismatch"？
+### Q1: OIDC login fails with `redirect_uri_mismatch` error
 
-**原因**：回调 URL 配置不匹配。
+**Cause**: Callback Redirect URI mismatch between identity‑provider settings and VODTV actual URL.
 
-**解决方案**：
-1. 检查 VODTV 实际访问地址（包括协议、域名、端口）
-2. 确保提供商后台配置的回调 URL **完全一致**
-3. 注意：
+**Troubleshooting steps**:
+
+1. Confirm actual VODTV visiting address including protocol, domain and port
+2. Ensure redirect URI registered on identity‑provider backend is exactly identical
+3. Common pitfalls:
    - `http://localhost:3000` ≠ `http://127.0.0.1:3000`
    - `https://example.com` ≠ `https://www.example.com`
-   - 末尾不要有斜杠：`/api/auth/oidc/callback` ✅  `/api/auth/oidc/callback/` ❌
+   - Trailing slash difference: `/api/auth/oidc/callback` ✅ vs `/api/auth/oidc/callback/` ❌
 
-### Q2: 登录后提示 "用户信息获取失败"
-
-**原因**：UserInfo Endpoint 配置错误或提供商返回格式不兼容。
-
-**解决方案**：
-1. 检查 UserInfo Endpoint URL 是否正确
-2. 查看 VODTV 后台日志（浏览器控制台 Network 标签）
-3. 确认提供商是否支持 `openid`、`profile`、`email` 范围
-
-### Q3: GitHub 登录无法自动发现端点
-
-**原因**：GitHub OAuth 不完全遵循 OIDC 标准，不支持自动发现。
-
-**解决方案**：必须**手动配置**所有三个端点 URL（见上文 GitHub 配置部分）。
-
-### Q4: Client Secret 泄露了怎么办？
-
-**紧急处理**：
-1. **立即**前往提供商后台重新生成新的 Client Secret
-2. 删除或撤销旧的 Secret
-3. 更新 VODTV 后台配置为新 Secret
-4. 检查日志，确认是否有异常登录
-
-### Q5: 如何测试 OIDC 配置是否正确？
-
-**测试步骤**：
-1. 保存 OIDC 配置后，退出 VODTV 登录
-2. 访问登录页面，应该看到 OIDC 登录按钮
-3. 点击按钮，应跳转到提供商登录页面
-4. 输入账号密码，授权后应自动跳回 VODTV
-5. 检查是否成功登录，用户名显示正确
-
-### Q6: 本地开发如何配置 OIDC？
-
-**本地开发配置**：
-
-大多数提供商允许使用 `http://localhost` 作为回调 URL：
-
-```
-Google:     http://localhost:3000/api/auth/oidc/callback ✅
-Microsoft:  http://localhost:3000/api/auth/oidc/callback ✅
-GitHub:     http://localhost:3000/api/auth/oidc/callback ✅
-```
-
-**注意**：
-- 本地开发可使用 `http://`（无需 HTTPS）
-- 生产环境**必须**使用 `https://`
-
-### Q7: 如何禁止某些用户通过 OIDC 登录？
-
-**方案 1**：在 VODTV 后台封禁用户
-1. 进入 **用户管理**
-2. 找到该用户，点击 **封禁**
-
-**方案 2**：提高 LinuxDo 最低信任等级
-- 设置为 `2` 或 `3`，限制低活跃度用户
-
-### Q8: 能否同时配置多个 OIDC 提供商？
-
-**✅ 已支持**！VODTV 的多 Provider 模式允许同时配置多个 OIDC 提供商。
-
-**配置方式**：
-1. 进入管理后台 → **系统设置** → **OIDC 认证配置**
-2. 切换到 **"多 Provider 模式（推荐）"**
-3. 点击 **"添加 Provider"** 可添加多个提供商
-4. 支持同时配置：Google、Microsoft、GitHub、Facebook、微信、Apple、LinuxDo 等
-
-**用户体验**：
-- 登录页面将显示所有已启用 Provider 的登录按钮
-- 用户可选择任一方式登录
-- 每个 Provider 可单独设置是否允许注册
-
-### Q9: OIDC 用户的密码是什么？
-
-**说明**：
-- OIDC 用户没有传统密码
-- 用户通过 OIDC 提供商（如 Google）登录，VODTV 不存储密码
-- 管理员可在后台为 OIDC 用户设置密码，允许其使用密码登录
-
-### Q10: 自动注册的 OIDC 用户有哪些权限？
-
-**默认权限**：
-- 角色：普通用户（`user`）
-- 用户组：按 **站点配置 → 默认用户组** 设置
-- 采集源权限：继承所在用户组的权限
-
-**修改权限**：
-管理员可在 **用户管理** 中调整 OIDC 用户的角色、用户组和权限。
-
----
-
-## 技术支持
-
-如遇到其他问题，请：
-
-1. 检查 VODTV 后台日志
-2. 查看浏览器控制台错误信息
-3. 提交 Issue 到 [VODTV GitHub 仓库](https://github.com/your-repo/VODTV)
-
----
-
-**文档版本**：v1.0
-**最后更新**：2025-12-27
-**适用版本**：VODTV v2.0+
+### Q2: Error message
