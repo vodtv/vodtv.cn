@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>vodtv/renovate"],
+  "packageRules": [
+     {
+      "matchDatasources": ["github-actions"],
+      "matchUpdateTypes": ["pin"],
+      "enabled": false
+     }
+   ]
+}
