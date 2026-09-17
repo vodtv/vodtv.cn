@@ -133,7 +133,7 @@
 }
 
 .sponsor-avatar {
-  @apply w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0;
+  @apply w-10 h-10 bg-linear-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0;
 }
 
 .sponsor-info {
@@ -184,7 +184,7 @@
 
 /* 感谢信息 */
 .sponsor-thanks {
-  @apply text-center bg-gradient-to-r from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-12;
+  @apply text-center bg-linear-to-r from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-12;
 }
 
 .sponsor-thanks-icon {
@@ -222,5 +222,6 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
 }

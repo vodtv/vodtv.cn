@@ -52,7 +52,7 @@
 
   /* 标题锚点链接 */
   .prose-content .header-anchor {
-    @apply text-gray-400 hover:text-primary-500 !ml-2 opacity-0 transition-opacity duration-200 no-underline border-0;
+    @apply text-gray-400 hover:text-primary-500 ml-2! opacity-0 transition-opacity duration-200 no-underline border-0;
   }
 
   .prose-content .header-anchor::before {
@@ -131,6 +131,7 @@
   }
   
   .prose-content li > p {
+     @apply my-0;
   }
 
   
