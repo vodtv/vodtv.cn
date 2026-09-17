@@ -168,13 +168,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      vitepress-plugin-group-icons:
-        specifier: ^1.7.6
-        version: 1.7.6(vite@5.4.21(@types/node@22.20.2)(lightningcss@1.30.2)(sass-embedded@1.104.1)(sass@1.104.1))
-      vue:
-        specifier: ^3.5.42
-        version: 3.5.42(typescript@5.9.3)
     devDependencies:
       '@types/node':
         specifier: ^22.20.2
@@ -197,6 +190,9 @@ importers:
       vitepress:
         specifier: ^1.6.4
         version: 1.6.4(@algolia/client-search@5.35.0)(@types/node@22.20.2)(lightningcss@1.30.2)(postcss@8.5.28)(sass-embedded@1.104.1)(sass@1.104.1)(search-insights@2.17.3)(typescript@5.9.3)
+      vue:
+        specifier: ^3.5.42
+        version: 3.5.42(typescript@5.9.3)
 
   packages/theme:
     dependencies:
@@ -726,17 +722,11 @@ packages:
   '@iconify-json/heroicons@1.2.3':
     resolution: {integrity: sha512-n+vmCEgTesRsOpp5AB5ILB6srsgsYK+bieoQBNlafvoEhjVXLq8nIGN4B0v/s4DUfa0dOrjwE/cKJgIKdJXOEg==}
 
-  '@iconify-json/logos@1.2.14':
-    resolution: {integrity: sha512-O36DicXkgAMT6NAsH7MTWlOql8NktHz9fBCItTjz6L/9gyRXw4vQj6qTeVgww5UZWiVugUV1MhVFA/g9HWIkBw==}
-
   '@iconify-json/simple-icons@1.2.47':
     resolution: {integrity: sha512-wa/2O7G4sBmwSEWWLh5C+HeY00lVOoWYRKJOYQtk7lAbQrHUReD1ijiGOyTynV1YavxtNueL1CBA1UZmYJfOrQ==}
 
   '@iconify-json/tabler@1.2.26':
     resolution: {integrity: sha512-92G+ZD70AZgeJf07JfQzH+isnai6DwPcMBuF/qL1F+xAxdXCJzGd3w2RmsRvOmB+w1ImmWEEDms50QivQIjd6g==}
-
-  '@iconify-json/vscode-icons@1.2.77':
-    resolution: {integrity: sha512-yl8e3KlFfLLhiL9CH6YwX6syePeSLLwH2dL4cKGYC27SgdNHL3TRpheAyOjO3fw2+Ovp3tOSF5oj3AhSv4MQ8Q==}
 
   '@iconify/tailwind4@1.2.1':
     resolution: {integrity: sha512-Hd7k8y7uzT3hk8ltw0jGku0r0wA8sc3d2iMvVTYv/9tMxBb+frZtWZGD9hDMU3EYuE+lMn58wi2lS8R2ZbwFcQ==}
@@ -2663,14 +2653,6 @@ packages:
       mermaid: ^11.0.0
       vue: ^3.0.0
 
-  vitepress-plugin-group-icons@1.7.6:
-    resolution: {integrity: sha512-fXSpQAYHpFpEsZLKWQAwbRx/+0uRSHmY58YNAQcz0AVirGsM6w22jtSmQhOGLEj8ZKyeRtTJrpx6otUI6wvoaQ==}
-    peerDependencies:
-      vite: '>=3'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-
   vitepress@1.6.4:
     resolution: {integrity: sha512-+2ym1/+0VVrbhNyRoFFesVvBvHAVMZMK0rw60E3X/5349M1GuVdKeazuksqopEdvkKwKGs21Q729jX81/bkBJg==}
     hasBin: true
@@ -3091,19 +3073,11 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/logos@1.2.14':
-    dependencies:
-      '@iconify/types': 2.0.0
-
   '@iconify-json/simple-icons@1.2.47':
     dependencies:
       '@iconify/types': 2.0.0
 
   '@iconify-json/tabler@1.2.26':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/vscode-icons@1.2.77':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -5055,14 +5029,6 @@ snapshots:
     dependencies:
       mermaid: 11.12.2
       vue: 3.5.42(typescript@5.9.3)
-
-  vitepress-plugin-group-icons@1.7.6(vite@5.4.21(@types/node@22.20.2)(lightningcss@1.30.2)(sass-embedded@1.104.1)(sass@1.104.1)):
-    dependencies:
-      '@iconify-json/logos': 1.2.14
-      '@iconify-json/vscode-icons': 1.2.77
-      '@iconify/utils': 3.1.7
-    optionalDependencies:
-      vite: 5.4.21(@types/node@22.20.2)(lightningcss@1.30.2)(sass-embedded@1.104.1)(sass@1.104.1)
 
   vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@22.20.2)(lightningcss@1.30.2)(postcss@8.5.28)(sass-embedded@1.104.1)(sass@1.104.1)(search-insights@2.17.3)(typescript@5.9.3):
     dependencies:
