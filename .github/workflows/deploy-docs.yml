@@ -1,35 +1,26 @@
 name: Deploy Vodtv
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: pages
   cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
       - name: Configure Pages
-        uses: actions/configure-pages@v6
-
+        uses: actions/configure-pages@v5
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          run_install: false
-
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
@@ -38,23 +29,18 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: |
             pnpm-lock.yaml
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Build theme
         run: pnpm build:theme
-
       - name: Build docs
         env:
           GITHUB_ACTIONS: true
         run: pnpm build:docs
-
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: .vitepress/dist
-
+          path: packages/docs/.vitepress/dist
   deploy:
     environment:
       name: github-pages
