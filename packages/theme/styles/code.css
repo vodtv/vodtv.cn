@@ -55,14 +55,25 @@
     @apply block text-sm m-0 p-0 leading-6;
   }
 
+  /* 高亮行：区分亮/暗模式 */
   .prose-content .shiki .line.highlighted {
-    @apply !bg-primary-500/10 !bg-primary-700/10;
+    @apply bg-primary-500/10!;
   }
+  html.dark .prose-content .shiki .line.highlighted {
+    @apply bg-primary-700/10!;
+  }
+
   .prose-content .shiki .line.highlighted.error {
-    @apply !bg-red-500/10 !bg-red-700/10;
+    @apply bg-red-500/10!;
+  }
+  html.dark .prose-content .shiki .line.highlighted.error {
+    @apply bg-red-700/10!;
   }
   .prose-content .shiki .line.highlighted.warning {
-    @apply !bg-yellow-500/10 !bg-yellow-700/10;
+    @apply bg-yellow-500/10!;
+  }
+  html.dark .prose-content .shiki .line.highlighted.warning {
+    @apply bg-yellow-700/10!;
   }
 
   .prose-content .shiki .line.diff {
@@ -70,7 +81,10 @@
   }
 
   .prose-content .shiki .line.diff.remove {
-    @apply !bg-red-500/10 !bg-red-700/10;
+    @apply bg-red-500/10!;
+  }
+  html.dark .prose-content .shiki .line.diff.remove {
+    @apply bg-red-700/10!;
   }
 
   .prose-content .shiki .line.diff.remove::after {
@@ -79,9 +93,27 @@
   }
 
   .prose-content .shiki .line.diff.add {
-    @apply !bg-green-500/10 !bg-green-700/10;
+    @apply bg-green-500/10!;
+  }
+  html.dark .prose-content .shiki .line.diff.add {
+    @apply bg-green-700/10!;
   }
 
+  .prose-content .shiki .line.diff.add::after {
+    content: "+";
+    @apply absolute right-2 top-0.5 text-green-500 font-mono text-sm;
+  }
+
+  .prose-content .shiki .line.diff.add {
+    @apply bg-green-500/10!;
+  }
+  html.dark .prose-content .shiki .line.diff.add {
+    @apply bg-green-700/10!;
+  }
+  
+
+
+  
   .prose-content .shiki .line.diff.add::after {
     content: "+";
     @apply absolute right-2 top-0.5 text-green-500 font-mono text-sm;
@@ -125,16 +157,7 @@
     font-weight: var(--shiki-light-font-weight) !important;
     text-decoration: var(--shiki-light-text-decoration) !important;
   }
-  
-  /* VitePress 特定样式 */
-  .prose-content .vp-adaptive-theme {
-    /* VitePress 自适应主题容器 */
-  }
-  
-  .prose-content .vp-code {
-    /* VitePress 代码块 */
-  }
-  
+      
   /* VitePress 代码组样式 */
   .prose-content .vp-code-group {
     @apply border border-gray-200 dark:border-gray-800 rounded-lg mb-6 overflow-hidden;

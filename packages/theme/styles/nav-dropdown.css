@@ -51,16 +51,16 @@
 }
 
 .nav-dropdown-menu-depth-0 {
-  @apply left-0 min-w-[240px];
+  @apply left-0 min-w-60;
 }
 
 /* 避免子菜单重叠 */
 .nav-dropdown-menu-depth-1 {
-  @apply left-full top-0 ml-2 -mt-1 min-w-[200px];
+  @apply left-full top-0 ml-2 -mt-1 min-w-50;
 }
 
 .nav-dropdown-menu-depth-2 {
-  @apply left-full top-0 ml-2 mt-0 min-w-[200px];
+  @apply left-full top-0 ml-2 mt-0 min-w-50;
 }
 
 /* 菜单内容 */
@@ -151,7 +151,7 @@
 
 /* 大型下拉菜单（如产品菜单） */
 .nav-dropdown-mega {
-  @apply min-w-[600px];
+  @apply min-w-150;
 }
 
 .nav-dropdown-mega .nav-dropdown-menu-inner {

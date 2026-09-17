@@ -1,7 +1,6 @@
 import { withTheme } from '@vodtv/theme/config'
 
-const isGitHub = process.env.GITHUB_ACTIONS === 'true'
-const base = isGitHub ? '/vodtv/' : '/'
+const base = process.env.GITHUB_ACTIONS === 'true' ? '/vodtv.cn/' : '/'
 const srcDir = 'packages/docs'
 
 export default withTheme({
