@@ -1,12 +1,12 @@
 {
   "name": "vodtv",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "private": true,
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
-  "packageManager": "pnpm@12.4.2",
+  "packageManager": "pnpm@12.9.1",
   "description": "vodtv theme and docs | VitePress主题收纳与演示仓库",
   "scripts": {
     "dev": "pnpm -C packages/theme build && vitepress dev",
@@ -17,14 +17,14 @@
     "release": "pnpm -C packages/theme release"
   },
   "devDependencies": {
-    "@types/node": "^22.20.2",
+    "@types/node": "22.20.2",
     "@vodtv/theme": "workspace:*",
-    "autoprefixer": "^10.6.0",
-    "postcss": "^8.5.28",
-    "sass-embedded": "^1.104.1",
-    "typescript": "^5.9.3",
-    "vitepress": "^1.6.4",
-    "vue": "^3.5.42"
+    "autoprefixer": "10.6.0",
+    "postcss": "8.5.28",
+    "sass-embedded": "1.104.1",
+    "typescript": "5.9.3",
+    "vitepress": "1.6.4",
+    "vue": "3.5.42"
   },
   "keywords": [
     "vodtv",

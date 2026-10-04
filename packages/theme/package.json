@@ -1,6 +1,6 @@
 {
   "name": "@vodtv/theme",
-  "version": "1.1.9",
+  "version": "1.1.10-0",
   "description": "A modern VitePress theme",
   "type": "module",
   "main": "./dist/cjs/index.cjs",
@@ -44,30 +44,30 @@
     "release": "npm publish --access public"
   },
   "dependencies": {
-    "@iconify/tailwind4": "^1.0.6",
-    "@vueuse/core": "^11.3.0",
-    "dayjs": "^1.11.20",
-    "minisearch": "^7.1.2",
-    "vitepress-mermaid-renderer": "^1.1.8",
-    "vue": "^3.5.18"
+    "@iconify/tailwind4": "1.2.1",
+    "@vueuse/core": "11.3.0",
+    "dayjs": "1.11.23",
+    "minisearch": "7.2.0",
+    "vitepress-mermaid-renderer": "1.1.8",
+    "vue": "3.5.42"
   },
   "devDependencies": {
-    "@iconify-json/heroicons": "^1.2.2",
-    "@iconify-json/tabler": "^1.2.20",
-    "@iconify/tailwind": "^1.2.0",
-    "@tailwindcss/vite": "^4.1.11",
-    "@types/node": "^22.17.0",
-    "@vitejs/plugin-vue": "^5.2.4",
-    "rimraf": "^6.0.1",
-    "tailwindcss": "^4.1.11",
-    "typescript": "^5.9.2",
-    "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.4",
-    "vitepress": "^1.6.4",
-    "vue-tsc": "^3.0.5"
+    "@iconify-json/heroicons": "1.2.3",
+    "@iconify-json/tabler": "1.2.26",
+    "@iconify/tailwind": "1.2.0",
+    "@tailwindcss/vite": "4.1.18",
+    "@types/node": "22.20.2",
+    "@vitejs/plugin-vue": "5.2.4",
+    "rimraf": "6.1.2",
+    "tailwindcss": "4.1.18",
+    "typescript": "5.9.3",
+    "vite": "6.4.1",
+    "vite-plugin-dts": "4.5.4",
+    "vitepress": "1.6.4",
+    "vue-tsc": "3.2.4"
   },
   "peerDependencies": {
-    "vitepress": "^1.6.4"
+    "vitepress": "1.6.4"
   },
   "keywords": [
     "vitepress",
@@ -84,5 +84,5 @@
     "type": "git",
     "url": "https://github.com/vodtv/theme"
   },
-  "packageManager": "pnpm@12.4.2"
+  "packageManager": "pnpm@12.9.1"
 }
