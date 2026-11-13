@@ -3,7 +3,7 @@ import path from "path";
 // import AutoImport from "unplugin-auto-import/vite";
 // import Components from "unplugin-vue-components/vite";
 const base = process.env.GITHUB_ACTIONS
-  ? "/" + process.env.GITHUB_REPOSITORY_URL + "/"
+  ? `/${process.env.GITHUB_REPOSITORY}/`
   : "/";
 const srcDir = "packages/docs";
 
