@@ -31,10 +31,12 @@ jobs:
             pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Build theme
+        run: pnpm build:theme
       - name: Build docs
         env:
           GITHUB_ACTIONS: true
-        run: pnpm build
+        run: pnpm build:docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:

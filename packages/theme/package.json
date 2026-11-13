@@ -40,7 +40,6 @@
     "build": "pnpm run clean && vite build && (vue-tsc --declaration --emitDeclarationOnly --outDir dist/types || true)",
     "build:watch": "vite build --watch",
     "dev": "pnpm run build:watch",
-    "prepublishOnly": "pnpm run build",
     "release": "npm publish --access public"
   },
   "dependencies": {
