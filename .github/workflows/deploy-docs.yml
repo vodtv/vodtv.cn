@@ -26,21 +26,19 @@ jobs:
         with:
           node-version: 24
           check-latest: true
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: |
             pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build theme
-        run: pnpm build:theme
       - name: Build docs
         env:
           GITHUB_ACTIONS: true
-        run: pnpm build:docs
+        run: pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .vitepress/dist
+          path: ./packages/docs/.vitepress/dist
   deploy:
     environment:
       name: github-pages
