@@ -1,6 +1,6 @@
 ---
 layout: home
-title: vodtv
+title: 重要声明
 titleTemplate: 极速、高清、无广告
 
 featuresConfig:

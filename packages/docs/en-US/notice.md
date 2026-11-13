@@ -1,6 +1,6 @@
 ---
 layout: home
-title: vodtv
+title: Important Notice
 titleTemplate: Fast · HD · Ad‑Free
 featuresConfig:
   title: Important Notice

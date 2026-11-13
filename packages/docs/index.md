@@ -1,7 +1,7 @@
 ---
 layout: home
-title: vodtv
-titleTemplate: 极速 、 高清 、 无广告
+title: vodtv.cn
+titleTemplate: 极速 - 高清 - 无广告
 
 hero:
   name: 自由观影，畅享精彩

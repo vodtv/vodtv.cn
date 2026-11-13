@@ -1,8 +1,8 @@
 ---
 layout: page
-title: About VODTV
+title: About Us
 hero:
-  title: About VODTV
+  title: About Us
   description: Learn about our mission and vision
   icon: icon-[tabler--info-circle]
   color: primary
@@ -11,11 +11,11 @@ hero:
 
 # About Us
 
-VODTV is a modern self‑hosted media documentation & playback application built for private media viewing scenarios.
+Us is a modern self‑hosted media documentation & playback application built for private media viewing scenarios.
 
 ## Design Philosophy
 
-We believe a great media system should balance ease‑of‑use, privacy and feature richness. VODTV is committed to delivering:
+We believe a great media system should balance ease‑of‑use, privacy and feature richness. Us is committed to delivering:
 
 - **Privacy‑First** — Keep your media data under your own control
 - **Feature‑Rich** — Cover media browsing, searching, AI assistant and multi‑source playback
@@ -55,7 +55,7 @@ We believe a great media system should balance ease‑of‑use, privacy and feat
 
 ## Development Team
 
-VODTV is developed and maintained by the open‑source community team. We focus on personal self‑hosted media solutions, aiming to build a convenient private media service for enthusiasts.
+Us is developed and maintained by the open‑source community team. We focus on personal self‑hosted media solutions, aiming to build a convenient private media service for enthusiasts.
 
 ## Tech Stack
 
@@ -78,12 +78,12 @@ VODTV is developed and maintained by the open‑source community team. We focus 
 
 ## License
 
-VODTV is released under the MIT License. You are free to use, modify and distribute this project for personal purposes.
+Us is released under the MIT License. You are free to use, modify and distribute this project for personal purposes.
 
 ## Contact Us
 
-- **GitHub**: [https://github.com/vodtv/vodtv](https://github.com/vodtv/vodtv)
+- **GitHub**: [https://github.com/Us/Us](https://github.com/Us/Us)
 - **Documentation**: [Documentation Homepage](./)
-- **Issues**: [GitHub Issues](https://github.com/vodtv/vodtv/issues)
+- **Issues**: [GitHub Issues](https://github.com/Us/Us/issues)
 
-Thank you for using VODTV!
+Thank you for using Us!

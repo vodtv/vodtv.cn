@@ -1,15 +1,15 @@
 ---
 layout: page
-title: 关于 vodtv
+title: 关于我们
 hero:
-  title: 关于 vodtv
+  title: 关于我们
   description: 了解我们的使命和愿景
   icon: icon-[tabler--info-circle]
   color: primary
   align: center
 ---
 
-# 关于 vodtv
+# 关于我们
 
 vodtv 深度二次开发的全功能影视聚合播放平台。
 
@@ -25,22 +25,26 @@ vodtv 深度二次开发的全功能影视聚合播放平台。
 ## 主要特性
 
 ### 🎨 现代设计
+
 - 基于现代设计语言
 - 支持亮色/暗色主题
 - 响应式设计，完美适配各种设备
 
 ### 🚀 强大功能
+
 - 内置搜索功能
 - Mermaid 图表支持
 - 多语言国际化
 - 多种页面布局
 
 ### ⚡ 性能优异
+
 - 基于 Vite 构建
 - 快速的热重载
 - 优化的构建输出
 
 ### 🔧 易于扩展
+
 - 丰富的配置选项
 - 组件化架构
 - 插件支持
@@ -59,6 +63,7 @@ vodtv 由 [vodtv](https://vodtv.cn) 团队开发和维护。我们是一个专�
 ## 版本历史
 
 ### v1.0.0
+
 - 首个正式版本发布
 - 支持多种页面布局
 - 内置 Mermaid 图表支持
