@@ -1,0 +1,26 @@
+{
+  "name": "vodtv",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.4.2",
+  "description": "vodtv theme and docs | VitePress主题收纳与演示仓库",
+  "scripts": {
+    "dev": "pnpm -C ../theme build && vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@vodtv/theme": "workspace:*",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
+  },
+  "keywords": [
+    "vodtv",
+    "vitepress",
+    "theme",
+    "docs"
+  ],
+  "author": "vodtv",
+  "license": "MIT"
+}

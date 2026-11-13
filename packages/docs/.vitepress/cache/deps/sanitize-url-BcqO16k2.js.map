@@ -1,0 +1,1 @@
+{"version":3,"file":"sanitize-url-BcqO16k2.js","names":[],"sources":["../../../../theme/dist/esm/shims/sanitize-url.js"],"sourcesContent":["function e(t) {\n  return t;\n}\nexport {\n  e as default,\n  e as sanitizeUrl\n};\n"],"mappings":";AAAA,SAAS,EAAE,GAAG;CACZ,OAAO;AACT"}

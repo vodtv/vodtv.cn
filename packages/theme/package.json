@@ -48,8 +48,7 @@
     "@vueuse/core": "^11.3.0",
     "dayjs": "^1.11.20",
     "minisearch": "^7.1.2",
-    "vitepress-mermaid-renderer": "^1.1.8",
-    "vue": "^3.5.18"
+    "vitepress-mermaid-renderer": "^1.1.8"
   },
   "devDependencies": {
     "@iconify-json/heroicons": "^1.2.2",
@@ -62,12 +61,14 @@
     "tailwindcss": "^4.1.11",
     "typescript": "^5.9.2",
     "vite": "^6.3.5",
+    "vue-tsc": "^3.0.5",
     "vite-plugin-dts": "^4.5.4",
-    "vitepress": "^1.6.4",
-    "vue-tsc": "^3.0.5"
+    "vitepress": "catalog:",
+    "vue": "catalog:"
   },
   "peerDependencies": {
-    "vitepress": "^1.6.4"
+    "vitepress": "^1.6.4",
+    "vue": "catalog:"
   },
   "keywords": [
     "vitepress",
