@@ -33,38 +33,6 @@ export default VPTheme({
   },
 
   // vite
-  vite: {
-    /* plugins: [
-        AutoImport({
-          imports: ["vue", "vitepress"],
-          dts: ".vitepress/auto-imports.d.ts",
-        }),
-        Components({
-          dirs: [".vitepress/theme/components", ".vitepress/theme/views"],
-          extensions: ["vue", "md"],
-          include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-          dts: ".vitepress/components.d.ts",
-        }),
-      ], */
-    resolve: {
-      // 配置路径别名
-      alias: {
-        // eslint-disable-next-line no-undef
-        //"@": path.resolve(__dirname, "./theme"),
-      },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          silenceDeprecations: ["legacy-js-api"],
-        },
-      },
-    },
-    // 服务器
-    server: {
-      port: 1001,
-    },
-  },
 
   // 多语言配置
   locales: {
