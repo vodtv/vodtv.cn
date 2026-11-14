@@ -1,9 +1,10 @@
 import { VPTheme } from "@vodtv/theme/config";
 import nav from "./nav";
 import sidebar from "./sidebar";
-const base = process.env.GITHUB_ACTIONS
-  ? `/${process.env.GITHUB_REPOSITORY}/`
-  : "/";
+const base =
+  process.env.GITHUB_ACTIONS === "true"
+    ? `/${process.env.GITHUB_REPOSITORY}/`
+    : "/";
 
 export default VPTheme({
   base,
