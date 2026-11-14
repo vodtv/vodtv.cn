@@ -13,6 +13,18 @@ export default VPTheme({
     ["meta", { name: "theme-color", content: "#3b82f6" }],
   ],
 
+  vite: {
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://caiji.dyttzyapi.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
+  },
+
   // 启用暗色模式
   appearance: true,
 

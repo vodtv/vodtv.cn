@@ -1,12 +1,12 @@
 ---
 layout: page
 title: 关于我们
-hero:
-  title: 关于我们
-  description: 了解我们的使命和愿景
-  icon: icon-[tabler--info-circle]
-  color: primary
-  align: center
+description: vodtv.cn，深度二次开发的全功能影视聚合播放平台.
+heroIcon: "icon-[heroicons--information-circle]"
+align: center
+heroColor: warning
+heroSize: md
+maxWidth: max-w-7xl
 ---
 
 # 关于我们

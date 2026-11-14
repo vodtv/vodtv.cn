@@ -21,19 +21,19 @@ hero:
       link: https://github.com/Vodtv/vodtv
       target: _blank
     - theme: alt
-      text: 查看指南
-      link: /guide/
+      text: 影视点播
+      link: /vodtv/
 
 features:
-  - icon: rocket-launch
+  - icon: heroicons--rocket-launch
     color: blue
     title: 快速搭建
     details: 简单配置，快速搭建你的视频站点。
-  - icon: paint-brush
+  - icon: heroicons--squares-plus
     color: purple
     title: 简洁播放界面
     details: 美观媒体UI，支持亮色、暗色主题切换。
-  - icon: globe-alt
+  - icon: heroicons--shield-check
     color: green
     title: 多语言支持
     details: 面向全球用户，轻松添加更多语种。
@@ -41,11 +41,11 @@ features:
     color: orange
     title: 多端适配
     details: 完美适配桌面、平板和移动设备
-  - icon: "rocket-launch"
+  - icon: heroicons--cloud-arrow-up
     color: amber
     title: 极速流媒体
     details: 低延迟视频流，影片加载迅速。
-  - icon: magnifying-glass
+  - icon: heroicons--signal
     color: indigo
     title: 媒体检索
     details: 一键搜索电影与剧集。
@@ -53,7 +53,7 @@ features:
     color: blue
     title: 聚合搜索
     details: 多采集站服务端并行搜索，单源失败不影响整体，用户 IP 不暴露给第三方。
-  - icon: paint-brush
+  - icon: heroicons--sparkles
     color: purple
     title: 跨源同名聚合
     details: 同名影片合并为一张卡片，展开即可比较和选择各来源。

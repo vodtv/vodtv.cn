@@ -21,8 +21,8 @@ hero:
       link: https://github.com/Vodtv/vodtv
       target: _blank
     - theme: alt
-      text: View Guide
-      link: /en-US/guide/
+      text: View Vodtv
+      link: /en-US/vodtv/
 
 features:
   - icon: rocket-launch

@@ -4,7 +4,6 @@ title: GitHub 镜像源
 description: GitHub加速镜像源，自动测速实时展示延迟、下载速度与连通状态
 heroIcon: ⚡
 align: center
-heroColor: primary
 heroSize: md
 ---
 
