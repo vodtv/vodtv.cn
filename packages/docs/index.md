@@ -14,10 +14,11 @@ hero:
     alt: "一体化模块化 AI "
   actions:
     - theme: brand
-      text: 快速开始
+      text: 快速开始      
       link: /guide/quick-start
     - theme: alt
       text: 在 GitHub 查看
+      openVideoModal: true
       link: https://github.com/Vodtv/vodtv
       target: _blank
     - theme: alt

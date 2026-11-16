@@ -22,5 +22,8 @@
     "docs"
   ],
   "author": "vodtv",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "aplayer": "^1.10.1"
+  }
 }

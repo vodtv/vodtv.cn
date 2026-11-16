@@ -1,10 +1,10 @@
 ---
 layout: home
-title: 重要声明
+title: 🔔 重要声明
 titleTemplate: 极速、高清、无广告
 
 featuresConfig:
-  title: 重要声明
+  title: 🔔 重要声明
   description: ⚠️ 请在使用前仔细阅读以下重要信息
   extraSection:
     title: 🔐 安全与隐私

@@ -10,5 +10,5 @@ maxWidth: max-w-7xl
 ---
 
 <ClientOnly>
-<VodApiPlayer api="http://caiji.dyttzyapi.com/api.php/provide/vod" :use-proxy="true" :intro-sec="25" :outro-sec="40"/>
+  <VodApiPlayer api="http://caiji.dyttzyapi.com/api.php/provide/vod" proxyUrl="https://cors.isteed.cc/" :intro-sec="25" :outro-sec="40" old_pic_domain="img.dytt-tupian.com" new_pic_domain="img.dytt-tupian.com"/>
 </ClientOnly>

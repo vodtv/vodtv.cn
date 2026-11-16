@@ -1,6 +1,7 @@
 import { VPTheme } from "@vodtv/theme/config";
-import nav from "./nav";
-import sidebar from "./sidebar";
+import nav from "./nav.ts";
+
+import sidebar from "./sidebar.ts";
 const base = process.env.GITHUB_ACTIONS ? "/vodtv.cn/" : "/";
 
 export default VPTheme({
@@ -11,18 +12,6 @@ export default VPTheme({
     ["meta", { name: "theme-color", content: "#3b82f6" }],
   ],
 
-  vite: {
-    server: {
-      proxy: {
-        "/api": {
-          target: "http://caiji.dyttzyapi.com",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
-      },
-    },
-  },
-
   // 启用暗色模式
   appearance: true,
 
@@ -31,9 +20,23 @@ export default VPTheme({
 
   // Markdown 配置
   markdown: {
+    // 开启行号
+    lineNumbers: true,
     theme: {
       light: "github-light",
       dark: "github-dark",
+    },
+    image: {
+      // 默认禁用；设置为 true 可为所有图片启用懒加载。
+      lazyLoad: true,
+    },
+    // 更改容器默认值标题
+    container: {
+      tipLabel: "提示",
+      warningLabel: "警告",
+      dangerLabel: "危险",
+      infoLabel: "信息",
+      detailsLabel: "详细信息",
     },
   },
 
@@ -45,6 +48,46 @@ export default VPTheme({
       title: "vodtv.cn",
       description: "极速 、 高清 、 无广告",
       themeConfig: {
+        // Logo 配置
+        logo: "/logo.svg",
+
+        outline: {
+          label: "本页导航",
+          level: [2, 3],
+        },
+
+        lastUpdated: {
+          text: "最后更新于",
+          formatOptions: {
+            dateStyle: "full",
+            timeStyle: "full",
+            hourCycle: "h24",
+          },
+        },
+
+        // 文章翻页
+        docFooter: { prev: "上一页", next: "下一页" },
+
+        ///返回顶部文字修改(移动端)
+        returnToTopLabel: "返回顶部",
+
+        //侧边栏文字更改(移动端)
+        sidebarMenuLabel: "目录",
+
+        // 主题模式切换
+        lightModeSwitchTitle: "切换到浅色模式",
+        darkModeSwitchTitle: "切换到深色模式",
+        darkModeSwitchLabel: "主题模式",
+
+        // 社交链接
+        socialLinks: [
+          { icon: "github", link: "https://github.com/vodtv/vodtv" },
+        ],
+
+        // Footer 配置
+        footer: {
+          copyright: 'Copyright © 2024 <a href="https://vodtv.cn">vodtv</a>',
+        },
         // 中文导航
         nav: nav.cn,
         // 中文侧边栏
@@ -62,20 +105,6 @@ export default VPTheme({
         // 英文侧边栏
         sidebar: sidebar.en,
       },
-    },
-  },
-
-  // 全局主题配置
-  themeConfig: {
-    // Logo 配置
-    logo: "/logo.svg",
-
-    // 社交链接
-    socialLinks: [{ icon: "github", link: "https://github.com/vodtv/vodtv" }],
-
-    // Footer 配置
-    footer: {
-      copyright: 'Copyright © 2024 <a href="https://vodtv.cn">vodtv</a>',
     },
   },
 });
