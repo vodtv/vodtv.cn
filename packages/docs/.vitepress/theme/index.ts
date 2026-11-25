@@ -1,16 +1,13 @@
 // 扩展默认主题
-import Theme from "@vodtv/theme";
-import { nextTick, onMounted } from "vue";
+import VPTheme from "@vodtv/theme";
+import { inBrowser } from "vitepress";
+import type { Theme } from "vitepress";
+import { nextTick, onMounted, defineAsyncComponent } from "vue";
 import "@vodtv/theme/dist/index.css";
-import "./custom.css";
-import { defineAsyncComponent } from "vue";
-import type { EnhanceAppContext, inBrowser } from "vitepress";
 
 export default {
-  extends: Theme,
-  enhanceApp(ctx: EnhanceAppContext) {
-    const { app } = ctx;
-
+  extends: VPTheme,
+  enhanceApp({ app }) {
     // 播放器异步懒加载
     const VodApiPlayer = defineAsyncComponent(() =>
       import("@vodtv/theme").then((m) => m.VodApiPlayer),
@@ -21,24 +18,23 @@ export default {
     );
     app.component("VodApiPlayer", VodApiPlayer);
     app.component("GitHubMirrorTable", GitHubMirrorTable);
+    if (inBrowser) {
+      /* 纸屑 */
+    }
   },
   setup() {
     onMounted(() => {
-      setupExternalLinks();
+      nextTick(() => {
+        const navLinks = document.querySelectorAll(
+          ".VPNavBarMenuLink, .VPNavBarMenuGroup",
+        );
+        navLinks.forEach((link) => {
+          if (link.textContent?.includes("订阅")) {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+          }
+        });
+      });
     });
   },
-};
-
-function setupExternalLinks() {
-  nextTick(() => {
-    const navLinks = document.querySelectorAll(
-      ".VPNavBarMenuLink, .VPNavBarMenuGroup",
-    );
-    navLinks.forEach((link) => {
-      if (link.textContent?.includes("订阅")) {
-        link.setAttribute("target", "_blank");
-        link.setAttribute("rel", "noopener noreferrer");
-      }
-    });
-  });
-}
+} satisfies Theme;

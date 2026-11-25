@@ -7,14 +7,11 @@ hero:
   name: 自由观影，畅享精彩
   text: 深度二次开发的全功能影视聚合搜索与播放平台
   tagline: 60+ 重大功能增强，帮您打造极致的在线观影体验。
-  subtitle: 智能体 • 机器人 • 知识库 • 文件解析 • 多媒体生成 • 工作流
-  mockUrl: "https://www.vodtv.cn"
-  image:
-    src: "/screenshot2.png"
-    alt: "一体化模块化 AI "
+  subtitle: 📺 剧集追更 👿 智能去广告 ▶️ 流畅在线播放 🔍 多源聚合搜索 ⏭️ 智能跳过
+
   actions:
     - theme: brand
-      text: 快速开始      
+      text: 快速开始
       link: /guide/quick-start
     - theme: alt
       text: 在 GitHub 查看

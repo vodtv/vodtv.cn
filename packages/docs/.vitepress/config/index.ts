@@ -46,7 +46,7 @@ export default VPTheme({
       label: "简体中文",
       lang: "zh-CN",
       title: "vodtv.cn",
-      description: "极速 、 高清 、 无广告",
+      description: "免费、开源的在线视频聚合搜索与观看平台。",
       themeConfig: {
         // Logo 配置
         logo: "/logo.svg",
@@ -82,6 +82,7 @@ export default VPTheme({
         // 社交链接
         socialLinks: [
           { icon: "github", link: "https://github.com/vodtv/vodtv" },
+          { icon: "x", link: "https://x.com/hefun" },
         ],
 
         // Footer 配置

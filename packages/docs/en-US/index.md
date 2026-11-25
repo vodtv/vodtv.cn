@@ -8,10 +8,7 @@ hero:
   text: A fully-featured video aggregation search and playback platform, deeply customized
   tagline: 60+ major feature enhancements to help you build the ultimate online viewing experience.
   subtitle: Agents • Bots • Knowledge Base • File Parsing • Multimedia Generation • Workflows
-  mockUrl: ""
-  image:
-    src: "/screenshot2.png"
-    alt: "All-in-one modular AI"
+
   actions:
     - theme: brand
       text: Quick Start

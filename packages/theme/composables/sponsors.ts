@@ -8,7 +8,7 @@ interface SponsorItem {
 }
 
 const API_URL =
-  "https://gh-proxy.com/raw.githubusercontent.com/hefung/hefung/refs/heads/main/sponsors-random.json";
+  "https://gh-proxy.com/raw.githubusercontent.com/hefung/sponsor/refs/heads/main/sponsor.json";
 // ========= 缓存配置 =========
 const CACHE_KEY = "hefung_sponsors_data_cache";
 const CACHE_TTL = 12 * 60 * 60 * 1000; // 12小时，你想改成 1小时就写 1*60*60*1000

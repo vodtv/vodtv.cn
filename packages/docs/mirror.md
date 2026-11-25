@@ -1,26 +1,36 @@
 ---
-layout: changelog
-title: GitHub 镜像源
-description: GitHub加速镜像源，自动测速实时展示延迟、下载速度与连通状态
-heroIcon: ⚡
-align: center
-heroSize: md
+layout: home
+title: GitHub 全球加速网关
+titleTemplate: 极速 - 高清 - 无广告
+
+features:
+  - icon: ⚡
+    color: blue
+    title: 极速传输 · 全球 Anycast
+    details: 依托全球分布式边缘加速节点与优质链路，彻底告别克隆超时与资产下载断连。
+  - icon: 🎯
+    color: purple
+    title: 全资源覆盖 · 即开即用
+    details: 全面兼容 Git Clone、Release 资产包、Raw 原始代码、Zip 源码归档以及 GitHub API。
+  - icon: 🚀
+    color: green
+    title: 多生态扩展 · 统一加速
+    details: 除 GitHub 外，无缝集成 Docker Hub、SourceForge 与 Google Sheets API 等一站式加速。GitHub文件加速
+
+featuresConfig:
+  title: 为什么选择 Mirror ？
+  description: 专为高并发生产与开发打造的开源中心
+  extraSection:
+    title: 开发者专属的GitHub 全球加速网关
+    description: 支持 Release、Raw、Gist 与 Git Clone毫秒级智能调度代理，让开源代码拉取畅通无阻。
+    tags:
+        - 快速搭建
+        - 简洁播放界面
+        - TypeScript支持
+        - 多布局方案
+        - 多语言
+        - 响应式设计
+
 ---
 
-# GitHub 加速镜像源
-
-> - 页面收录当前可用的 GitHub 加速代理，每 12 小时自动测速一次
-> - 实时展示每个镜像的连通状态、网络延迟和下载速度，优先挑状态正常的用就行
-> - 测速结果会受本地网络波动影响，仅供参考，不保证每个节点长期稳定
-
-## 镜像列表
-
 <GitHubMirrorTable />
-
-### ⚡ 使用说明
-
-1.  点击【复制】拿到镜像前缀，直接拼在原 GitHub 链接前面就能加速下载
-2.  只有状态为「正常」的镜像可以复制；超时、不支持的节点按钮会自动锁定，点不动
-    - 不支持：这个代理的格式不兼容，没法用来加速 GitHub
-    - 超时：当前你的网络连不上这个节点，换别的就行
-3.  所有镜像都是第三方公共服务，建议多存几个备用节点，哪天某个挂了直接换另一个

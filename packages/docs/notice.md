@@ -5,9 +5,9 @@ titleTemplate: 极速、高清、无广告
 
 featuresConfig:
   title: 🔔 重要声明
-  description: ⚠️ 请在使用前仔细阅读以下重要信息
+  description: ⚠️请在使用前仔细阅读以下重要信息，完整说明见文档 FAQ
   extraSection:
-    title: 🔐 安全与隐私
+    title: 🔐 文明 & 遵纪 & 守法
     description: 为了您的安全和避免潜在的法律风险，请设置密码保护并关闭公网注册！
     tags:
       - 为您的实例设置一个强密码
